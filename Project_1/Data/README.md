@@ -1,29 +1,40 @@
-# Raw Jeopardy Contestant-Clue Dataset
+# Jeopardy! winner prediction: Project 1 data
 
-## Data Summary
+## Data summary and access
 
-`jeopardy_raw_contestant_clue_data.csv.gz` is the connected raw dataset for the Jeopardy winner-prediction project. It contains 1,095,594 rows representing 365,198 unique clue records, 18,924 contestant-game records, 11,883 contestants, and all 6,308 Cluebase games from September 27, 1984, through July 26, 2019. The unit of observation is a **contestant-clue pair**: each clue is repeated once for each of the three contestants in its game. Every game contains exactly three contestants and one recorded winner. The compressed file is approximately 28.4 MiB and expands to approximately 449.5 MiB. It can be read directly without manual extraction using `pandas.read_csv("jeopardy_raw_contestant_clue_data.csv.gz", compression="gzip")`; because the expanded data are large, `usecols=` or `chunksize=` should be used on computers with limited memory. The file currently lives in the group's shared project files on GitHub.
+The files below are the ones currently shown in `Project_1/Data`. The connected raw file contains 6,308 games, 18,924 contestant-game records, and 365,198 distinct clues (1,095,594 contestant-clue rows). The processed contestant file contains the **3,882 primary games** that have at least 50 recorded clues and a stated occupation for all three contestants. It has 11,646 contestant-game rows. The raw file is needed to obtain the 225,388 distinct clues in those games; there is currently **no separate final clue file in this folder**.
 
-## Provenance
+For the winner model, compare each contestant's `occupation_text_for_model` with the category and clue text from the raw file, joined by `game_id`. SOC and CIP are optional exploratory annotations, not required to predict the winner.
 
-The file combines the supplied Cluebase CSV archive with J. Wolle's `combined_season1-42.tsv` dataset. Cluebase contributes the game, season, contestant, final-score, winner, and J! Archive-link fields. The Wolle file contributes category text, displayed clue text, expected correct responses, clue values, Daily Double values, comments, notes, and Final Jeopardy records. The sources were connected by `air_date`, which is unique among the Cluebase games in this snapshot. Wolle supplied clue records for 6,293 games, while the Cluebase clue table supplied a fallback for 15 dates absent from Wolle. Thus, all 6,308 games have at least one clue record, although two games contain only a Final Jeopardy clue. The file contains 180,340 Jeopardy-round clues, 178,634 Double Jeopardy clues, and 6,224 Final Jeopardy clues before each clue is repeated for the three contestants. Source values were retained as closely as possible; processing primarily renamed fields, standardized round labels, added source identifiers, and performed the relational joins.
+## Files in `Project_1/Data`
 
-## License and Use Restrictions
+| File | Contents |
+| --- | --- |
+| `jeopardy_raw_contestant_clue_data.csv.gz` | Connected raw contestant-clue data, including recorded clues, answer keys, scores, and winners. One clue appears once for each contestant in its game. |
+| `final_contestant_games.csv` | One row per contestant-game in the primary sample; cleaned occupation phrase, winner label, uncertainty, and optional SOC/CIP fields. |
+| `soc_cip_links.csv` | Official SOC-to-CIP pairs for occupations appearing in the processed data, including CIP program names. Optional for the main model. |
+| `Cluebase_Data_Download.ipynb` | Earlier data-acquisition notebook. It documents the acquisition attempt and is not needed to read the files above. |
+| `Initial_EDA.ipynb` | Earlier exploration of the raw connected data. |
+| `Final_EDA.ipynb` | Later exploration of the raw connected data and the pre-processed data. |
+| `README.md` | This description of the data, fields, processing, and limitations. |
 
-No license permitting unrestricted redistribution was supplied with either attached dataset. The Wolle repository states that the Jeopardy data are the property of Jeopardy Productions, Inc. and asks users not to create public-facing websites, applications, or products from the data. Cluebase describes its software as open source, but its documentation states that its data were obtained from J! Archive. J! Archive's current terms prohibit automated collection and republication of data collected or derived from the site. This combined raw file should therefore be treated as restricted educational-research data, not as an openly licensed dataset. Store it privately and share it only with the project group and instructor as needed for DS 4002. Do not publish the raw file, republish the clue text or personal records, monetize it, or use it in a public-facing product without permission from the relevant rights holders. Original code, field definitions, processing instructions, and aggregate findings that do not reproduce the underlying records may be shared. This is a conservative use statement rather than legal advice.
+The raw `.csv.gz` file can be opened directly with `pd.read_csv('jeopardy_raw_contestant_clue_data.csv.gz', compression='gzip')`. Read it in chunks or request specific columns if memory is limited. The two notebooks could eventually move to a `SCRIPTS` folder, but they are listed here because that is where they currently appear and are relevant to data.
 
-Relevant sources and terms:
+## Provenance and construction
 
-- Clue dataset: https://github.com/jwolle1/jeopardy_clue_dataset
-- Cluebase documentation: https://cluebase.readthedocs.io/en/latest/
-- Cluebase repository: https://github.com/lukelavin/Cluebase
-- J! Archive terms: https://www.j-archive.com/help.php
+Cluebase supplies games, contestants, introductions, scores, and winners [1]. J. Wolle's Jeopardy! clue data supplies categories, clue prompts, answers, values, and rounds for 6,293 games; Cluebase supplies clues for 15 other games [2]. The sources were joined by air date for the raw file. The occupation phrase comes from the contestant introduction after removing locations and certain surrounding text. A proposed O*NET-SOC occupation and uncertainty tier were assigned using exact titles, selected synonyms, broad-role rules, or approximate title matching [3]. The **2020 Classification of Instructional Programs (CIP)–2018 Standard Occupational Classification (SOC) crosswalk** was joined on the seven-character SOC code [4]. Its `99.9999 / NO MATCH` marker was treated as no CIP link. CIP is a possible program connected with a job, **not evidence of the contestant's education or UVA major**. The crosswalk is many-to-many: the file retains all program links rather than selecting a degree for each person.
 
-## File Structure
+The MI2 preprocessing rule removes 94 games with fewer than 50 distinct clues, leaving 6,214. Of those, 2,332 games have at least one introduction without an identifiable occupation and are excluded **as entire games** to preserve three contestants and one winner per game. This leaves 3,882 primary games. Students without a stated occupation, age-only introductions, and homemaker descriptions were not assigned a job. The final contestant file omits answer text, scores, current-game wagers, postgame notes, and snapshot total winnings, while keeping `is_winner` as the supervised target. When preparing clues from the raw file for analysis, deduplicate each clue across the three contestants and clean HTML tags/entities and extra spaces from category and clue text. The raw file stores original clue values, including the source's zero marker for Final Jeopardy, which has no fixed face value. If a later script constructs relative clue values, treat Final Jeopardy separately. Text embeddings and model parameters must be fitted using training games only.
 
-Each game-clue combination appears three times, once for each contestant. Game-level fields therefore repeat across all rows in a game, contestant-level fields repeat across all clues associated with that contestant's game, and clue-level fields repeat across the three contestants. Use `game_id` to identify games, `contestant_id` to identify people, and `clue_source_record_id` to identify clues. The combination of `game_id`, `contestant_id`, and `clue_source_record_id` uniquely describes the intended row. For game-level summaries, remove duplicated `game_id` values. For clue-level summaries, remove duplicated `clue_source_record_id` values. For contestant-game modeling, first aggregate clues within each `game_id` and then retain one row per `game_id` and `contestant_id`.
+## Source terms and ethics
 
-## Data Dictionary
+Neither the Cluebase-derived records nor Wolle's clue data came with permission to republish the connected row-level dataset publicly; Wolle identifies Jeopardy! rights held by Jeopardy Productions [1], [2]. Keep the raw and final contestant/clue files within the group's approved restricted access. The NCES crosswalk is distributed on the official CIP resource site [4]. O*NET 31.0 occupation data are distributed under Creative Commons Attribution 4.0; the attribution and license are at [3], [5]. The team added parsing and uncertain links; O*NET has not checked or endorsed those links. Public documentation and aggregate plots should avoid reproducing substantial clue text or unnecessary contestant identities.
+
+The occupations and winner records were publicly broadcast but contestants did not give them for this analysis. Occupation text is a rough proxy for subject knowledge, and mappings may vary with job wording and historical period. Do not interpret a similarity score or CIP link as intelligence, actual education, causal career effects, or expected success of UVA students. Summarize findings at the group level.
+
+## Data dictionary: raw connected file
+
+The following fields belong to the **raw** contestant-clue file. Game fields repeat for each clue and contestant; contestant fields repeat for the clues in that game; each clue repeats for three contestants.
 
 ### Game-Level Fields
 
@@ -79,26 +90,68 @@ Each game-clue combination appears three times, once for each contestant. Game-l
 | `correct_response` | String or blank | Expected correct response. Two unique clue records have missing responses. Because contestants do not see the answer key when selecting a clue, this field should be excluded from a board-only winner-prediction model even though it can support descriptive content analysis. |
 | `clue_notes` | String or blank | Miscellaneous clue notes from Wolle, including special-format information. Blank for Cluebase fallback clues. Notes may contain information unavailable before or during ordinary play and require auditing before use. |
 
-## Predictor Leakage Guidance
+## Data dictionary: final contestant and SOC–CIP files
 
-The raw file intentionally retains both inputs and outcomes so that the analysis remains reproducible. For the planned semantic winner model, the safe starting text variables are `contestant_intro`, `category`, and `clue_text`, after extracting occupation text from the introduction. Useful structural fields may include `round` and `clue_value`. The target is `is_winner`. At minimum, exclude `score1`, `score2`, `score3`, `winner_id`, `contestant_final_score`, `contestant_games_played`, `contestant_total_winnings`, `daily_double_value`, and all contestant response or wagering information from predictors. Names, IDs, URLs, correct responses, notes, and source indicators should also be excluded from semantic features unless a clearly justified audit or sensitivity analysis requires them. Fit all text transformations only on the training data and keep all rows from the same game together during validation.
+`final_contestant_games.csv` has one row per (`game_id`, `contestant_id`). `is_winner` is the target; never use it as a predictor. Join this file to distinct raw clues on `game_id` when constructing board similarity. Names, identifiers, dates, and mappings are for tracing or separate checks, not the main occupation-text feature set.
 
-## Known Limitations and Uncertainty
+| Final contestant field | Meaning and uncertainty |
+| --- | --- |
+| `game_id`, `contestant_id` | Keys for the game and person; a contestant may appear in multiple games. Do not use numeric IDs as model features. |
+| `contestant_name`, `contestant_intro` | Public source text retained for tracing occupation extraction; introductions can contain hometowns and non-job material. |
+| `occupation_phrase`, `occupation_text_for_model` | Extracted job phrase and cleaned primary text feature. The extraction can be incomplete or contain a misleading title. |
+| `is_winner` | Target label, 1 for the single recorded winner per game. **Never include as an input.** |
+| `contestant_position` | Source lineup slot, 1 to 3; possible structural baseline input, subject to archival-order effects. |
+| `air_date`, `season_name`, `episode_num` | Broadcast date and audit labels; use for checks or group/time splitting, not as outcome proxies. |
+| `clue_count`, `category_count` | Recorded clue and distinct category counts for each game; coverage can still be incomplete. |
+| `j_clue_count`, `dj_clue_count`, `fj_clue_count` | Recorded clue counts for Jeopardy!, Double Jeopardy!, and Final Jeopardy. Some games lack FJ records. |
+| `proposed_onet_soc_code`, `proposed_soc_code` | Optional proposed O*NET code and seven-character 2018 SOC portion; uncertain for broad or approximate matches. |
+| `proposed_soc_title`, `proposed_soc_url` | Proposed occupation name and O*NET page, not a validated job classification. |
+| `soc_uncertainty_level`, `soc_mapping_method` | Tier and method used to select the proposed occupation; details below. |
+| `optional_soc_profile_text` | Job phrase plus proposed SOC description; **not** the default model input because weak SOC guesses can add wrong information. |
+| `cip_candidate_count`, `candidate_cip_codes` | Number and `|`-separated list of official 2020 CIP program codes for the proposed SOC; an empty list indicates no crosswalk match. |
+| `cip_mapping_status` | `one_crosswalk_program`, `multiple_possible_programs`, or `no_crosswalk_program`. A unique crosswalk edge still does not establish an actual degree. |
+| `clue_source_set` | Wolle or Cluebase source(s) represented in the board, for sensitivity checks only. |
 
-Clue coverage varies substantially. Games contain between 1 and 61 unique clue records; two games contain only their Final Jeopardy clue, and many historical games have fewer than a full board. The file contains 6,224 Final Jeopardy clues for 6,308 games, so Final Jeopardy is missing for some games. Two clue records lack a correct response. Cluebase fallback games lack several Wolle-only fields and may have unreliable Daily Double flags. Source text may include transcription errors, messy formatting, or incomplete representations of image, audio, and video clues. Contestant introductions are not standardized occupation labels. The data also do **not** identify which contestant attempted or answered each individual clue, so contestant-level clue accuracy and exact Coryat scores cannot be reconstructed from this file. Those analyses would require a separate response-level or scoring dataset. These limitations should be reported and addressed through completeness thresholds, source indicators, mapping-confidence fields, and sensitivity analyses.
+The raw file's clue-level fields are defined above. For the winner analysis, use each unique (`game_id`, `clue_source_record_id`) once, taking its `category`, `clue_text`, `round`, and `clue_value` from the raw file. Do not use its `correct_response`, scores, or wagers as predictors.
 
-## Ethical Statement
+`soc_cip_links.csv` has `soc_code`, `official_soc_title`, `cip_code`, and `cip_title`, as printed in the official crosswalk. Joining it directly to contestants would multiply rows; aggregate CIP results by SOC or contestant and keep the original one-row-per-contestant unit for winner modeling.
 
-Contestant names, introductions, occupations, scores, and results were publicly displayed, but contestants did not provide them specifically for this research. Keep the row-level file private, minimize unnecessary display of names and hometowns, and present aggregate findings whenever possible. Occupation text is an incomplete proxy for knowledge and may reproduce occupational, educational, geographic, demographic, and linguistic stereotypes. Do not interpret semantic alignment as intelligence, individual ability, or a causal effect of a job or degree. Document ambiguous occupation mappings and their uncertainty rather than forcing a match. If UVA-major profiles are explored, describe the results only as similarity between program text and clue content, not as predicted performance of actual UVA students or graduates.
+### Mapping uncertainty
 
-## Reproducibility Checks
+| Tier | Interpretation |
+| --- | --- |
+| `high_exact_title` | Unique match to the O*NET title or a singular form. |
+| `medium_curated_match` | Selected equivalent job name or clear occupational rule. |
+| `low_contextual_role` | Job named in a longer introduction; specialty or seniority may differ. |
+| `low_broad_role` | Only a general family such as “teacher” is stated. |
+| `low_multiple_roles` | Introduction describes more than one possible role; one representative code is recorded. |
+| `very_low_approximate` | Closest title by letter pattern; may refer to another occupation. |
+| `very_low_weak_guess` | Especially weak title suggestion; unsuitable as a confirmed SOC assignment. |
+| `very_low_multiple_roles` | More than one role plus only a weak title suggestion. |
 
-- Compressed file: `jeopardy_raw_contestant_clue_data.csv.gz`
-- Rows: 1,095,594
-- Unique games: 6,308
-- Unique contestant-game records: 18,924
-- Unique contestants: 11,883
-- Unique clue records: 365,198
-- Games using Wolle clues: 6,293
-- Games using Cluebase fallback clues: 15
-- SHA-256: `0641b261635230da5745f046ac323ff9793fa614c953574d92ddfae8a2bef382`
+There are 3,786 high or medium contestant-game mappings among the 11,646 primary rows; **7,860** are lower confidence. Only 140 games have three high/medium SOC matches. For the preregistered primary analysis, compare the original occupation phrase with the board for all 3,882 games; a SOC-description or CIP analysis must be labeled exploratory or evaluated separately.
+
+## Exploratory analysis and reproducing MI3 inputs
+
+`Initial_EDA.ipynb` explores the raw connected file. Its plots and summary tables should be saved to the repository's `OUTPUT` folder when run. There are no figure files in the `Data` folder shown above; the MI3 rubric calls for at least two explanatory plots in the data metadata.
+
+To prepare model inputs using the files currently in this folder:
+
+1. Load `final_contestant_games.csv` and `jeopardy_raw_contestant_clue_data.csv.gz` in Python. Filter the raw rows to `game_id` values in the final contestant file, then keep one copy per (`game_id`, `clue_source_record_id`). This produces **225,388 distinct clues** for the primary sample.
+2. Use `occupation_text_for_model` as the contestant text and the raw `category` and `clue_text` as the board text. Clean HTML and whitespace before comparisons. Treat Final Jeopardy and any within-round clue-value weighting separately from ordinary clue values.
+3. Make one fixed **80% train / 20% test split by whole game**, as planned in MI2. Use exactly the same games for the baseline and enhanced models. Fit text transformations and tune models using training games only. Do not use `is_winner`, scores, answer keys, wagers, names, or postgame fields as predictors.
+4. Compute one win probability per contestant that sums to one per game. Compare held-out game-level log loss with the recorded winner, the matched non-text baseline, and uniform one-in-three probabilities. Save the final scripts, figures, predictions, and summary tables in the MI3 repository.
+
+For CIP names, join `final_contestant_games.csv` on `proposed_soc_code` = `soc_cip_links.csv`'s `soc_code`. Because one occupation can link to many programs, this join will repeat contestants; do **not** use that expanded table directly as one-row-per-player model data. The `candidate_cip_codes` field already lists the available codes without expanding the rows. Uncertain SOC/CIP links are not evidence of a person's actual major.
+
+## References
+
+[1] L. Lavin, “Cluebase documentation.” [Online]. Available: https://cluebase.readthedocs.io/en/latest/
+
+[2] J. Wolle, “Jeopardy clue dataset,” GitHub repository. [Online]. Available: https://github.com/jwolle1/jeopardy_clue_dataset
+
+[3] National Center for O*NET Development, “O*NET 31.0 occupation data.” [Online]. Available: https://www.onetcenter.org/dl_files/database/db_31_0_json/occupation_data.json
+
+[4] National Center for Education Statistics, “2020 CIP/SOC crosswalk.” [Online]. Available: https://nces.ed.gov/ipeds/cipcode/Files/CIP2020_SOC2018_Crosswalk.xlsx
+
+[5] National Center for O*NET Development, “O*NET database license.” [Online]. Available: https://www.onetcenter.org/license_db.html
