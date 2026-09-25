@@ -1,0 +1,3 @@
+model,test_log_loss,test_top1_accuracy
+uniform_1/3,1.0986122886681098,
+"baseline (position_x_era, l2=0.001)",1.096489402841116,0.35180412371134023
