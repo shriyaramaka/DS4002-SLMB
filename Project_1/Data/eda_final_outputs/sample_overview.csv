@@ -1,0 +1,12 @@
+measure,value
+Games,3882
+Unique contestants,8026
+Contestant-game rows,11646
+Unique clue rows,225388
+First air date,1984-09-28
+Last air date,2019-07-26
+Median clues per game,59.0
+Min clues per game,50
+Max clues per game,61
+Games with exactly 3 contestants,3882
+Games with exactly 1 winner,3882
