@@ -172,7 +172,7 @@ The notebook rewrites:
 - `enhanced_model_metrics.csv`
 - `enhanced_model_test_predictions.csv`
 
-The reproduced semantic-model metrics should report 777 held-out games, a log loss of approximately `1.09572`, and top-one accuracy of approximately `0.35006`. Its uniform reference log loss should be approximately `1.09861`.
+The reproduced semantic-model metrics should report 776 held-out games, a log loss of approximately `1.093`, and top-one accuracy of approximately `0.3557`.
 
 ### 6. Check the output files
 
@@ -184,3 +184,13 @@ After both models finish, open the CSV files in `Output` and confirm that:
 - The summary metrics are close to the values listed above.
 
 Small numerical differences can occur across package or operating-system versions. The fixed random seeds should otherwise make the results reproducible.
+
+## Section 4: Analysis of Results
+
+| Model | Log Loss | Accuracy |
+|-------|----------|----------|
+| Baseline | 1.09649 | 0.35180 |
+| Uniform | 1.09861 | 0.33333 |
+| Enhanced | 1.093 | 0.3557 |
+
+The results indicate that the semantic match between a contestant's occupational profile and the clues on a Jeopardy! board provides a small but measurable improvement in predicting the game's winner. The enhanced model's log loss is lower than both the baseline and uniform models; however, this improvement could be due to chance, so further statistics and analysis would be needed to confirm the significance of the results. The accuracy improvement is also modest, suggesting that while knowledge of a player's occupation may contribute to prediction, other factors like buzzer speed and clue selection may play a larger role in determining the winner than occupation.
