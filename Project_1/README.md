@@ -184,7 +184,3 @@ After both models finish, open the CSV files in `Output` and confirm that:
 - The summary metrics are close to the values listed above.
 
 Small numerical differences can occur across package or operating-system versions. The fixed random seeds should otherwise make the results reproducible.
-
-### Current Analysis Note
-
-The baseline script and enhanced-model notebook currently create separate seeded 80/20 game splits. Their current metric files can be reproduced with the steps above, but they should use the same held-out game IDs before the models are treated as a final matched comparison. This README should also be updated when the final evaluation or presentation scripts are added.
