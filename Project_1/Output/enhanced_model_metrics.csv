@@ -1,3 +1,2 @@
 model,log_loss,accuracy,games,best_C
 enhanced_sentence_bert,1.0930469607138589,0.3556701030927835,776,0.001
-uniform_reference,1.0986122886681098,,776,
