@@ -1,8 +1,8 @@
-# Jeopardy! winner prediction: Project 1 data
+# Jeopardy! Winner Prediction: Data Documentation
 
 ## Data summary and access
 
-The files below are the ones currently shown in `Project_1/Data`. The connected raw file contains 6,308 games, 18,924 contestant-game records, and 365,198 distinct clues (1,095,594 contestant-clue rows). The processed contestant file contains the **3,882 primary games** that have at least 50 recorded clues and a stated occupation for all three contestants. It has 11,646 contestant-game rows. The raw file is needed to obtain the 225,388 distinct clues in those games; there is currently **no separate final clue file in this folder**.
+This folder contains only the raw and processed data files plus this data dictionary. Analysis notebooks are stored in `Project_1/Scripts`, and their generated tables and figures are stored in `Project_1/Output`. The connected raw file contains 6,308 games, 18,924 contestant-game records, and 365,198 distinct clues (1,095,594 contestant-clue rows). The processed contestant file contains the **3,882 primary games** that have at least 50 recorded clues and a stated occupation for all three contestants. It has 11,646 contestant-game rows. The raw file is needed to obtain the 225,388 distinct clues in those games; there is no separate final clue file.
 
 For the winner model, compare each contestant's `occupation_text_for_model` with the category and clue text from the raw file, joined by `game_id`. SOC and CIP are optional exploratory annotations, not required to predict the winner.
 
@@ -13,12 +13,20 @@ For the winner model, compare each contestant's `occupation_text_for_model` with
 | `jeopardy_raw_contestant_clue_data.csv.gz` | Connected raw contestant-clue data, including recorded clues, answer keys, scores, and winners. One clue appears once for each contestant in its game. |
 | `final_contestant_games.csv` | One row per contestant-game in the primary sample; cleaned occupation phrase, winner label, uncertainty, and optional SOC/CIP fields. |
 | `soc_cip_links.csv` | Official SOC-to-CIP pairs for occupations appearing in the processed data, including CIP program names. Optional for the main model. |
-| `Cluebase_Data_Download.ipynb` | Earlier data-acquisition notebook. It documents the acquisition attempt and is not needed to read the files above. |
-| `Initial_EDA.ipynb` | Earlier exploration of the raw connected data. |
-| `Final_EDA.ipynb` | Later exploration of the raw connected data and the pre-processed data. |
 | `README.md` | This description of the data, fields, processing, and limitations. |
 
-The raw `.csv.gz` file can be opened directly with `pd.read_csv('jeopardy_raw_contestant_clue_data.csv.gz', compression='gzip')`. Read it in chunks or request specific columns if memory is limited. The two notebooks could eventually move to a `SCRIPTS` folder, but they are listed here because that is where they currently appear and are relevant to data.
+The raw `.csv.gz` file can be opened directly with `pd.read_csv('jeopardy_raw_contestant_clue_data.csv.gz', compression='gzip')`. Read it in chunks or request specific columns if memory is limited.
+
+## Where to find the data code and outputs
+
+| Location | Purpose |
+| --- | --- |
+| `Project_1/Scripts/Cluebase_Data_Download.ipynb` | Downloads the archived Cluebase PostgreSQL dump, extracts its tables, and records the SQL acquisition process. Running it writes its working files to `Project_1/Output/cluebase_project/`. The supplied data files are already built, so most users do not need to rerun it. |
+| `Project_1/Scripts/Initial_EDA.ipynb` | Explores the original connected raw data. It reads the compressed raw file from `Data` and writes figures to `Project_1/Output/initial_eda_outputs/`. |
+| `Project_1/Scripts/Final_EDA.ipynb` | Describes the final 3,882-game sample, clue topics, missingness, and SOC/CIP uncertainty. |
+| `Project_1/Output/eda_final_outputs/` | Contains the tables and plots produced by `Final_EDA.ipynb`. |
+| `Project_1/Scripts/baseline_model.py` | Fits the non-text baseline model and saves its results in `Output`. |
+| `Project_1/Scripts/enhanced_model.ipynb` | Creates the semantic features, fits the enhanced model, and saves its results in `Output`. |
 
 ## Provenance and construction
 
@@ -133,7 +141,17 @@ There are 3,786 high or medium contestant-game mappings among the 11,646 primary
 
 ## Exploratory analysis and reproducing MI3 inputs
 
-`Initial_EDA.ipynb` explores the raw connected file. Its plots and summary tables should be saved to the repository's `OUTPUT` folder when run. There are no figure files in the `Data` folder shown above; the MI3 rubric calls for at least two explanatory plots in the data metadata.
+`Scripts/Initial_EDA.ipynb` explores the raw connected file. `Scripts/Final_EDA.ipynb` describes the final sample and writes its results to `Output/eda_final_outputs/`. That output folder contains:
+
+- `sample_overview.csv`: sample size, date range, clue coverage, and structural checks.
+- `games_by_clue_count.csv` and `.png`: number of retained games at each clue count from 50 through 61.
+- `missing_text.csv`: blank occupation, category, clue-text, and value counts.
+- `round_summary.csv`: clues, games, high-value clues, and median clue length by round.
+- `top_categories.csv` and `.png`: the 15 most common categories by clue count.
+- `occupation_words.csv` and `clue_words.csv`: the most common cleaned words in occupation and clue text.
+- `soc_uncertainty_summary.csv`: contestant-game counts by SOC mapping-confidence tier.
+- `cip_mapping_summary.csv`: contestant-game counts by CIP mapping status.
+- `winner_rate_by_position.csv`: descriptive winner rates for contestant positions 1 through 3.
 
 To prepare model inputs using the files currently in this folder:
 
