@@ -1,26 +1,58 @@
+# Project Scripts
 
-Non-text baseline model for Jeopardy! winner prediction (DS 4002, SLMB).
+This folder contains every notebook and Python script used for data acquisition, exploratory analysis, and winner modeling. Data inputs are stored in `../Data`, and generated tables, figures, predictions, and metrics are stored in `../Output`.
 
-What it does
-  1. Loads the primary sample (final_contestant_games.csv): 3,882 games x 3 contestants.
-  2. Makes ONE fixed 80/20 train/test split by whole game (seeded) and saves the
-     test game IDs so the enhanced model uses the exact same split.
-  3. Fits a conditional (game-level multinomial) logit: each game gets three
-     win probabilities that sum to one, via a softmax over the three contestants.
-  4. Chooses between candidate feature sets and L2 strengths using grouped
-     5-fold CV on TRAINING games only.
-  5. Refits on all training games, predicts the held-out test games once, and
-     exports predictions alongside uniform 1/3 probabilities.
+## Files
 
-Only pre-game, non-text information is used. Never used: is_winner (target only),
-scores, winnings, games played, wagers, answers, Daily Double info, names, IDs,
-game notes, occupation or clue text.
+| File | Purpose | Main output location |
+| --- | --- | --- |
+| `Cluebase_Data_Download.ipynb` | Downloads the archived Cluebase PostgreSQL dump and extracts its tables. The completed repository already contains the needed data, so rerunning this notebook is optional. | `../Output/cluebase_project/` |
+| `Initial_EDA.ipynb` | Explores the original connected contestant-clue dataset. | `../Output/initial_eda_outputs/` |
+| `Final_EDA.ipynb` | Describes the final 3,882-game sample, clue coverage, text fields, common topics, and SOC/CIP uncertainty. | `../Output/eda_final_outputs/` |
+| `baseline_model.py` | Fits the non-text winner baseline, performs grouped cross-validation, and saves the shared held-out game IDs. | `../Output/` |
+| `enhanced_model.ipynb` | Creates Sentence-BERT contestant-board similarity features and fits the enhanced winner model using the baseline model's held-out games. | `../Output/` |
 
-Run:  python baseline_model.py --data final_contestant_games.csv --out OUTPUT
+## Recommended Run Order
 
-Outputs (written to --out):
-  test_game_ids.csv              held-out game IDs, shared with the enhanced model
-  baseline_cv_results.csv        CV log loss for every (feature set, L2) pair
-  baseline_coefficients.csv      fitted coefficients of the chosen model
-  baseline_test_predictions.csv  per-contestant test probabilities (baseline + uniform)
-  baseline_test_summary.csv      test log loss and top-1 accuracy
+From the main `Project_1` folder:
+
+1. Run the final exploratory analysis:
+
+   ```bash
+   cd Scripts
+   jupyter notebook Final_EDA.ipynb
+   ```
+
+2. Return to the project folder and run the baseline model:
+
+   ```bash
+   cd ..
+   python3 Scripts/baseline_model.py --data Data/final_contestant_games.csv --out Output
+   ```
+
+3. Start the enhanced-model notebook from `Scripts` and run every cell:
+
+   ```bash
+   cd Scripts
+   jupyter notebook enhanced_model.ipynb
+   ```
+
+Run `Cluebase_Data_Download.ipynb` only if the raw source tables must be reconstructed. Run `Initial_EDA.ipynb` only to reproduce the earlier raw-data exploration.
+
+## Baseline Outputs
+
+- `test_game_ids.csv`: shared held-out game IDs used by both models.
+- `baseline_cv_results.csv`: cross-validation log loss for each baseline specification.
+- `baseline_coefficients.csv`: coefficients from the selected baseline.
+- `baseline_test_predictions.csv`: baseline and uniform probabilities for held-out contestants.
+- `baseline_test_summary.csv`: baseline and uniform log loss and accuracy.
+
+## Enhanced-Model Outputs
+
+- `enhanced_model_features.csv`: contestant-level semantic features.
+- `enhanced_model_feature_summary.csv`: descriptive statistics for those features.
+- `enhanced_model_game_splits.csv`: train/test assignment for every game.
+- `enhanced_model_test_predictions.csv`: semantic-model probabilities for held-out games.
+- `enhanced_model_metrics.csv`: semantic-model log loss and accuracy.
+
+Scores, wagers, responses, winner IDs, names, historical winnings, and other postgame information are excluded from the predictor variables. `is_winner` is used only as the target.
