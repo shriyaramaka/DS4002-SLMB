@@ -9,28 +9,51 @@ This repository contains the data, code, and outputs for Group SLMB's first DS 4
 
 ## Repository Contents
 
-The repository contains the raw and processed data, exploratory analysis, a non-text baseline model, a Sentence-BERT semantic model, and the output files created by those models. The `Data` folder also contains a separate README with the data dictionary, provenance, license information, uncertainty notes, and ethical considerations.
+The repository contains the raw and processed data, exploratory analysis, a non-text baseline model, a Sentence-BERT semantic model, and the output files created by those models. The `Data` folder contains a separate README with the data dictionary, provenance, license information, uncertainty notes, and ethical considerations. The `Scripts` folder contains the data-acquisition, exploratory-analysis, and modeling code. All tables, plots, predictions, and model results are stored in `Output`.
 
 ## Section 1: Software and Platform
 
 The project was completed in Python on macOS. Team members used Jupyter Notebook or other local Python applications on their Macs. Google Colab can also run the notebooks, but it is not required. Git, GitHub, and GitHub Desktop were used to store and share the project.
 
-The analysis uses Python 3 and the following packages:
+The saved final notebooks record Python `3.13.7`. The analysis also uses the packages below. Before submission, replace each `X.X.X` entry with the version from the environment that produced the final model results.
 
-- `pandas`
-- `numpy`
-- `scipy`
-- `scikit-learn`
-- `sentence-transformers`
-- `matplotlib`
-- `seaborn`
-- `requests`
-- `jupyter`
+- `pandas==X.X.X`
+- `numpy==X.X.X`
+- `scipy==X.X.X`
+- `scikit-learn==X.X.X`
+- `sentence-transformers==X.X.X`
+- `matplotlib==X.X.X`
+- `seaborn==X.X.X`
+- `requests==X.X.X`
+- `jupyter==X.X.X`
 
-Install the required packages from a terminal with:
+The exact installed versions can be printed by running:
+
+```python
+import platform
+from importlib.metadata import version
+
+packages = [
+    "pandas",
+    "numpy",
+    "scipy",
+    "scikit-learn",
+    "sentence-transformers",
+    "matplotlib",
+    "seaborn",
+    "requests",
+    "jupyter",
+]
+
+print(f"Python=={platform.python_version()}")
+for package in packages:
+    print(f"{package}=={version(package)}")
+```
+
+After recording the versions above, install the same versions using:
 
 ```bash
-python3 -m pip install pandas numpy scipy scikit-learn sentence-transformers matplotlib seaborn requests jupyter
+python3 -m pip install pandas==X.X.X numpy==X.X.X scipy==X.X.X scikit-learn==X.X.X sentence-transformers==X.X.X matplotlib==X.X.X seaborn==X.X.X requests==X.X.X jupyter==X.X.X
 ```
 
 The first run of the semantic model also downloads the pretrained Sentence-BERT model `all-MiniLM-L6-v2`, so an internet connection is required for that step.
@@ -44,17 +67,22 @@ Project_1/
 ├── REFERENCES.MD
 ├── Data/
 │   ├── README.md
-│   ├── Cluebase_Data_Download.ipynb
-│   ├── Initial_EDA.ipynb
-│   ├── Final_EDA.ipynb
 │   ├── jeopardy_raw_contestant_clue_data.csv.gz
 │   ├── final_contestant_games.csv
 │   └── soc_cip_links.csv
 ├── Scripts/
 │   ├── README.md
+│   ├── Cluebase_Data_Download.ipynb
+│   ├── Initial_EDA.ipynb
+│   ├── Final_EDA.ipynb
 │   ├── baseline_model.py
 │   └── enhanced_model.ipynb
 └── Output/
+    ├── eda_final_outputs/
+    │   ├── README.md
+    │   ├── games_by_clue_count.png
+    │   ├── top_categories.png
+    │   └── supporting summary CSV files
     ├── baseline_coefficients.csv
     ├── baseline_cv_results.csv
     ├── baseline_test_predictions.csv
@@ -76,56 +104,66 @@ Project_1/
 - `Data/jeopardy_raw_contestant_clue_data.csv.gz` contains the connected raw contestant and clue records.
 - `Data/final_contestant_games.csv` contains the final contestant-game sample and occupation-profile fields.
 - `Data/soc_cip_links.csv` contains optional links between Standard Occupational Classification occupations and Classification of Instructional Programs fields.
-- `Data/Final_EDA.ipynb` describes the final analysis sample and creates summary tables and plots.
+- `Scripts/Cluebase_Data_Download.ipynb` documents the original Cluebase data acquisition.
+- `Scripts/Initial_EDA.ipynb` contains the initial exploration of the raw data.
+- `Scripts/Final_EDA.ipynb` describes the final analysis sample and creates summary tables and plots.
 - `Scripts/baseline_model.py` builds the non-text winner baseline.
 - `Scripts/enhanced_model.ipynb` creates semantic similarity features and fits the Sentence-BERT winner model.
+- `Output/eda_final_outputs/` contains the exploratory plots and summary tables.
 - `Output/` contains the current model features, predictions, metrics, coefficients, and split records.
 
 ## Section 3: Instructions for Reproducing the Results
 
-### 1. Download the repository
+### 1. Download the project folder
 
-Clone the repository with GitHub Desktop or Git, or download it as a ZIP file and extract it. Keep the folder names and structure unchanged because the enhanced-model notebook uses relative paths.
+Open the GitHub link for the `Project_1` folder. Clone the full repository with GitHub Desktop or Git, or download it as a ZIP file and extract it. Keep the folder names and structure unchanged because the notebooks use relative paths.
 
 Using Git from a terminal:
 
 ```bash
 git clone <repository-url>
-cd Project_1
+cd <repository-name>/Project_1
 ```
 
-Replace `<repository-url>` with the repository's GitHub URL.
+Replace `<repository-url>` and `<repository-name>` with the correct GitHub information.
 
 ### 2. Install the software
 
-Open Terminal on macOS, move into the `Project_1` folder, and install the packages listed above:
+Open Terminal on macOS, move into the `Project_1` folder, and install the package versions recorded in Section 1.
+
+The repository already contains the data needed for the current analysis. Do not rerun `Scripts/Cluebase_Data_Download.ipynb` unless you specifically want to reconstruct the source data.
+
+### 3. Reproduce the exploratory analysis and plots
+
+Start Jupyter from the main `Project_1` folder:
 
 ```bash
-python3 -m pip install pandas numpy scipy scikit-learn sentence-transformers matplotlib seaborn requests jupyter
+jupyter notebook
 ```
 
-The repository already contains the data needed for the current analysis. Do not rerun `Cluebase_Data_Download.ipynb` unless you specifically want to reconstruct the source data.
+Open `Scripts/Final_EDA.ipynb` and run every cell from top to bottom. The notebook uses:
 
-### 3. Review the final data
-
-Start Jupyter from the `Data` folder so the notebook can find the two data files:
-
-```bash
-cd Data
-jupyter notebook Final_EDA.ipynb
+```text
+Data/final_contestant_games.csv
+Data/jeopardy_raw_contestant_clue_data.csv.gz
 ```
 
-Run every cell from top to bottom. The notebook checks the sample structure, clue coverage, missing text, common categories, occupation wording, and optional SOC/CIP mapping uncertainty. It creates an `eda_final_outputs` folder inside `Data` containing summary CSV files and two plots.
+The notebook checks the sample structure, clue coverage, missing text, common categories, occupation wording, and optional SOC/CIP mapping uncertainty. Its plots and summary tables should be saved in:
+
+```text
+Output/eda_final_outputs/
+```
+
+The two main exploratory plots are:
+
+- `Output/eda_final_outputs/games_by_clue_count.png`
+- `Output/eda_final_outputs/top_categories.png`
+
+Descriptions and previews of these plots are provided in `Output/eda_final_outputs/README.md`.
 
 The final sample should contain 3,882 games, 11,646 contestant-game records, three contestants per game, one recorded winner per game, and at least 50 recorded clues per game.
 
-Return to the project folder after the notebook finishes:
-
-```bash
-cd ..
-```
-
-`Initial_EDA.ipynb` records the earlier exploration of the raw data and is not required to reproduce the current model results.
+`Scripts/Initial_EDA.ipynb` records the earlier exploration of the raw data and is not required to reproduce the current model results.
 
 ### 4. Run the non-text baseline model
 
@@ -147,14 +185,13 @@ The reproduced baseline summary should report a held-out log loss of approximate
 
 ### 5. Run the semantic model
 
-Start Jupyter from the `Scripts` folder. Starting it from this folder is important because the notebook locates `Data` and `Output` by moving one level up from its working directory.
+Start Jupyter from the main `Project_1` folder:
 
 ```bash
-cd Scripts
-jupyter notebook enhanced_model.ipynb
+jupyter notebook
 ```
 
-Run every cell from top to bottom. On its first run, the notebook may take time to download `all-MiniLM-L6-v2` and create embeddings for the occupation, clue, and category text. The notebook then:
+Open `Scripts/enhanced_model.ipynb` and run every cell from top to bottom. On its first run, the notebook may take time to download `all-MiniLM-L6-v2` and create embeddings for the occupation, clue, and category text. The notebook then:
 
 1. Loads the final contestant and raw clue files.
 2. Cleans the text.
@@ -162,7 +199,7 @@ Run every cell from top to bottom. On its first run, the notebook may take time 
 4. Calculates contestant-to-board similarity features.
 5. Fits and tunes a regularized multinomial logistic-regression model.
 6. Evaluates the model on held-out games.
-7. Saves the model files in the main `Output` folder.
+7. Saves the model files in `Output`.
 
 The notebook rewrites:
 
@@ -188,11 +225,11 @@ Small numerical differences can occur across package or operating-system version
 ## Section 4: Analysis of Results
 
 | Model | Log Loss | Accuracy |
-|-------|----------|----------|
+|---|---:|---:|
 | Baseline | 1.09649 | 0.35180 |
 | Uniform | 1.09861 | 0.33333 |
 | Enhanced | 1.093 | 0.3557 |
 
-The results indicate that the semantic match between a contestant's occupational profile and the clues on a Jeopardy! board provides a small but measurable improvement in predicting the game's winner. The enhanced model's log loss is lower than both the baseline and uniform models; however, this improvement could be due to chance, so further statistics and analysis would be needed to confirm the significance of the results. The accuracy improvement is also modest, suggesting that while knowledge of a player's occupation may contribute to prediction, other factors like buzzer speed and clue selection may play a larger role in determining the winner than occupation.
+The semantic model produced a small observed improvement over the non-text baseline and uniform probabilities. Its held-out log loss was lower, and its top-one accuracy was slightly higher. However, the size of the difference was modest, and additional uncertainty analysis would be needed to determine whether the improvement is reliable. Factors not represented by the text, including buzzer speed, clue selection, Daily Double placement, and wagering, may have a larger role in determining the winner.
 
-Additional analysis can be performed by linking UVA majors to SOC occupations using the optional `soc_cip_links.csv` file. This could help determine whether certain majors are more predictive of Jeopardy! success than others, and whether the semantic match between a contestant's major and the clues on a board is a stronger predictor than the match between their occupation and the clues.
+Additional exploratory analysis can link UVA majors to SOC occupations using `Data/soc_cip_links.csv`. These comparisons describe text similarity and should not be interpreted as evidence that a major causes Jeopardy! success.
