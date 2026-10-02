@@ -13,50 +13,34 @@ The repository contains the raw and processed data, exploratory analysis, a non-
 
 ## Section 1: Software and Platform
 
-The project was completed in Python on macOS. Team members used Jupyter Notebook or other local Python applications on their Macs. Google Colab can also run the notebooks, but it is not required. Git, GitHub, and GitHub Desktop were used to store and share the project.
+The project was completed in Python on macOS. Team members used Jupyter Notebook, Google Colab, or other local Python applications on their Macs. Git, GitHub, and GitHub Desktop were used to store and share the project.
 
-The saved final notebooks record Python `3.13.7`. The analysis also uses the packages below. Before submission, replace each `X.X.X` entry with the version from the environment that produced the final model results.
+The data preparation and analysis used the following software and package versions:
 
-- `pandas==X.X.X`
-- `numpy==X.X.X`
-- `scipy==X.X.X`
-- `scikit-learn==X.X.X`
-- `sentence-transformers==X.X.X`
-- `matplotlib==X.X.X`
-- `seaborn==X.X.X`
-- `requests==X.X.X`
-- `jupyter==X.X.X`
+- Python `3.13.15`
+- pandas `2.2.3`
+- NumPy `2.1.3`
+- SciPy `1.16.3`
+- scikit-learn `1.6.1`
+- sentence-transformers `5.7.0`
+- Matplotlib `3.10.0`
+- Seaborn `0.13.2`
+- Requests `2.32.4`
 
-The exact installed versions can be printed by running:
-
-```python
-import platform
-from importlib.metadata import version
-
-packages = [
-    "pandas",
-    "numpy",
-    "scipy",
-    "scikit-learn",
-    "sentence-transformers",
-    "matplotlib",
-    "seaborn",
-    "requests",
-    "jupyter",
-]
-
-print(f"Python=={platform.python_version()}")
-for package in packages:
-    print(f"{package}=={version(package)}")
-```
-
-After recording the versions above, install the same versions using:
+The installed versions can be checked from a terminal using:
 
 ```bash
-python3 -m pip install pandas==X.X.X numpy==X.X.X scipy==X.X.X scikit-learn==X.X.X sentence-transformers==X.X.X matplotlib==X.X.X seaborn==X.X.X requests==X.X.X jupyter==X.X.X
+python3 --version
+python3 -m pip freeze | grep -Ei '^(pandas|numpy|scipy|scikit-learn|sentence-transformers|matplotlib|seaborn|requests)=='
 ```
 
-The first run of the semantic model also downloads the pretrained Sentence-BERT model `all-MiniLM-L6-v2`, so an internet connection is required for that step.
+Install the recorded package versions from a terminal using:
+
+```bash
+python3 -m pip install pandas==2.2.3 numpy==2.1.3 scipy==1.16.3 scikit-learn==1.6.1 sentence-transformers==5.7.0 matplotlib==3.10.0 seaborn==0.13.2 requests==2.32.4
+```
+
+The first run of the semantic model downloads the pretrained Sentence-BERT model `all-MiniLM-L6-v2`, so an internet connection is required for that step. The Cluebase acquisition notebook also requires PostgreSQL if the source database is reconstructed.
 
 ## Section 2: Map of the Repository
 
