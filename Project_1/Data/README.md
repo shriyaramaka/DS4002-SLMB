@@ -17,6 +17,15 @@ For the winner model, compare each contestant's `occupation_text_for_model` with
 
 The raw `.csv.gz` file can be opened directly with `pd.read_csv('jeopardy_raw_contestant_clue_data.csv.gz', compression='gzip')`. Read it in chunks or request specific columns if memory is limited.
 
+## MI2 Exploratory Plots
+
+The `Data` folder includes copies of the two exploratory plots presented in MI2:
+
+- `mi2_clues_per_game.png`: distribution of clue coverage across games
+- `mi2_top_categories.png`: twenty most frequent Jeopardy! categories
+
+The complete exploratory-analysis outputs are stored in `Outputs/initial_eda_outputs/`. These two figures are duplicated here to keep the MI2 data-establishment materials together.
+
 ## Where to find the data code and outputs
 
 | Location | Purpose |
