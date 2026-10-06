@@ -49,11 +49,16 @@ Project_1/
 ├── README.md
 ├── LICENSE
 ├── REFERENCES.MD
+├── SLMB - Project 1 Presentation.pdf
+│
 ├── Data/
 │   ├── README.md
+│   ├── MI2_clues_per_game.png
+│   ├── MI2_top_categories.png
 │   ├── jeopardy_raw_contestant_clue_data.csv.gz
 │   ├── final_contestant_games.csv
 │   └── soc_cip_links.csv
+│
 ├── Scripts/
 │   ├── README.md
 │   ├── Cluebase_Data_Download.ipynb
@@ -61,12 +66,43 @@ Project_1/
 │   ├── Final_EDA.ipynb
 │   ├── baseline_model.py
 │   └── enhanced_model.ipynb
+│
 └── Output/
+    ├── initial_eda_outputs/
+    │   ├── README.md
+    │   ├── 01_games_by_season.png
+    │   ├── 02_games_by_year.png
+    │   ├── 03_clues_per_game.png
+    │   ├── 04_completeness_thresholds.png
+    │   ├── 05_win_rate_by_position.png
+    │   ├── 06_final_score_by_winner.png
+    │   ├── 07_introduction_word_counts.png
+    │   ├── 08_top_categories.png
+    │   ├── 09_clues_by_round.png
+    │   ├── 10_clue_values_by_round.png
+    │   ├── 11_common_introduction_words.png
+    │   ├── 12_contestant_appearances.png
+    │   ├── MI2_clue_coverage_distribution.png
+    │   ├── MI2_games_by_season.png
+    │   ├── eda_completeness_thresholds.csv
+    │   ├── eda_game_summary.csv
+    │   └── eda_position_summary.csv
+    │
     ├── eda_final_outputs/
     │   ├── README.md
     │   ├── games_by_clue_count.png
+    │   ├── games_by_clue_count.csv
     │   ├── top_categories.png
-    │   └── supporting summary CSV files
+    │   ├── top_categories.csv
+    │   ├── sample_overview.csv
+    │   ├── missing_text.csv
+    │   ├── round_summary.csv
+    │   ├── winner_rate_by_position.csv
+    │   ├── occupation_words.csv
+    │   ├── clue_words.csv
+    │   ├── soc_uncertainty_summary.csv
+    │   └── cip_mapping_summary.csv
+    │
     ├── baseline_coefficients.csv
     ├── baseline_cv_results.csv
     ├── baseline_test_predictions.csv
@@ -77,7 +113,6 @@ Project_1/
     ├── enhanced_model_game_splits.csv
     ├── enhanced_model_metrics.csv
     └── enhanced_model_test_predictions.csv
-```
 
 ### Main Files
 
