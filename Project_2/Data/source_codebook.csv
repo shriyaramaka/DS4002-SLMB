@@ -1,0 +1,699 @@
+field,code,label
+CRASH_SEVERITY,A,A. Severe Injury
+CRASH_SEVERITY,B,B. Visible Injury
+CRASH_SEVERITY,C,C. Nonvisible Injury
+CRASH_SEVERITY,K,K. Fatal Injury
+CRASH_SEVERITY,O,PDO. Property Damage Only
+COLLISION_TYPE,0,Not Provided
+COLLISION_TYPE,1,1. Rear End
+COLLISION_TYPE,10,10. Deer
+COLLISION_TYPE,11,11. Other Animal
+COLLISION_TYPE,12,12. Ped
+COLLISION_TYPE,13,13. Bicyclist
+COLLISION_TYPE,14,14. Motorcyclist
+COLLISION_TYPE,15,15. Backed Into
+COLLISION_TYPE,16,16. Other
+COLLISION_TYPE,2,2. Angle
+COLLISION_TYPE,3,3. Head On
+COLLISION_TYPE,4,4. Sideswipe - Same Direction
+COLLISION_TYPE,5,5. Sideswipe - Opposite Direction
+COLLISION_TYPE,6,6. Fixed Object in Road
+COLLISION_TYPE,7,7. Train
+COLLISION_TYPE,8,8. Non-Collision
+COLLISION_TYPE,9,9. Fixed Object - Off Road
+COLLISION_TYPE,99,Not Applicable
+WEATHER_CONDITION,0,Not Provided
+WEATHER_CONDITION,1,1. No Adverse Condition (Clear/Cloudy)
+WEATHER_CONDITION,10,"10. Blowing Sand, Soil, Dirt, or Snow"
+WEATHER_CONDITION,11,11. Severe Crosswinds
+WEATHER_CONDITION,3,3. Fog
+WEATHER_CONDITION,4,4. Mist
+WEATHER_CONDITION,5,5. Rain
+WEATHER_CONDITION,6,6. Snow
+WEATHER_CONDITION,7,7. Sleet/Hail
+WEATHER_CONDITION,8,8. Smoke/Dust
+WEATHER_CONDITION,9,9. Other
+WEATHER_CONDITION,99,Not Applicable
+LIGHT_CONDITION,0,Not Provided
+LIGHT_CONDITION,1,1. Dawn
+LIGHT_CONDITION,2,2. Daylight
+LIGHT_CONDITION,3,3. Dusk
+LIGHT_CONDITION,4,4. Darkness - Road Lighted
+LIGHT_CONDITION,5,5. Darkness - Road Not Lighted
+LIGHT_CONDITION,6,6. Darkness - Unknown Road Lighting
+LIGHT_CONDITION,7,7. Unknown
+LIGHT_CONDITION,99,Not Applicable
+ROADWAY_SURFACE_COND,0,Not Provided
+ROADWAY_SURFACE_COND,1,1. Dry
+ROADWAY_SURFACE_COND,10,10. Slush
+ROADWAY_SURFACE_COND,11,"11. Sand, Dirt, Gravel"
+ROADWAY_SURFACE_COND,2,2. Wet
+ROADWAY_SURFACE_COND,3,3. Snowy
+ROADWAY_SURFACE_COND,4,4. Icy
+ROADWAY_SURFACE_COND,5,5. Muddy
+ROADWAY_SURFACE_COND,6,6. Oil/Other Fluids
+ROADWAY_SURFACE_COND,7,7. Other
+ROADWAY_SURFACE_COND,8,8. Natural Debris
+ROADWAY_SURFACE_COND,9,"9. Water (Standing, Moving)"
+ROADWAY_SURFACE_COND,99,Not Applicable
+RELATION_TO_ROADWAY,0,Not Provided
+RELATION_TO_ROADWAY,1,1. Main-Line Roadway
+RELATION_TO_ROADWAY,10,10. Intersection Related - Within 150 Feet
+RELATION_TO_ROADWAY,11,11. Intersection Related - Outside 150 Feet
+RELATION_TO_ROADWAY,12,12. Crossover Related
+RELATION_TO_ROADWAY,13,"13. Driveway, Alley-Access - Related"
+RELATION_TO_ROADWAY,14,14. Railway Grade Crossing
+RELATION_TO_ROADWAY,15,"15. Other Crossing (Crossing for Bikes, School, etc.)"
+RELATION_TO_ROADWAY,2,2. Acceleration/Deceleration Lanes
+RELATION_TO_ROADWAY,3,3. Gore Area (b/w Ramp and Highway Edgelines)
+RELATION_TO_ROADWAY,4,4. Collector/Distributor Road
+RELATION_TO_ROADWAY,5,5. On Entrance/Exit Ramp
+RELATION_TO_ROADWAY,6,6. Intersection at end of Ramp
+RELATION_TO_ROADWAY,7,"7. Other location not listed above within an interchange area (median, shoulder , roadside)"
+RELATION_TO_ROADWAY,8,8. Non-Intersection
+RELATION_TO_ROADWAY,9,9. Within Intersection
+RELATION_TO_ROADWAY,99,Not Applicable
+ROADWAY_ALIGNMENT,0,Not Provided
+ROADWAY_ALIGNMENT,1,1. Straight - Level
+ROADWAY_ALIGNMENT,10,10. On/Off Ramp
+ROADWAY_ALIGNMENT,2,2. Curve - Level
+ROADWAY_ALIGNMENT,3,3. Grade - Straight
+ROADWAY_ALIGNMENT,4,4. Grade - Curve
+ROADWAY_ALIGNMENT,5,5. Hillcrest - Straight
+ROADWAY_ALIGNMENT,6,6. Hillcrest - Curve
+ROADWAY_ALIGNMENT,7,7. Dip - Straight
+ROADWAY_ALIGNMENT,8,8. Dip - Curve
+ROADWAY_ALIGNMENT,9,9. Other
+ROADWAY_ALIGNMENT,99,Not Applicable
+ROADWAY_SURFACE_TYPE,0,Not Provided
+ROADWAY_SURFACE_TYPE,1,1. Concrete
+ROADWAY_SURFACE_TYPE,2,"2. Blacktop, Asphalt, Bituminous"
+ROADWAY_SURFACE_TYPE,3,3. Brick or Block
+ROADWAY_SURFACE_TYPE,4,"4. Slag, Gravel, Stone"
+ROADWAY_SURFACE_TYPE,5,5. Dirt
+ROADWAY_SURFACE_TYPE,6,6. Other
+ROADWAY_SURFACE_TYPE,99,Not Applicable
+ROADWAY_DEFECT,0,Not Provided
+ROADWAY_DEFECT,1,1. No Defects
+ROADWAY_DEFECT,10,10. Edge Pavement Drop Off
+ROADWAY_DEFECT,2,"2. Holes, Ruts, Bumps"
+ROADWAY_DEFECT,3,3. Soft or Low Shoulder
+ROADWAY_DEFECT,4,4. Under Repair
+ROADWAY_DEFECT,5,5. Loose Material
+ROADWAY_DEFECT,6,6. Restricted Width
+ROADWAY_DEFECT,7,7. Slick Pavement
+ROADWAY_DEFECT,8,8. Roadway Obstructed
+ROADWAY_DEFECT,9,9. Other
+ROADWAY_DEFECT,99,Not Applicable
+ROADWAY_DESCRIPTION,0,Not Provided
+ROADWAY_DESCRIPTION,1,"1. Two-Way, Not Divided"
+ROADWAY_DESCRIPTION,2,"2. Two-Way, Divided, Unprotected Median"
+ROADWAY_DESCRIPTION,3,"3. Two-Way, Divided, Positive Median Barrier"
+ROADWAY_DESCRIPTION,4,"4. One-Way, Not Divided"
+ROADWAY_DESCRIPTION,5,5. Unknown
+ROADWAY_DESCRIPTION,99,Not Applicable
+INTERSECTION_TYPE,0,Not Provided
+INTERSECTION_TYPE,1,1. Not at Intersection
+INTERSECTION_TYPE,2,2. Two Approaches
+INTERSECTION_TYPE,3,3. Three Approaches
+INTERSECTION_TYPE,4,4. Four Approaches
+INTERSECTION_TYPE,5,"5. Five-Point, or More"
+INTERSECTION_TYPE,6,6. Roundabout
+INTERSECTION_TYPE,99,Not Applicable
+TRAFFIC_CONTROL_TYPE,0,Not Provided
+TRAFFIC_CONTROL_TYPE,1,1. No Traffic Control
+TRAFFIC_CONTROL_TYPE,10,10. Railroad Crossing With Markings and Signs
+TRAFFIC_CONTROL_TYPE,11,11. Railroad Crossing With Signals
+TRAFFIC_CONTROL_TYPE,12,12. Railroad Crossing With Gate and Signals
+TRAFFIC_CONTROL_TYPE,13,13. Other
+TRAFFIC_CONTROL_TYPE,14,14. Ped Crosswalk
+TRAFFIC_CONTROL_TYPE,15,15. Reduced Speed - School Zone
+TRAFFIC_CONTROL_TYPE,16,16. Reduced Speed - Work Zone
+TRAFFIC_CONTROL_TYPE,17,17. Highway Safety Corridor
+TRAFFIC_CONTROL_TYPE,2,2. Officer or Flagger
+TRAFFIC_CONTROL_TYPE,3,3. Traffic Signal
+TRAFFIC_CONTROL_TYPE,4,4. Stop Sign
+TRAFFIC_CONTROL_TYPE,5,5. Slow or Warning Sign
+TRAFFIC_CONTROL_TYPE,6,6. Traffic Lanes Marked
+TRAFFIC_CONTROL_TYPE,7,7. No Passing Lines
+TRAFFIC_CONTROL_TYPE,8,8. Yield Sign
+TRAFFIC_CONTROL_TYPE,9,9. One Way Road or Street
+TRAFFIC_CONTROL_TYPE,99,Not Applicable
+TRFC_CTRL_STATUS_TYPE,0,Not Provided
+TRFC_CTRL_STATUS_TYPE,1,1. Yes - Working
+TRFC_CTRL_STATUS_TYPE,2,2. Yes - Working and Obscured
+TRFC_CTRL_STATUS_TYPE,3,3. Yes - Not Working
+TRFC_CTRL_STATUS_TYPE,4,4. Yes - Not Working and Obscured
+TRFC_CTRL_STATUS_TYPE,5,5. Yes - Missing
+TRFC_CTRL_STATUS_TYPE,6,6. No Traffic Control Device Present
+TRFC_CTRL_STATUS_TYPE,99,Not Applicable
+WORK_ZONE_RELATED,0,Not Provided
+WORK_ZONE_RELATED,1,1. Yes
+WORK_ZONE_RELATED,2,2. No
+WORK_ZONE_RELATED,99,Not Applicable
+WORK_ZONE_LOCATION,0,Not Provided
+WORK_ZONE_LOCATION,1,1. Advance Warning Area
+WORK_ZONE_LOCATION,2,2. Transition Area
+WORK_ZONE_LOCATION,3,3. Activity Area
+WORK_ZONE_LOCATION,4,4. Termination Area
+WORK_ZONE_LOCATION,99,Not Applicable
+WORK_ZONE_TYPE,0,Not Provided
+WORK_ZONE_TYPE,1,1. Lane Closure
+WORK_ZONE_TYPE,2,2. Lane Shift/Crossover
+WORK_ZONE_TYPE,3,3. Work on Shoulder or Median
+WORK_ZONE_TYPE,4,4. Intermittent or Moving Work
+WORK_ZONE_TYPE,5,5. Other
+WORK_ZONE_TYPE,99,Not Applicable
+SCHOOL_ZONE,0,Not Provided
+SCHOOL_ZONE,1,1. Yes
+SCHOOL_ZONE,2,2. Yes - With School Activity
+SCHOOL_ZONE,3,3. No
+SCHOOL_ZONE,99,Not Applicable
+FIRST_HARMFUL_EVENT,0,Not Provided
+FIRST_HARMFUL_EVENT,1,1. Bank Or Ledge
+FIRST_HARMFUL_EVENT,10,10. Other
+FIRST_HARMFUL_EVENT,11,11. Jersey Wall
+FIRST_HARMFUL_EVENT,12,12. Building/Structure
+FIRST_HARMFUL_EVENT,13,13. Curb
+FIRST_HARMFUL_EVENT,14,14. Ditch
+FIRST_HARMFUL_EVENT,15,15. Other Fixed Object
+FIRST_HARMFUL_EVENT,16,16. Other Traffic Barrier
+FIRST_HARMFUL_EVENT,17,17. Traffic Sign Support
+FIRST_HARMFUL_EVENT,18,18. Mailbox
+FIRST_HARMFUL_EVENT,19,19. Ped
+FIRST_HARMFUL_EVENT,2,2. Trees
+FIRST_HARMFUL_EVENT,20,20. Motor Vehicle In Transport
+FIRST_HARMFUL_EVENT,21,21. Train
+FIRST_HARMFUL_EVENT,22,22. Bicycle
+FIRST_HARMFUL_EVENT,23,23. Animal
+FIRST_HARMFUL_EVENT,24,24. Work Zone Maintenance Equipment
+FIRST_HARMFUL_EVENT,25,25. Other Movable Object
+FIRST_HARMFUL_EVENT,26,26. Unknown Movable Object
+FIRST_HARMFUL_EVENT,27,27. Other
+FIRST_HARMFUL_EVENT,28,28. Ran Off Road
+FIRST_HARMFUL_EVENT,29,29. Jack Knife
+FIRST_HARMFUL_EVENT,3,3. Utility Pole
+FIRST_HARMFUL_EVENT,30,30. Overturn (Rollover)
+FIRST_HARMFUL_EVENT,31,31. Downhill Runaway
+FIRST_HARMFUL_EVENT,32,32. Cargo Loss or Shift
+FIRST_HARMFUL_EVENT,33,33. Explosion or Fire
+FIRST_HARMFUL_EVENT,34,34. Separation of Units
+FIRST_HARMFUL_EVENT,35,35. Cross Median
+FIRST_HARMFUL_EVENT,36,36. Cross Centerline
+FIRST_HARMFUL_EVENT,37,"37. Equipment Failure (Tire, etc)"
+FIRST_HARMFUL_EVENT,38,38. Immersion
+FIRST_HARMFUL_EVENT,39,39. Fell/Jumped From Vehicle
+FIRST_HARMFUL_EVENT,4,4. Fence Or Post
+FIRST_HARMFUL_EVENT,40,40. Thrown or Falling Object
+FIRST_HARMFUL_EVENT,41,41. Non-Collision Unknown
+FIRST_HARMFUL_EVENT,42,42. Other Non-Collision
+FIRST_HARMFUL_EVENT,5,5. Guard Rail
+FIRST_HARMFUL_EVENT,6,6. Parked Vehicle
+FIRST_HARMFUL_EVENT,7,"7. Tunnel, Bridge, Underpass, Culvert, etc."
+FIRST_HARMFUL_EVENT,8,"8. Sign, Traffic Signal"
+FIRST_HARMFUL_EVENT,9,9. Impact Cushioning Device
+FIRST_HARMFUL_EVENT_LOC,0,Not Provided
+FIRST_HARMFUL_EVENT_LOC,1,1. On Roadway
+FIRST_HARMFUL_EVENT_LOC,2,2. Shoulder
+FIRST_HARMFUL_EVENT_LOC,3,3. Median
+FIRST_HARMFUL_EVENT_LOC,4,4. Roadside
+FIRST_HARMFUL_EVENT_LOC,5,5. Gore
+FIRST_HARMFUL_EVENT_LOC,6,6. Separator
+FIRST_HARMFUL_EVENT_LOC,7,7. In Parking Lane or Zone
+FIRST_HARMFUL_EVENT_LOC,8,"8. Off Roadway, Location Unknown"
+FIRST_HARMFUL_EVENT_LOC,9,9. Outside Right-of-Way
+FIRST_HARMFUL_EVENT_LOC,99,Not Applicable
+ALCOHOL_NOTALCOHOL,0,No
+ALCOHOL_NOTALCOHOL,1,Yes
+ALCOHOL_NOTALCOHOL,-,-
+BELTED_UNBELTED,0,No
+BELTED_UNBELTED,1,Yes
+BELTED_UNBELTED,-,-
+BIKE_NONBIKE,0,No
+BIKE_NONBIKE,1,Yes
+BIKE_NONBIKE,-,-
+DISTRACTED_NOTDISTRACTED,0,No
+DISTRACTED_NOTDISTRACTED,1,Yes
+DISTRACTED_NOTDISTRACTED,-,-
+ANIMAL,0,No
+ANIMAL,1,Yes
+ANIMAL,-,-
+DROWSY_NOTDROWSY,0,No
+DROWSY_NOTDROWSY,1,Yes
+DROWSY_NOTDROWSY,-,-
+DRUG_NODRUG,0,No
+DRUG_NODRUG,1,Yes
+DRUG_NODRUG,-,-
+GR_NOGR,0,No
+GR_NOGR,1,Yes
+GR_NOGR,-,-
+HITRUN_NOT_HITRUN,0,No
+HITRUN_NOT_HITRUN,1,Yes
+HITRUN_NOT_HITRUN,-,-
+LGTRUCK_NONLGTRUCK,0,No
+LGTRUCK_NONLGTRUCK,1,Yes
+LGTRUCK_NONLGTRUCK,-,-
+MOTOR_NONMOTOR,0,No
+MOTOR_NONMOTOR,1,Yes
+MOTOR_NONMOTOR,-,-
+PED_NONPED,0,No
+PED_NONPED,1,Yes
+PED_NONPED,-,-
+SPEED_NOTSPEED,0,No
+SPEED_NOTSPEED,1,Yes
+SPEED_NOTSPEED,-,-
+RD_TYPE,0,NOT_RD
+RD_TYPE,1,RD_LEFT
+RD_TYPE,2,RD_RIGHT
+RD_TYPE,3,RD_UNKNOWN
+INTERSECTION_ANALYSIS,0,NOT_INTERSECTION
+INTERSECTION_ANALYSIS,1,VDOT_INTERSECTION
+INTERSECTION_ANALYSIS,2,URBAN_INTERSECTION
+SENIOR_NOTSENIOR,0,No
+SENIOR_NOTSENIOR,1,Yes
+SENIOR_NOTSENIOR,-,-
+YOUNG_NOTYOUNG,0,No
+YOUNG_NOTYOUNG,1,Yes
+YOUNG_NOTYOUNG,-,-
+MAINLINE_YN,0,No
+MAINLINE_YN,1,Yes
+MAINLINE_YN,-,-
+NIGHT,0,No
+NIGHT,1,Yes
+NIGHT,-,-
+VDOT_DISTRICT,1,1. Bristol
+VDOT_DISTRICT,2,2. Salem
+VDOT_DISTRICT,3,3. Lynchburg
+VDOT_DISTRICT,4,4. Richmond
+VDOT_DISTRICT,5,5. Hampton Roads
+VDOT_DISTRICT,6,6. Fredericksburg
+VDOT_DISTRICT,7,7. Culpeper
+VDOT_DISTRICT,8,8. Staunton
+VDOT_DISTRICT,9,9. Northern Virginia
+PHYSICAL_JURIS,0,000. Arlington County
+PHYSICAL_JURIS,1,001. Accomack County
+PHYSICAL_JURIS,10,010. Bland County
+PHYSICAL_JURIS,100,100. City of Alexandria
+PHYSICAL_JURIS,101,101. Town of Big Stone Gap
+PHYSICAL_JURIS,102,102. City of Bristol
+PHYSICAL_JURIS,103,103. City of Buena Vista
+PHYSICAL_JURIS,104,104. City of Charlottesville
+PHYSICAL_JURIS,105,105. Town of Clifton Forge
+PHYSICAL_JURIS,106,106. City of Colonial Heights
+PHYSICAL_JURIS,107,107. City of Covington
+PHYSICAL_JURIS,108,108. City of Danville
+PHYSICAL_JURIS,109,109. City of Emporia
+PHYSICAL_JURIS,11,011. Botetourt County
+PHYSICAL_JURIS,110,110. City of Falls Church
+PHYSICAL_JURIS,111,111. City of Fredericksburg
+PHYSICAL_JURIS,112,112. Town of Front Royal
+PHYSICAL_JURIS,113,113. City of Galax
+PHYSICAL_JURIS,114,114. City of Hampton
+PHYSICAL_JURIS,115,115. City of Harrisonburg
+PHYSICAL_JURIS,116,116. City of Hopewell
+PHYSICAL_JURIS,117,117. City of Lexington
+PHYSICAL_JURIS,118,118. City of Lynchburg
+PHYSICAL_JURIS,119,119. Town of Marion
+PHYSICAL_JURIS,12,012. Brunswick County
+PHYSICAL_JURIS,120,120. City of Martinsville
+PHYSICAL_JURIS,121,121. City of Newport News
+PHYSICAL_JURIS,122,122. City of Norfolk
+PHYSICAL_JURIS,123,123. City of Petersburg
+PHYSICAL_JURIS,124,124. City of Portsmouth
+PHYSICAL_JURIS,125,125. Town of Pulaski
+PHYSICAL_JURIS,126,126. City of Radford
+PHYSICAL_JURIS,127,127. City of Richmond
+PHYSICAL_JURIS,128,128. City of Roanoke
+PHYSICAL_JURIS,129,129. City of Salem
+PHYSICAL_JURIS,13,013. Buchanan County
+PHYSICAL_JURIS,130,130. Town of South Boston
+PHYSICAL_JURIS,131,131. City of Chesapeake
+PHYSICAL_JURIS,132,132. City of Staunton
+PHYSICAL_JURIS,133,133. City of Suffolk
+PHYSICAL_JURIS,134,134. City of Virginia Beach
+PHYSICAL_JURIS,136,136. City of Waynesboro
+PHYSICAL_JURIS,137,137. City of Williamsburg
+PHYSICAL_JURIS,138,138. City of Winchester
+PHYSICAL_JURIS,139,139. Town of Wytheville
+PHYSICAL_JURIS,14,014. Buckingham County
+PHYSICAL_JURIS,140,140. Town of Abingdon
+PHYSICAL_JURIS,141,141. Town of Bedford
+PHYSICAL_JURIS,142,142. Town of Blackstone
+PHYSICAL_JURIS,143,143. Town of Bluefield
+PHYSICAL_JURIS,144,144. Town of Farmville
+PHYSICAL_JURIS,145,145. City of Franklin
+PHYSICAL_JURIS,146,146. City of Norton
+PHYSICAL_JURIS,147,147. City of Poquoson
+PHYSICAL_JURIS,148,148. Town of Richlands
+PHYSICAL_JURIS,149,149. Town of Vinton
+PHYSICAL_JURIS,15,015. Campbell County
+PHYSICAL_JURIS,150,150. Town of Blacksburg
+PHYSICAL_JURIS,151,151. City of Fairfax
+PHYSICAL_JURIS,152,152. City of Manassas Park
+PHYSICAL_JURIS,153,153. Town of Vienna
+PHYSICAL_JURIS,154,154. Town of Christiansburg
+PHYSICAL_JURIS,155,155. City of Manassas
+PHYSICAL_JURIS,156,156. Town of Warrenton
+PHYSICAL_JURIS,157,157. Town of Rocky Mount
+PHYSICAL_JURIS,158,158. Town of Tazewell
+PHYSICAL_JURIS,159,159. Town of Luray
+PHYSICAL_JURIS,16,016. Caroline County
+PHYSICAL_JURIS,160,160. Town of Accomac
+PHYSICAL_JURIS,161,161. Town of Alberta
+PHYSICAL_JURIS,162,162. Town of Altavista
+PHYSICAL_JURIS,163,163. Town of Amherst
+PHYSICAL_JURIS,164,164. Town of Appalachia
+PHYSICAL_JURIS,165,165. Town of Appomattox
+PHYSICAL_JURIS,166,166. Town of Ashland
+PHYSICAL_JURIS,167,167. Town of Belle Haven
+PHYSICAL_JURIS,168,168. Town of Berryville
+PHYSICAL_JURIS,169,169. Town of Bloxom
+PHYSICAL_JURIS,17,017. Carroll County
+PHYSICAL_JURIS,170,170. Town of Boones Mill
+PHYSICAL_JURIS,171,171. Town of Bowling Green
+PHYSICAL_JURIS,172,172. Town of Boyce
+PHYSICAL_JURIS,173,173. Town of Boydton
+PHYSICAL_JURIS,174,174. Town of Boykins
+PHYSICAL_JURIS,175,175. Town of Branchville
+PHYSICAL_JURIS,176,176. Town of Bridgewater
+PHYSICAL_JURIS,177,177. Town of Broadway
+PHYSICAL_JURIS,178,178. Town of Brodnax
+PHYSICAL_JURIS,179,179. Town of Brookneal
+PHYSICAL_JURIS,18,018. Charles City County
+PHYSICAL_JURIS,180,180. Town of Buchanan
+PHYSICAL_JURIS,181,181. Town of Burkeville
+PHYSICAL_JURIS,182,182. Town of Cape Charles
+PHYSICAL_JURIS,183,183. Town of Capron
+PHYSICAL_JURIS,184,184. Town of Cedar Bluff
+PHYSICAL_JURIS,185,185. Town of Charlotte C.H.
+PHYSICAL_JURIS,186,186. Town of Chase City
+PHYSICAL_JURIS,187,187. Town of Chatham
+PHYSICAL_JURIS,188,188. Town of Cheriton
+PHYSICAL_JURIS,189,189. Town of Chilhowie
+PHYSICAL_JURIS,19,019. Charlotte County
+PHYSICAL_JURIS,190,190. Town of Chincoteague
+PHYSICAL_JURIS,191,191. Town of Claremont
+PHYSICAL_JURIS,192,192. Town of Clarksville
+PHYSICAL_JURIS,193,193. Town of Cleveland
+PHYSICAL_JURIS,194,194. Town of Clifton
+PHYSICAL_JURIS,195,195. Town of Clinchport
+PHYSICAL_JURIS,196,196. Town of Clintwood
+PHYSICAL_JURIS,197,197. Clover
+PHYSICAL_JURIS,198,198. Town of Coeburn
+PHYSICAL_JURIS,199,199. Town of Colonial Beach
+PHYSICAL_JURIS,2,002. Albemarle County
+PHYSICAL_JURIS,20,020. Chesterfield County
+PHYSICAL_JURIS,200,200. Town of Columbia
+PHYSICAL_JURIS,201,201. Town of Courtland
+PHYSICAL_JURIS,202,202. Town of Craigsville
+PHYSICAL_JURIS,203,203. Town of Crewe
+PHYSICAL_JURIS,204,204. Town of Culpeper
+PHYSICAL_JURIS,205,205. Town of Damascus
+PHYSICAL_JURIS,206,206. Town of Dayton
+PHYSICAL_JURIS,207,207. Town of Dendron
+PHYSICAL_JURIS,208,208. Town of Dillwyn
+PHYSICAL_JURIS,209,209. Town of Drakes Branch
+PHYSICAL_JURIS,21,021. Clarke County
+PHYSICAL_JURIS,210,210. Town of Dublin
+PHYSICAL_JURIS,211,211. Town of Duffield
+PHYSICAL_JURIS,212,212. Town of Dumfries
+PHYSICAL_JURIS,213,213. Town of Dungannon
+PHYSICAL_JURIS,214,214. Town of Eastville
+PHYSICAL_JURIS,215,215. Town of Edinburg
+PHYSICAL_JURIS,216,216. Town of Elkton
+PHYSICAL_JURIS,217,217. Town of Exmore
+PHYSICAL_JURIS,218,218. Town of Fincastle
+PHYSICAL_JURIS,219,219. Town of Floyd
+PHYSICAL_JURIS,22,022. Craig County
+PHYSICAL_JURIS,220,220. Town of Fries
+PHYSICAL_JURIS,221,221. Town of Gate City
+PHYSICAL_JURIS,222,222. Town of Glade Spring
+PHYSICAL_JURIS,223,223. Town of Glasgow
+PHYSICAL_JURIS,224,224. Town of Glen Lyn
+PHYSICAL_JURIS,225,225. Town of Gordonsville
+PHYSICAL_JURIS,226,226. Town of Goshen
+PHYSICAL_JURIS,227,227. Town of Gretna
+PHYSICAL_JURIS,228,228. Town of Grottoes
+PHYSICAL_JURIS,229,229. Town of Grundy
+PHYSICAL_JURIS,23,023. Culpeper County
+PHYSICAL_JURIS,230,230. Town of Halifax
+PHYSICAL_JURIS,231,231. Town of Hallwood
+PHYSICAL_JURIS,232,232. Town of Hamilton
+PHYSICAL_JURIS,233,233. Town of Haymarket
+PHYSICAL_JURIS,234,234. Town of Haysi
+PHYSICAL_JURIS,235,235. Town of Herndon
+PHYSICAL_JURIS,236,236. Town of Hillsboro
+PHYSICAL_JURIS,237,237. Town of Hillsville
+PHYSICAL_JURIS,238,238. Holland
+PHYSICAL_JURIS,239,239. Town of Honaker
+PHYSICAL_JURIS,24,024. Cumberland County
+PHYSICAL_JURIS,240,240. Town of Independence
+PHYSICAL_JURIS,241,241. Town of Iron Gate
+PHYSICAL_JURIS,242,242. Town of Irvington
+PHYSICAL_JURIS,243,243. Town of Ivor
+PHYSICAL_JURIS,244,244. Town of Jarratt
+PHYSICAL_JURIS,245,245. Town of Jonesville
+PHYSICAL_JURIS,246,246. Town of Keller
+PHYSICAL_JURIS,247,247. Town of Kenbridge
+PHYSICAL_JURIS,248,248. Town of Keysville
+PHYSICAL_JURIS,249,249. Town of Kilmarnock
+PHYSICAL_JURIS,25,025. Dickenson County
+PHYSICAL_JURIS,250,250. Town of LaCrosse
+PHYSICAL_JURIS,251,251. Town of Lawrenceville
+PHYSICAL_JURIS,252,252. Town of Lebanon
+PHYSICAL_JURIS,253,253. Town of Leesburg
+PHYSICAL_JURIS,254,254. Town of Louisa
+PHYSICAL_JURIS,255,255. Town of Lovettsville
+PHYSICAL_JURIS,256,256. Town of Madison
+PHYSICAL_JURIS,257,257. Town of McKenney
+PHYSICAL_JURIS,258,258. Town of Melfa
+PHYSICAL_JURIS,259,259. Town of Middleburg
+PHYSICAL_JURIS,26,026. Dinwiddie County
+PHYSICAL_JURIS,260,260. Town of Middletown
+PHYSICAL_JURIS,261,261. Town of Mineral
+PHYSICAL_JURIS,262,262. Town of Monterey
+PHYSICAL_JURIS,263,263. Town of Montross
+PHYSICAL_JURIS,264,264. Town of Mount Crawford
+PHYSICAL_JURIS,265,265. Town of Mount Jackson
+PHYSICAL_JURIS,266,266. Town of Narrows
+PHYSICAL_JURIS,267,267. Town of Nassawadox
+PHYSICAL_JURIS,268,268. Town of New Castle
+PHYSICAL_JURIS,269,269. Town of New Market
+PHYSICAL_JURIS,27,027. Elizabeth City Maintenance Area
+PHYSICAL_JURIS,270,270. Town of Newsoms
+PHYSICAL_JURIS,271,271. Town of Nickelsville
+PHYSICAL_JURIS,272,272. Town of Occoquan
+PHYSICAL_JURIS,273,273. Town of Onancock
+PHYSICAL_JURIS,274,274. Town of Onley
+PHYSICAL_JURIS,275,275. Town of Orange
+PHYSICAL_JURIS,276,276. Town of Painter
+PHYSICAL_JURIS,277,277. Town of Pamplin City
+PHYSICAL_JURIS,278,278. Town of Parksley
+PHYSICAL_JURIS,279,279. Town of Pearisburg
+PHYSICAL_JURIS,28,028. Essex County
+PHYSICAL_JURIS,280,280. Town of Pembroke
+PHYSICAL_JURIS,281,281. Town of Pennington Gap
+PHYSICAL_JURIS,282,282. Town of Phenix
+PHYSICAL_JURIS,283,283. Town of Pocahontas
+PHYSICAL_JURIS,284,284. Town of Port Royal
+PHYSICAL_JURIS,285,285. Town of Pound
+PHYSICAL_JURIS,286,286. Town of Purcellville
+PHYSICAL_JURIS,287,287. Town of Quantico
+PHYSICAL_JURIS,288,288. Town of Remington
+PHYSICAL_JURIS,289,289. Town of Rich Creek
+PHYSICAL_JURIS,29,029. Fairfax County
+PHYSICAL_JURIS,290,290. Town of Ridgeway
+PHYSICAL_JURIS,291,291. Town of Round Hill
+PHYSICAL_JURIS,292,292. Town of Rural Retreat
+PHYSICAL_JURIS,293,293. Town of St. Charles
+PHYSICAL_JURIS,294,294. Town of Saint Paul
+PHYSICAL_JURIS,295,295. Town of Saltville
+PHYSICAL_JURIS,296,296. Town of Saxis
+PHYSICAL_JURIS,297,297. Town of Scottsburg
+PHYSICAL_JURIS,298,298. Town of Scottsville
+PHYSICAL_JURIS,299,299. Town of Shenandoah
+PHYSICAL_JURIS,3,003. Alleghany County
+PHYSICAL_JURIS,30,030. Fauquier County
+PHYSICAL_JURIS,300,300. Town of Smithfield
+PHYSICAL_JURIS,301,301. Town of South Hill
+PHYSICAL_JURIS,302,302. Town of Stanardsville
+PHYSICAL_JURIS,303,303. Town of Stanley
+PHYSICAL_JURIS,304,304. Town of Stephens City
+PHYSICAL_JURIS,305,305. Town of Stony Creek
+PHYSICAL_JURIS,306,306. Town of Strasburg
+PHYSICAL_JURIS,307,307. Town of Stuart
+PHYSICAL_JURIS,308,308. Town of Surry
+PHYSICAL_JURIS,309,309. Town of Tangier
+PHYSICAL_JURIS,31,031. Floyd County
+PHYSICAL_JURIS,310,310. Town of Tappahannock
+PHYSICAL_JURIS,311,311. Town of The Plains
+PHYSICAL_JURIS,312,312. Town of Timberville
+PHYSICAL_JURIS,313,313. Town of Toms Brook
+PHYSICAL_JURIS,314,314. Town of Troutdale
+PHYSICAL_JURIS,315,315. Town of Troutville
+PHYSICAL_JURIS,316,316. Town of Urbanna
+PHYSICAL_JURIS,317,317. Town of Victoria
+PHYSICAL_JURIS,318,318. Town of Virgilina
+PHYSICAL_JURIS,319,319. Town of Wachapreague
+PHYSICAL_JURIS,32,032. Fluvanna County
+PHYSICAL_JURIS,320,320. Town of Wakefield
+PHYSICAL_JURIS,321,321. Town of Warsaw
+PHYSICAL_JURIS,322,322. Town of Washington
+PHYSICAL_JURIS,323,323. Town of Waverly
+PHYSICAL_JURIS,324,324. Town of Weber City
+PHYSICAL_JURIS,325,325. Town of West Point
+PHYSICAL_JURIS,326,326. Whaleyville
+PHYSICAL_JURIS,327,327. Town of White Stone
+PHYSICAL_JURIS,328,328. Town of Windsor
+PHYSICAL_JURIS,329,329. Town of Wise
+PHYSICAL_JURIS,33,033. Franklin County
+PHYSICAL_JURIS,330,330. Town of Woodstock
+PHYSICAL_JURIS,331,331. Town of Hurt
+PHYSICAL_JURIS,339,339. Town of Clinchco
+PHYSICAL_JURIS,34,034. Frederick County
+PHYSICAL_JURIS,340,340. Castlewood
+PHYSICAL_JURIS,35,035. Giles County
+PHYSICAL_JURIS,36,036. Gloucester County
+PHYSICAL_JURIS,37,037. Goochland County
+PHYSICAL_JURIS,38,038. Grayson County
+PHYSICAL_JURIS,39,039. Greene County
+PHYSICAL_JURIS,4,004. Amelia County
+PHYSICAL_JURIS,40,040. Greensville County
+PHYSICAL_JURIS,41,041. Halifax County
+PHYSICAL_JURIS,42,042. Hanover County
+PHYSICAL_JURIS,43,043. Henrico County
+PHYSICAL_JURIS,44,044. Henry County
+PHYSICAL_JURIS,45,045. Highland County
+PHYSICAL_JURIS,46,046. Isle of Wight County
+PHYSICAL_JURIS,47,047. James City County
+PHYSICAL_JURIS,48,048. King George County
+PHYSICAL_JURIS,49,049. King & Queen County
+PHYSICAL_JURIS,5,005. Amherst County
+PHYSICAL_JURIS,50,050. King William County
+PHYSICAL_JURIS,51,051. Lancaster County
+PHYSICAL_JURIS,52,052. Lee County
+PHYSICAL_JURIS,53,053. Loudoun County
+PHYSICAL_JURIS,54,054. Louisa County
+PHYSICAL_JURIS,55,055. Lunenburg County
+PHYSICAL_JURIS,56,056. Madison County
+PHYSICAL_JURIS,57,057. Mathews County
+PHYSICAL_JURIS,58,058. Mecklenburg County
+PHYSICAL_JURIS,59,059. Middlesex County
+PHYSICAL_JURIS,6,006. Appomattox County
+PHYSICAL_JURIS,60,060. Montgomery County
+PHYSICAL_JURIS,61,061. Nansemond Maintenance Area
+PHYSICAL_JURIS,62,062. Nelson County
+PHYSICAL_JURIS,63,063. New Kent County
+PHYSICAL_JURIS,64,064. Norfolk Maintenance Area
+PHYSICAL_JURIS,65,065. Northampton County
+PHYSICAL_JURIS,66,066. Northumberland County
+PHYSICAL_JURIS,67,067. Nottoway County
+PHYSICAL_JURIS,68,068. Orange County
+PHYSICAL_JURIS,69,069. Page County
+PHYSICAL_JURIS,7,007. Augusta County
+PHYSICAL_JURIS,70,070. Patrick County
+PHYSICAL_JURIS,71,071. Pittsylvania County
+PHYSICAL_JURIS,72,072. Powhatan County
+PHYSICAL_JURIS,73,073. Prince Edward County
+PHYSICAL_JURIS,74,074. Prince George County
+PHYSICAL_JURIS,75,075. Princess Anne Maintenance Area
+PHYSICAL_JURIS,76,076. Prince William County
+PHYSICAL_JURIS,77,077. Pulaski County
+PHYSICAL_JURIS,78,078. Rappahannock County
+PHYSICAL_JURIS,79,079. Richmond County
+PHYSICAL_JURIS,8,008. Bath County
+PHYSICAL_JURIS,80,080. Roanoke County
+PHYSICAL_JURIS,81,081. Rockbridge County
+PHYSICAL_JURIS,82,082. Rockingham County
+PHYSICAL_JURIS,83,083. Russell County
+PHYSICAL_JURIS,84,084. Scott County
+PHYSICAL_JURIS,85,085. Shenandoah County
+PHYSICAL_JURIS,86,086. Smyth County
+PHYSICAL_JURIS,87,087. Southampton County
+PHYSICAL_JURIS,88,088. Spotsylvania County
+PHYSICAL_JURIS,89,089. Stafford County
+PHYSICAL_JURIS,9,009. Bedford County
+PHYSICAL_JURIS,90,090. Surry County
+PHYSICAL_JURIS,91,091. Sussex County
+PHYSICAL_JURIS,92,092. Tazewell County
+PHYSICAL_JURIS,93,093. Warren County
+PHYSICAL_JURIS,94,094. Warwick Maintenance Area
+PHYSICAL_JURIS,95,095. Washington County
+PHYSICAL_JURIS,96,096. Westmoreland County
+PHYSICAL_JURIS,97,097. Wise County
+PHYSICAL_JURIS,98,098. Wythe County
+PHYSICAL_JURIS,99,099. York County
+PHYSICAL_JURIS,999,999. Unknown County
+FUN,INT,"1-Interstate (A,1)"
+FUN,OFE,2-Principal Arterial - Other Freeways and Expressways (B)
+FUN,OPA,"3-Principal Arterial - Other (E,2)"
+FUN,MIA,"4-Minor Arterial (H,3)"
+FUN,MAC,"5-Major Collector (I,4)"
+FUN,MIC,6-Minor Collector (5)
+FUN,LOC,"7-Local (J,6)"
+FAC,OUD,1-One-Way Undivided
+FAC,OWD,2-One-Way Divided
+FAC,TUD,3-Two-Way Undivided
+FAC,TWD,4-Two-Way Divided
+FAC,REX,5-Reversible Exclusively (e.g. 395R)
+AREA_TYPE,0,Rural
+AREA_TYPE,1,Urban
+SYSTEM,1,VDOT Interstate
+SYSTEM,2,VDOT Primary
+SYSTEM,3,VDOT Secondary
+SYSTEM,4,NonVDOT primary
+SYSTEM,5,NonVDOT secondary
+VSP,1,1
+VSP,2,2
+VSP,3,3
+VSP,4,4
+VSP,5,5
+VSP,6,6
+VSP,7,7
+OWNERSHIP,1,1. State Hwy Agency
+OWNERSHIP,2,2. County Hwy Agency
+OWNERSHIP,3,3. City or Town Hwy Agency
+OWNERSHIP,4,4. Federal Roads
+OWNERSHIP,5,5. Toll Roads Maintained by Others
+OWNERSHIP,6,6. Private/Unknown Roads
+PLAN_DISTRICT,1,Lenowisco
+PLAN_DISTRICT,2,Cumberland Plateau
+PLAN_DISTRICT,3,Mount Rogers
+PLAN_DISTRICT,4,New River Valley
+PLAN_DISTRICT,5,Roanoke Valley-Alleghany
+PLAN_DISTRICT,6,Central Shenandoah
+PLAN_DISTRICT,7,Northern Shenandoah Valley
+PLAN_DISTRICT,8,Northern Virginia
+PLAN_DISTRICT,9,Rappahannock - Rapidan
+PLAN_DISTRICT,10,Thomas Jefferson
+PLAN_DISTRICT,11,Region 2000
+PLAN_DISTRICT,12,West Piedmont
+PLAN_DISTRICT,13,Southside
+PLAN_DISTRICT,14,Commonwealth Regional
+PLAN_DISTRICT,15,Richmond Regional
+PLAN_DISTRICT,16,George Washington Regional
+PLAN_DISTRICT,17,Northern Neck
+PLAN_DISTRICT,18,Middle Peninsula
+PLAN_DISTRICT,19,Crater
+PLAN_DISTRICT,22,Accomack-Northampton
+PLAN_DISTRICT,23,Hampton Roads
+PLAN_DISTRICT,"15,19","Richmond Regional, Crater"
+PLAN_DISTRICT,"18,23","Middle Peninsula, Hampton Roads"
+PLAN_DISTRICT,"19,23","Crater, Hampton Roads"
+PLAN_DISTRICT,"5,12","Roanoke Valley-Alleghany, West Piedmont"
+MPO_NAME,-,-
+MPO_NAME,BRIS,Bristol Metropolitan Planning Organization
+MPO_NAME,CVIL,Charlottesville-Albemarle Metropolitan Planning Organization
+MPO_NAME,DAN,Danville Metropolitan Planning Organization
+MPO_NAME,FRED,Fredericksburg Area Metropolitan Planning Organization
+MPO_NAME,HAMP,Hampton Roads Transportation Planning Organization
+MPO_NAME,HAR,Harrisonburg-Rockingham Metropolitan Planning Organization
+MPO_NAME,KING,Kingsport Transportation Planning Organization
+MPO_NAME,LYN,Central Virginia Metropolitan Planning Organization
+MPO_NAME,NOVA,Northern Virginia Portion of The Metropolitan Washington Council of Governments
+MPO_NAME,NRV,New River Valley Metropolitan Planning Organization
+MPO_NAME,RICH,Richmond Transportation Planning Organization
+MPO_NAME,ROAN,Roanoke Valley Transportation Planning Organization
+MPO_NAME,SAW,Staunton-Augusta-Waynesboro Metropolitan Planning Organization
+MPO_NAME,TCAT,Tri-Cities Area Metropolitan Planning Organization
+MPO_NAME,WINC,Winchester-Frederick Metropolitan Planning Organization

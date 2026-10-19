@@ -1,0 +1,13 @@
+{
+  "url": "https://archive-api.open-meteo.com/v1/archive?latitude=38.03&longitude=-78.48&start_date=2016-12-01&end_date=2026-07-31&models=era5&daily=temperature_2m_max%2Ctemperature_2m_min%2Ctemperature_2m_mean%2Cprecipitation_sum%2Csnowfall_sum%2Cwind_speed_10m_max&timezone=America%2FNew_York",
+  "parameters": {
+    "latitude": 38.03,
+    "longitude": -78.48,
+    "start_date": "2016-12-01",
+    "end_date": "2026-07-31",
+    "models": "era5",
+    "daily": "temperature_2m_max,temperature_2m_min,temperature_2m_mean,precipitation_sum,snowfall_sum,wind_speed_10m_max",
+    "timezone": "America/New_York"
+  },
+  "retrieved_at_utc": "2026-10-09T04:37:54.886604+00:00"
+}
