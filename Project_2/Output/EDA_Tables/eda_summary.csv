@@ -1,0 +1,10 @@
+,value
+start,2017-01-01
+end,2025-12-31
+study_crashes,5197
+days,3287
+mean_daily_crashes,1.5810769698813507
+variance_daily_crashes,1.888053252442672
+zero_record_days,771
+zero_record_days_pct,23.456038941283847
+maximum_daily_crashes,8

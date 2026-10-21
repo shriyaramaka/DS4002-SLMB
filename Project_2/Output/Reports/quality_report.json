@@ -1,0 +1,129 @@
+{
+  "city": "City of Charlottesville, Virginia",
+  "filter": "PHYSICAL_JURIS = '104'",
+  "source_rows": 5432,
+  "clean_incident_rows": 5432,
+  "excluded_rows": 0,
+  "duplicate_conflicts": [],
+  "invalid_or_missing_hhmm": 0,
+  "earliest_crash_date": "2017-01-01",
+  "latest_crash_date": "2026-07-31",
+  "modeling_start": "2017-01-01",
+  "modeling_end": "2025-12-31",
+  "modeling_incidents": 5197,
+  "daily_panel_rows": 3287,
+  "weather_source_rows": 3530,
+  "unmatched_weather_days": 0,
+  "crashes_by_year": [
+    {
+      "year": 2017,
+      "observed_crash_count": 533,
+      "period_status": "complete_calendar_year_range"
+    },
+    {
+      "year": 2018,
+      "observed_crash_count": 569,
+      "period_status": "complete_calendar_year_range"
+    },
+    {
+      "year": 2019,
+      "observed_crash_count": 626,
+      "period_status": "complete_calendar_year_range"
+    },
+    {
+      "year": 2020,
+      "observed_crash_count": 480,
+      "period_status": "complete_calendar_year_range"
+    },
+    {
+      "year": 2021,
+      "observed_crash_count": 472,
+      "period_status": "complete_calendar_year_range"
+    },
+    {
+      "year": 2022,
+      "observed_crash_count": 658,
+      "period_status": "complete_calendar_year_range"
+    },
+    {
+      "year": 2023,
+      "observed_crash_count": 595,
+      "period_status": "complete_calendar_year_range"
+    },
+    {
+      "year": 2024,
+      "observed_crash_count": 626,
+      "period_status": "complete_calendar_year_range"
+    },
+    {
+      "year": 2025,
+      "observed_crash_count": 638,
+      "period_status": "complete_calendar_year_range"
+    },
+    {
+      "year": 2026,
+      "observed_crash_count": 235,
+      "period_status": "partial_through_July_31"
+    }
+  ],
+  "missing_values_incident_fields": {
+    "crash_id": 0,
+    "source_object_id": 0,
+    "date_local": 0,
+    "time_local_hhmm": 0,
+    "time_raw_hhmm": 0,
+    "hour_local": 0,
+    "year": 0,
+    "month": 0,
+    "weekday_mon0": 0,
+    "is_weekend": 0,
+    "physical_jurisdiction_code": 0,
+    "physical_jurisdiction": 0,
+    "latitude": 0,
+    "longitude": 0,
+    "street_source": 0,
+    "severity_code": 0,
+    "severity_label": 0,
+    "persons_killed": 0,
+    "persons_injured": 0,
+    "vehicles_involved": 0,
+    "pedestrians_killed": 0,
+    "pedestrians_injured": 0,
+    "collision_type_code": 0,
+    "collision_type_label": 0,
+    "reported_weather_code": 0,
+    "reported_weather_label": 0,
+    "road_surface_code": 0,
+    "road_surface_label": 0,
+    "light_condition_code": 0,
+    "light_condition_label": 0,
+    "record_period_status": 0,
+    "source_ref": 0
+  },
+  "weather_missing_values": {
+    "temp_max_c": 0,
+    "temp_min_c": 0,
+    "temp_mean_c": 0,
+    "precip_mm": 0,
+    "snowfall_cm": 0,
+    "wind_max_kmh": 0
+  },
+  "weather_grid": {
+    "latitude": 38.0,
+    "longitude": -78.5,
+    "elevation": 146.0,
+    "timezone": "America/New_York"
+  },
+  "weather_units": {
+    "time": "iso8601",
+    "temperature_2m_max": "\u00b0C",
+    "temperature_2m_min": "\u00b0C",
+    "temperature_2m_mean": "\u00b0C",
+    "precipitation_sum": "mm",
+    "snowfall_sum": "cm",
+    "wind_speed_10m_max": "km/h"
+  },
+  "weather_model_requested": "era5",
+  "reporting_completeness": "not independently verified",
+  "built_at_utc": "2026-10-19T14:45:09.200221+00:00"
+}
