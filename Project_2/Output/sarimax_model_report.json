@@ -1,0 +1,770 @@
+{
+  "created_at_utc": "2026-10-23T23:59:28.200051+00:00",
+  "input": "Data/cville_sarimax_analysis.csv",
+  "validation_report": "Output/sarimax_validation_report.json",
+  "order_selection": {
+    "fit_period": [
+      "2017-01-01",
+      "2022-12-31"
+    ],
+    "validation_period": [
+      "2023-01-01",
+      "2023-12-31"
+    ],
+    "criterion": "rolling next-day MAE on no-weather model",
+    "grid": "p,q,P,Q in {0,1}; d in {0,1}; D=0; m=7",
+    "tie_break": "fewest total AR/MA terms, then lower training-fit AIC",
+    "selected_order": [
+      1,
+      0,
+      1
+    ],
+    "selected_seasonal_order": [
+      1,
+      0,
+      1,
+      7
+    ],
+    "selected_validation_mae": 1.097357446398607,
+    "selected_training_aic": 7415.2719408513685,
+    "candidates": [
+      {
+        "order": [
+          0,
+          0,
+          0
+        ],
+        "seasonal_order": [
+          0,
+          0,
+          0,
+          7
+        ],
+        "converged": true,
+        "aic": 7532.5181582614405,
+        "validation_mae": 1.1229201444735664,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          0,
+          0,
+          0
+        ],
+        "seasonal_order": [
+          0,
+          0,
+          1,
+          7
+        ],
+        "converged": true,
+        "aic": 7499.111752149306,
+        "validation_mae": 1.1190180989286822,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          0,
+          0,
+          0
+        ],
+        "seasonal_order": [
+          1,
+          0,
+          0,
+          7
+        ],
+        "converged": true,
+        "aic": 7500.884425124054,
+        "validation_mae": 1.1179785771793285,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          0,
+          0,
+          0
+        ],
+        "seasonal_order": [
+          1,
+          0,
+          1,
+          7
+        ],
+        "converged": true,
+        "aic": 7448.922306577581,
+        "validation_mae": 1.1106659051557972,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          0,
+          0,
+          1
+        ],
+        "seasonal_order": [
+          0,
+          0,
+          0,
+          7
+        ],
+        "converged": true,
+        "aic": 7518.604428617788,
+        "validation_mae": 1.1216129220063003,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          0,
+          0,
+          1
+        ],
+        "seasonal_order": [
+          0,
+          0,
+          1,
+          7
+        ],
+        "converged": true,
+        "aic": 7488.512505906383,
+        "validation_mae": 1.1181238304767946,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          0,
+          0,
+          1
+        ],
+        "seasonal_order": [
+          1,
+          0,
+          0,
+          7
+        ],
+        "converged": true,
+        "aic": 7493.327347654165,
+        "validation_mae": 1.1172609702944902,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          0,
+          0,
+          1
+        ],
+        "seasonal_order": [
+          1,
+          0,
+          1,
+          7
+        ],
+        "converged": true,
+        "aic": 7441.241800308278,
+        "validation_mae": 1.1105764457549223,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          0,
+          1,
+          0
+        ],
+        "seasonal_order": [
+          0,
+          0,
+          0,
+          7
+        ],
+        "converged": true,
+        "aic": 8866.620736618199,
+        "validation_mae": 1.5046628117091212,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          0,
+          1,
+          0
+        ],
+        "seasonal_order": [
+          0,
+          0,
+          1,
+          7
+        ],
+        "converged": true,
+        "aic": 8842.869209930192,
+        "validation_mae": 1.5092548185592363,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          0,
+          1,
+          0
+        ],
+        "seasonal_order": [
+          1,
+          0,
+          0,
+          7
+        ],
+        "converged": true,
+        "aic": 8846.214443469134,
+        "validation_mae": 1.5093445984863165,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          0,
+          1,
+          0
+        ],
+        "seasonal_order": [
+          1,
+          0,
+          1,
+          7
+        ],
+        "converged": true,
+        "aic": 8816.619957274022,
+        "validation_mae": 1.5109310508970537,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          0,
+          1,
+          1
+        ],
+        "seasonal_order": [
+          0,
+          0,
+          0,
+          7
+        ],
+        "converged": true,
+        "aic": 7489.1040634135825,
+        "validation_mae": 1.1336660434684667,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          0,
+          1,
+          1
+        ],
+        "seasonal_order": [
+          0,
+          0,
+          1,
+          7
+        ],
+        "converged": true,
+        "aic": 7464.665930823571,
+        "validation_mae": 1.1346023262354485,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          0,
+          1,
+          1
+        ],
+        "seasonal_order": [
+          1,
+          0,
+          0,
+          7
+        ],
+        "converged": true,
+        "aic": 7471.763948317997,
+        "validation_mae": 1.134851928564567,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          0,
+          1,
+          1
+        ],
+        "seasonal_order": [
+          1,
+          0,
+          1,
+          7
+        ],
+        "converged": false,
+        "aic": 7425.61567873915,
+        "status": "excluded_nonconverged"
+      },
+      {
+        "order": [
+          1,
+          0,
+          0
+        ],
+        "seasonal_order": [
+          0,
+          0,
+          0,
+          7
+        ],
+        "converged": true,
+        "aic": 7521.0402495082835,
+        "validation_mae": 1.1214132076136618,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          1,
+          0,
+          0
+        ],
+        "seasonal_order": [
+          0,
+          0,
+          1,
+          7
+        ],
+        "converged": true,
+        "aic": 7490.120790769807,
+        "validation_mae": 1.118018675018727,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          1,
+          0,
+          0
+        ],
+        "seasonal_order": [
+          1,
+          0,
+          0,
+          7
+        ],
+        "converged": true,
+        "aic": 7488.57043594222,
+        "validation_mae": 1.1172199677202725,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          1,
+          0,
+          0
+        ],
+        "seasonal_order": [
+          1,
+          0,
+          1,
+          7
+        ],
+        "converged": true,
+        "aic": 7443.9299798720995,
+        "validation_mae": 1.1105388769871627,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          1,
+          0,
+          1
+        ],
+        "seasonal_order": [
+          0,
+          0,
+          0,
+          7
+        ],
+        "converged": true,
+        "aic": 7476.968298214524,
+        "validation_mae": 1.1187569976726917,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          1,
+          0,
+          1
+        ],
+        "seasonal_order": [
+          0,
+          0,
+          1,
+          7
+        ],
+        "converged": true,
+        "aic": 7454.504775538051,
+        "validation_mae": 1.1174488836031005,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          1,
+          0,
+          1
+        ],
+        "seasonal_order": [
+          1,
+          0,
+          0,
+          7
+        ],
+        "converged": true,
+        "aic": 7458.660335407865,
+        "validation_mae": 1.1173634196108655,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          1,
+          0,
+          1
+        ],
+        "seasonal_order": [
+          1,
+          0,
+          1,
+          7
+        ],
+        "converged": true,
+        "aic": 7415.2719408513685,
+        "validation_mae": 1.097357446398607,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          1,
+          1,
+          0
+        ],
+        "seasonal_order": [
+          0,
+          0,
+          0,
+          7
+        ],
+        "converged": true,
+        "aic": 8274.656588154494,
+        "validation_mae": 1.3413178611619276,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          1,
+          1,
+          0
+        ],
+        "seasonal_order": [
+          0,
+          0,
+          1,
+          7
+        ],
+        "converged": true,
+        "aic": 8248.932086987365,
+        "validation_mae": 1.3419332091791338,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          1,
+          1,
+          0
+        ],
+        "seasonal_order": [
+          1,
+          0,
+          0,
+          7
+        ],
+        "converged": true,
+        "aic": 8248.593257428181,
+        "validation_mae": 1.3420359704674427,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          1,
+          1,
+          0
+        ],
+        "seasonal_order": [
+          1,
+          0,
+          1,
+          7
+        ],
+        "converged": true,
+        "aic": 8179.980232654047,
+        "validation_mae": 1.2881477981957787,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          1,
+          1,
+          1
+        ],
+        "seasonal_order": [
+          0,
+          0,
+          0,
+          7
+        ],
+        "converged": true,
+        "aic": 7488.323990187479,
+        "validation_mae": 1.1374927640179477,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          1,
+          1,
+          1
+        ],
+        "seasonal_order": [
+          0,
+          0,
+          1,
+          7
+        ],
+        "converged": true,
+        "aic": 7463.428986371171,
+        "validation_mae": 1.1366583872346312,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          1,
+          1,
+          1
+        ],
+        "seasonal_order": [
+          1,
+          0,
+          0,
+          7
+        ],
+        "converged": true,
+        "aic": 7466.53523673186,
+        "validation_mae": 1.1364914115084634,
+        "status": "eligible"
+      },
+      {
+        "order": [
+          1,
+          1,
+          1
+        ],
+        "seasonal_order": [
+          1,
+          0,
+          1,
+          7
+        ],
+        "converged": true,
+        "aic": 7428.581933417893,
+        "validation_mae": 1.1052370901783402,
+        "status": "eligible"
+      }
+    ]
+  },
+  "scaling": {
+    "fit_period": [
+      "2017-01-01",
+      "2022-12-31"
+    ],
+    "means": {
+      "month_sin": -0.0032440438156092952,
+      "month_cos": -0.004347911912368794,
+      "temp_mean_c_lag7": 15.237197626654494,
+      "precip_mm_lag7": 2.9717480602464628,
+      "snowfall_cm_lag7": 0.08274760383386583,
+      "wind_max_kmh_lag7": 13.199452304883614
+    },
+    "population_std": {
+      "month_sin": 0.7070184858781767,
+      "month_cos": 0.7071739309854984,
+      "temp_mean_c_lag7": 9.125957141261827,
+      "precip_mm_lag7": 7.1449209635269995,
+      "snowfall_cm_lag7": 0.7806428846104859,
+      "wind_max_kmh_lag7": 4.691912078408269
+    }
+  },
+  "final_fit_period": [
+    "2017-01-01",
+    "2023-12-31"
+  ],
+  "test_period": [
+    "2024-01-01",
+    "2025-12-31"
+  ],
+  "forecast_method": "one day ahead; append observed count after each forecast, no coefficient refit",
+  "metrics": {
+    "no_weather": {
+      "mae": 1.089040672299483,
+      "rmse": 1.4029926891907019,
+      "days": 731
+    },
+    "with_weather": {
+      "mae": 1.0891828679902764,
+      "rmse": 1.4032356855811727,
+      "days": 731
+    },
+    "seasonal_naive_7day": {
+      "mae": 1.476060191518468,
+      "rmse": 1.969327035819142,
+      "days": 731
+    }
+  },
+  "metrics_by_year": {
+    "no_weather": {
+      "2024": {
+        "mae": 1.0270390882643727,
+        "rmse": 1.306846966736556,
+        "days": 366
+      },
+      "2025": {
+        "mae": 1.151212123688114,
+        "rmse": 1.4931985079695462,
+        "days": 365
+      }
+    },
+    "with_weather": {
+      "2024": {
+        "mae": 1.0209609531157542,
+        "rmse": 1.3025756757995026,
+        "days": 366
+      },
+      "2025": {
+        "mae": 1.1575916922206195,
+        "rmse": 1.497392266023204,
+        "days": 365
+      }
+    },
+    "seasonal_naive_7day": {
+      "2024": {
+        "mae": 1.407103825136612,
+        "rmse": 1.850269512195335,
+        "days": 366
+      },
+      "2025": {
+        "mae": 1.5452054794520549,
+        "rmse": 2.0818853415456062,
+        "days": 365
+      }
+    }
+  },
+  "clipped_negative_forecasts": {
+    "no_weather": 0,
+    "with_weather": 0
+  },
+  "bootstrap_mae_differences": {
+    "weather_minus_no_weather": {
+      "mae_difference_a_minus_b": 0.00014219569079338578,
+      "ci_95_percentile": [
+        -0.015836594528361374,
+        0.014395528493647699
+      ],
+      "resamples": 2000,
+      "block_size_days": 7
+    },
+    "weather_minus_seasonal_naive": {
+      "mae_difference_a_minus_b": -0.38687732352819143,
+      "ci_95_percentile": [
+        -0.4692732571989628,
+        -0.3052149147958683
+      ],
+      "resamples": 2000,
+      "block_size_days": 7
+    }
+  },
+  "bootstrap": {
+    "method": "paired circular moving blocks",
+    "block_size_days": 7,
+    "resamples": 2000,
+    "seed": 4002,
+    "interpretation": "negative weather-minus-comparator favors weather"
+  },
+  "residual_checks": {
+    "no_weather": {
+      "n": 2556,
+      "mean": 0.0012052515418873192,
+      "std": 1.3295109788537547,
+      "ljung_box": {
+        "7": {
+          "statistic": 25.307226692657895,
+          "p_value": 0.0006692620688620186
+        },
+        "14": {
+          "statistic": 46.5194293050726,
+          "p_value": 2.3052038884427107e-05
+        },
+        "28": {
+          "statistic": 77.09777343755285,
+          "p_value": 1.791491693113578e-06
+        }
+      }
+    },
+    "with_weather": {
+      "n": 2556,
+      "mean": -0.01088383268220138,
+      "std": 1.3270023197290959,
+      "ljung_box": {
+        "7": {
+          "statistic": 4.523607331156498,
+          "p_value": 0.7178727193230149
+        },
+        "14": {
+          "statistic": 7.0884971472112435,
+          "p_value": 0.9312464812084703
+        },
+        "28": {
+          "statistic": 24.704520586914345,
+          "p_value": 0.6438660047308116
+        }
+      }
+    }
+  },
+  "sensitivity_2020_2021": {
+    "no_weather": {
+      "status": "ok",
+      "fit_period": [
+        "2017-01-01",
+        "2019-12-31"
+      ],
+      "evaluation_period": [
+        "2020-01-01",
+        "2021-12-31"
+      ],
+      "metrics": {
+        "mae": 1.076237361261566,
+        "rmse": 1.3035845538969568,
+        "days": 731
+      },
+      "clipped_forecasts": 0
+    },
+    "with_weather": {
+      "status": "ok",
+      "fit_period": [
+        "2017-01-01",
+        "2019-12-31"
+      ],
+      "evaluation_period": [
+        "2020-01-01",
+        "2021-12-31"
+      ],
+      "metrics": {
+        "mae": 1.0763511122556286,
+        "rmse": 1.3024919546811515,
+        "days": 731
+      },
+      "clipped_forecasts": 0
+    }
+  },
+  "forecast_file": "Output/sarimax_test_forecasts.csv"
+}

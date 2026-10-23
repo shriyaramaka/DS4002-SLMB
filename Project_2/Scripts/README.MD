@@ -6,6 +6,7 @@
 | --- | --- |
 | `build_dataset.py` | Rebuilds the cleaned crash, weather, joined daily, annual-count, and codebook tables from the source JSON files. Checks identifiers, geography, counts, and joins, and generates quality and provenance reports. |
 | `prepare_sarimax_data.py` | Builds the nine-column SARIMAX analysis file from the joined daily table. Verifies the study period, month terms, and lag-7 weather, excludes leakage columns, assigns the train/validation/test split, and writes a validation report. |
+| `fit_sarimax_models.py` | Selects a shared SARIMAX order on rolling 2023 validation forecasts, fits matched calendar-only and calendar-plus-weather models through 2023, and writes rolling one-day test forecasts and metrics. |
 | `Charlottesville_Crash_EDA.ipynb` | Explores data quality, trends, weekday/hour patterns, severity, collision types, locations, and weather associations. Saves nine figure files containing 12 plots and six summary tables. |
 
 ## Requirements
@@ -13,6 +14,7 @@
 - Python 3.9 or newer, with America/New_York timezone data.
 - The builder uses only Python's standard library.
 - `prepare_sarimax_data.py` requires `pandas` and `numpy`.
+- `fit_sarimax_models.py` requires `pandas`, `numpy`, and `statsmodels`.
 - The notebook requires `pandas`, `numpy`, `matplotlib`, and a notebook environment such as Jupyter or VS Code with a Python kernel.
 
 ## Run the dataset builder
@@ -42,6 +44,16 @@ python3 Scripts/prepare_sarimax_data.py
 ```
 
 This reads `Data/cville_daily_crashes_weather.csv` and `Data/cville_weather_daily.csv`, then writes `Data/cville_sarimax_analysis.csv`, a copy at `Output/cville_sarimax_analysis.csv`, and `Output/sarimax_validation_report.json`. The script stops with an error if any check fails, for example if the row count is not 3,287, a lag-7 weather value does not match the weather file, or a leakage column appears in the output.
+
+## Fit and compare SARIMAX models
+
+From the project root, after building the analysis file:
+
+```bash
+python3 Scripts/fit_sarimax_models.py
+```
+
+The script reads `Data/cville_sarimax_analysis.csv` and checks `Output/sarimax_validation_report.json`. It selects a shared order by rolling next-day MAE on 2023 for the calendar-only model, searching `p,q,P,Q ∈ {0,1}`, `d ∈ {0,1}`, `D=0`, and weekly period `m=7`. Nonconverged fits are excluded; ties favor fewer AR/MA terms, then lower training-fit AIC. Scaling is fit on 2017–2022 only. Both models are refit on 2017–2023, then forecasts are made one day ahead for 2024–2025, updating the state with each observed count without refitting coefficients. The output includes the seven-day seasonal-naive comparator, overall and annual MAE/RMSE, clipped-prediction counts, paired seven-day moving-block bootstrap intervals (2,000 resamples, seed 4002), residual Ljung–Box checks, and a pre-pandemic-trained 2020–2021 sensitivity check. Files are written to `Output/sarimax_test_forecasts.csv` and `Output/sarimax_model_report.json`.
 
 ## Run the EDA notebook
 
