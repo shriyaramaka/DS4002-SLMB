@@ -5,12 +5,14 @@
 | File | Purpose |
 | --- | --- |
 | `build_dataset.py` | Rebuilds the cleaned crash, weather, joined daily, annual-count, and codebook tables from the source JSON files. Checks identifiers, geography, counts, and joins, and generates quality and provenance reports. |
+| `prepare_sarimax_data.py` | Builds the nine-column SARIMAX analysis file from the joined daily table. Verifies the study period, month terms, and lag-7 weather, excludes leakage columns, assigns the train/validation/test split, and writes a validation report. |
 | `Charlottesville_Crash_EDA.ipynb` | Explores data quality, trends, weekday/hour patterns, severity, collision types, locations, and weather associations. Saves nine figure files containing 12 plots and six summary tables. |
 
 ## Requirements
 
 - Python 3.9 or newer, with America/New_York timezone data.
 - The builder uses only Python's standard library.
+- `prepare_sarimax_data.py` requires `pandas` and `numpy`.
 - The notebook requires `pandas`, `numpy`, `matplotlib`, and a notebook environment such as Jupyter or VS Code with a Python kernel.
 
 ## Run the dataset builder
@@ -30,6 +32,16 @@ python3 Scripts/build_dataset.py --refresh
 ```
 
 New API responses are saved in `Output/raw/` and used by that invocation. A later run without `--refresh` returns to the frozen `Data/raw/` inputs. Date ranges remain fixed unless changed explicitly in the script.
+
+## Build the SARIMAX analysis file
+
+From the project root:
+
+```bash
+python3 Scripts/prepare_sarimax_data.py
+```
+
+This reads `Data/cville_daily_crashes_weather.csv` and `Data/cville_weather_daily.csv`, then writes `Data/cville_sarimax_analysis.csv`, a copy at `Output/cville_sarimax_analysis.csv`, and `Output/sarimax_validation_report.json`. The script stops with an error if any check fails, for example if the row count is not 3,287, a lag-7 weather value does not match the weather file, or a leakage column appears in the output.
 
 ## Run the EDA notebook
 

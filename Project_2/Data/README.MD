@@ -27,6 +27,7 @@ The dates above describe this frozen download. The script uses fixed date ranges
 | File | Contents and purpose |
 | --- | --- |
 | `cville_daily_crashes_weather.csv` | Main dataset: one row per city calendar day, with crash counts, weather, calendar variables, and lagged features. |
+| `cville_sarimax_analysis.csv` | Nine-column modeling file for SARIMAX: daily crash count, month terms, lag-7 weather, and the train/validation/test split. Built by `Scripts/prepare_sarimax_data.py`. |
 | `cville_crash_incidents.csv` | One row per crash, including date/time, location, severity, injuries, and collision type. |
 | `cville_weather_daily.csv` | Weather observations from the historical ERA5 reanalysis API, before joining to daily crashes. |
 | `annual_crash_counts.csv` | Annual counts and a partial-year flag for 2026. |
@@ -122,6 +123,20 @@ The zero-count rule means **no crash record exists for that day in the downloade
 | `light_condition_code`, `light_condition_label` | Original lighting condition and label. |
 | `record_period_status` | Full calendar-year range or partial 2026. This is a date-range flag, not a completeness certification. |
 | `source_ref` | Crash dataset and metadata references. |
+
+### SARIMAX analysis file
+
+`cville_sarimax_analysis.csv` has one row for each of the 3,287 study days and no missing values. Its columns are a subset of the main daily dataset, plus `split`.
+
+| Column(s) | Meaning / units |
+| --- | --- |
+| `date_local` | Target calendar date, YYYY-MM-DD. |
+| `crash_count` | Outcome: number of reported city crashes that day. |
+| `month_sin`, `month_cos` | Cyclic month terms. Calendar exogenous variables. |
+| `temp_mean_c_lag7`, `precip_mm_lag7`, `snowfall_cm_lag7`, `wind_max_kmh_lag7` | Weather seven days before the target date. Weather exogenous variables. |
+| `split` | `train` (2017–2022, 2,191 days), `validation` (2023, 365 days), or `test` (2024–2025, 731 days). Not a predictor. |
+
+Crash history is left to the SARIMAX AR/MA and seven-day seasonal terms, so the manual crash lags and trailing means are intentionally excluded. Same-day observed weather, injury and fatality counts, and weekday indicators are also excluded. Scaling and imputation are not applied; fit them on the training split only.
 
 The standalone weather file uses `date_local`, `temp_max_c`, `temp_min_c`, `temp_mean_c`, `precip_mm`, `snowfall_cm`, `wind_max_kmh`, and `source_ref`. Its units match the corresponding daily-table fields. CSV blanks indicate missing/unavailable values; zero is an actual numeric value.
 
