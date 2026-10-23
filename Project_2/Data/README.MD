@@ -35,6 +35,21 @@ The dates above describe this frozen download. The script uses fixed date ranges
 | `provenance.json` | API filter, retrieval information, weather request, and SHA-256 hashes of the source files. |
 | `raw/` | Frozen source JSON responses and metadata used to reproduce the dataset. |
 
+## Exploratory figures used in MI2
+
+These are copies of the original EDA notebook figures, included here so the README and MI2 findings can be read together. The analysis uses the full 2017–2025 study period. Original generated figures remain in `Output/`; these documentation copies are in `Data/`.
+
+### Figure 1. Distribution of daily reported crash counts
+
+![Distribution of daily reported crash counts in Charlottesville, 2017–2025](mi2_daily_crash_distribution.png)
+
+The dataset includes 771 zero-record days (23.5%). Daily counts average 1.58 crashes, with variance 1.89 and a maximum of 8. A zero means no crash record appears for that day in this source. The original image retains its notebook label, plot 4; it is Figure 1 in MI2.
+
+### Figure 2. Annual reported crash counts
+
+![Annual reported Charlottesville city crash counts, 2017–2025](mi2_annual_crash_counts.png)
+
+Recorded counts decline to 480 in 2020 and 472 in 2021, then rise to 658 in 2022. The plot does not establish whether changes reflect travel, reporting, or other factors. This motivates evaluation by year and a sensitivity analysis excluding 2020–2021. The original image retains its notebook label, plot 3; it is Figure 2 in MI2.
 ## Sources and compilation
 
 ### Crash records
