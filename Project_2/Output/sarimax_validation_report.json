@@ -1,0 +1,98 @@
+{
+  "built_at_utc": "2026-10-23T13:38:58.887442+00:00",
+  "input": "Data/cville_daily_crashes_weather.csv",
+  "output": "Data/cville_sarimax_analysis.csv",
+  "exog_no_weather": [
+    "month_sin",
+    "month_cos"
+  ],
+  "exog_with_weather": [
+    "month_sin",
+    "month_cos",
+    "temp_mean_c_lag7",
+    "precip_mm_lag7",
+    "snowfall_cm_lag7",
+    "wind_max_kmh_lag7"
+  ],
+  "not_predictors": [
+    "date_local",
+    "split"
+  ],
+  "notes": [
+    "Crash history is modeled by SARIMAX AR/MA and the seven-day seasonal terms; no manual crash lags are included.",
+    "All 3,287 study dates are retained; weather before 2017 supplies the first lag-7 values.",
+    "Scaling and imputation are not applied here; fit them on the train split only."
+  ],
+  "checks": {
+    "dates_unique": true,
+    "dates_continuous": true,
+    "study_period": [
+      "2017-01-01",
+      "2025-12-31"
+    ],
+    "rows": 3287,
+    "total_crashes": 5197,
+    "no_partial_2026": true,
+    "month_terms_match_formula": true,
+    "weather_lag7_verified": {
+      "temp_mean_c_lag7": true,
+      "precip_mm_lag7": true,
+      "snowfall_cm_lag7": true,
+      "wind_max_kmh_lag7": true
+    },
+    "columns": [
+      "date_local",
+      "crash_count",
+      "month_sin",
+      "month_cos",
+      "temp_mean_c_lag7",
+      "precip_mm_lag7",
+      "snowfall_cm_lag7",
+      "wind_max_kmh_lag7",
+      "split"
+    ],
+    "column_count": 9,
+    "forbidden_columns_present": [],
+    "missing_values": {
+      "date_local": 0,
+      "crash_count": 0,
+      "month_sin": 0,
+      "month_cos": 0,
+      "temp_mean_c_lag7": 0,
+      "precip_mm_lag7": 0,
+      "snowfall_cm_lag7": 0,
+      "wind_max_kmh_lag7": 0,
+      "split": 0
+    },
+    "splits": {
+      "train": {
+        "start": "2017-01-01",
+        "end": "2022-12-31",
+        "days": 2191,
+        "crashes": 3338,
+        "mean_per_day": 1.5235,
+        "variance_per_day": 1.8404,
+        "zero_days": 547
+      },
+      "validation": {
+        "start": "2023-01-01",
+        "end": "2023-12-31",
+        "days": 365,
+        "crashes": 595,
+        "mean_per_day": 1.6301,
+        "variance_per_day": 1.8766,
+        "zero_days": 83
+      },
+      "test": {
+        "start": "2024-01-01",
+        "end": "2025-12-31",
+        "days": 731,
+        "crashes": 1264,
+        "mean_per_day": 1.7291,
+        "variance_per_day": 2.0087,
+        "zero_days": 141
+      }
+    }
+  },
+  "status": "passed"
+}
