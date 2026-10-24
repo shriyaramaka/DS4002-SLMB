@@ -200,6 +200,18 @@ def main():
         "weather_minus_seasonal_naive": moving_block_ci(test.crash_count, predictions["with_weather"],
                                                         naive, rng),
     }
+    intervals_by_year = {}
+    for year in (2024, 2025):
+        mask = test.index.year == year
+        year_rng = np.random.default_rng(SEED + year)
+        intervals_by_year[str(year)] = {
+            "weather_minus_no_weather": moving_block_ci(
+                test.crash_count.to_numpy()[mask], predictions["with_weather"][mask],
+                predictions["no_weather"][mask], year_rng),
+            "weather_minus_seasonal_naive": moving_block_ci(
+                test.crash_count.to_numpy()[mask], predictions["with_weather"][mask],
+                naive[mask], year_rng),
+        }
 
     rows = []
     for i, (date, actual) in enumerate(test.crash_count.items()):
@@ -264,8 +276,18 @@ def main():
         "test_period": ["2024-01-01", "2025-12-31"],
         "forecast_method": "one day ahead; append observed count after each forecast, no coefficient refit",
         "metrics": model_metrics, "metrics_by_year": annual_metrics,
+        "goal_assessment": {
+            "target": "with-weather test MAE lower than both no-weather and seasonal-naive models",
+            "met": bool(model_metrics["with_weather"]["mae"] < model_metrics["no_weather"]["mae"]
+                        and model_metrics["with_weather"]["mae"] < model_metrics["seasonal_naive_7day"]["mae"]),
+            "result": ("weather model beats both comparators" if
+                       model_metrics["with_weather"]["mae"] < model_metrics["no_weather"]["mae"]
+                       and model_metrics["with_weather"]["mae"] < model_metrics["seasonal_naive_7day"]["mae"]
+                       else "null result: weather model did not beat both comparators on test MAE"),
+        },
         "clipped_negative_forecasts": clip_counts,
         "bootstrap_mae_differences": intervals,
+        "bootstrap_mae_differences_by_year": intervals_by_year,
         "bootstrap": {"method": "paired circular moving blocks", "block_size_days": BLOCK_SIZE,
                       "resamples": BOOTSTRAPS, "seed": SEED,
                       "interpretation": "negative weather-minus-comparator favors weather"},

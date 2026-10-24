@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-10-23T23:59:28.200051+00:00",
+  "created_at_utc": "2026-10-24T03:34:24.384897+00:00",
   "input": "Data/cville_sarimax_analysis.csv",
   "validation_report": "Output/sarimax_validation_report.json",
   "order_selection": {
@@ -659,6 +659,11 @@
       }
     }
   },
+  "goal_assessment": {
+    "target": "with-weather test MAE lower than both no-weather and seasonal-naive models",
+    "met": false,
+    "result": "null result: weather model did not beat both comparators on test MAE"
+  },
   "clipped_negative_forecasts": {
     "no_weather": 0,
     "with_weather": 0
@@ -681,6 +686,48 @@
       ],
       "resamples": 2000,
       "block_size_days": 7
+    }
+  },
+  "bootstrap_mae_differences_by_year": {
+    "2024": {
+      "weather_minus_no_weather": {
+        "mae_difference_a_minus_b": -0.006078135148618817,
+        "ci_95_percentile": [
+          -0.02200772122514581,
+          0.009779429780917977
+        ],
+        "resamples": 2000,
+        "block_size_days": 7
+      },
+      "weather_minus_seasonal_naive": {
+        "mae_difference_a_minus_b": -0.386142872020858,
+        "ci_95_percentile": [
+          -0.4862913807781488,
+          -0.27954836926862603
+        ],
+        "resamples": 2000,
+        "block_size_days": 7
+      }
+    },
+    "2025": {
+      "weather_minus_no_weather": {
+        "mae_difference_a_minus_b": 0.00637956853250535,
+        "ci_95_percentile": [
+          -0.017292468314621688,
+          0.02907233713655823
+        ],
+        "resamples": 2000,
+        "block_size_days": 7
+      },
+      "weather_minus_seasonal_naive": {
+        "mae_difference_a_minus_b": -0.3876137872314353,
+        "ci_95_percentile": [
+          -0.5054642603021744,
+          -0.26455415195458815
+        ],
+        "resamples": 2000,
+        "block_size_days": 7
+      }
     }
   },
   "bootstrap": {
