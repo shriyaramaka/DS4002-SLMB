@@ -4,7 +4,6 @@ Charlottesville Crash and Weather Forecasting — DS 4002, SLMB
 References [1]–[6] retain the numbering used in the MI2 discussion. Reference [3] documents the original Poisson proposal; [6] supports the revised SARIMAX plan. The current preparation script and EDA notebook do not implement forecasting yet. References for proposed methods do not imply that those methods have already been run.
 
 ## References
-# Project References
 
 Charlottesville Crash and Weather Forecasting — DS 4002, SLMB
 Reference [3] documents the historical Poisson proposal; [6] supports the implemented SARIMAX models. This file uses its own numbering, which can differ from MI2 and the root README. Forecast fitting, MAE/RMSE, and paired circular block resampling are implemented in fit_sarimax_models.py. Reference [14] is background on block resampling, not a package called by this implementation.
