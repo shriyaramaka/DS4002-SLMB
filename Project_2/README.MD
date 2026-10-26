@@ -5,171 +5,150 @@
 **Members:** Lyle Mora, Maggie Parkhurst, and Shriya Ramaka  
 **Course:** DS 4002, Section 002 — Professor Loreto Alonzi
 
-We study whether weather from seven days earlier improves next-day forecasts of reported Charlottesville crashes beyond crash history and seasonal patterns. The study combines Virginia Department of Transportation (VDOT) crash records [1] and Open-Meteo ERA5 weather [2]. It covers 5,197 reported crashes across 3,287 consecutive days in 2017–2025.
-
-Our goal is a weather-enhanced SARIMAX model with lower test mean absolute error (MAE) than both a SARIMAX model without weather and a seven-day seasonal-naive forecast. SARIMAX explicitly models time dependence [3]. The original Poisson proposal was replaced to meet the project’s time-series requirement.
-
-**Current status:** Data preparation, EDA, fitted forecasts, and a model report are included. The JSON report records a null result for the weather improvement goal. A review found a forecast CSV export error that must be corrected before submission; see [MI3 review](MI3_REVIEW.md). The report’s SARIMAX scores agree with the CSV’s raw forecast column after clipping at zero, but not with its exported `forecast_crash_count` column. Do not use that column for figures or scoring until repaired.
+We test whether earlier weather improves next-day forecasts of reported Charlottesville crashes beyond crash history and seasonality. The study combines VDOT crash records [1] and Open-Meteo ERA5 weather [2]: 5,197 reported crashes across 3,287 days in 2017–2025. Our original goal is lower test MAE for weather-enhanced SARIMAX than both SARIMAX without weather and a seven-day seasonal-naive forecast. Constant mean and median benchmarks were added following later MI2 feedback.
 
 ## Repository contents
 
-`Data/` contains frozen source files, cleaned tables, the final modeling input, and metadata. `Scripts/` contains the complete supplied code. `Output/` contains generated tables, EDA figures, forecasts, and model reports. The folder names below use their actual capitalization; commands and links on Linux are case-sensitive. The rubric’s DATA, SCRIPTS, and OUTPUT refer to these same roles.
+`Data/` holds frozen source data, intermediate/final tables, metadata, and two explanatory plots. `Scripts/` holds source code and the EDA notebook. `Output/` holds generated tables, figures, model forecasts, and reports. Folder/file capitalization below matches the original repository. Supporting documentation is in [Data/README.MD](Data/README.MD), [Scripts/README.MD](Scripts/README.MD), and [Output/README.MD](Output/README.MD).
 
 ### 1. Software and platform
 
-Use **Python 3.9 or newer**. The builder uses the standard library, including `zoneinfo`. Install these add-on packages in one environment:
+The corrected data/model pipeline was run on Linux, Python 3.12.14, with NumPy 2.3.5, pandas 2.2.3, SciPy 1.17.0, statsmodels 0.14.6, patsy 1.0.3, Matplotlib 3.10.8, and tzdata 2026.5. The model report records the actual model execution environment. Install the analysis dependencies using:
 
 ```bash
-python -m pip install numpy pandas matplotlib statsmodels jupyterlab ipykernel tzdata
+python -m pip install numpy==2.3.5 pandas==2.2.3 scipy==1.17.0 statsmodels==0.14.6 patsy==1.0.3 matplotlib==3.10.8 tzdata==2026.5
 ```
 
-- `numpy` and `pandas`: data validation, preparation, numerical calculations, and metrics.
-- `matplotlib`: EDA figures.
-- `statsmodels`: SARIMAX fitting and residual diagnostics.
-- `jupyterlab` and `ipykernel`: running the EDA notebook; IPython is installed as a dependency.
-- `tzdata`: America/New_York timezone support, particularly on Windows.
+For the notebook, also install `jupyterlab` and `ipykernel`. These provide IPython and a notebook interface. Use `python3` instead of `python` if required by your environment. macOS/Windows were not tested in the correction run; paths are portable, and tzdata supplies America/New_York timezone data. The original EDA notebook/plots were retained, not rerun during this correction. No additional review or test files are required to execute the project.
 
-The scripts use `pathlib` and can be run on Windows, macOS, or Linux. The ZIP does not record the platform or package versions used for the original model run. During this repository review, the builder and preparation script passed on Linux with Python 3.12.14, pandas 2.2.3, and NumPy 2.3.5. The full SARIMAX fit and notebook were not rerun in that review environment. Before submission, record the team’s actual analysis platform and package versions; the installation command above is not a pinned environment.
-
-On macOS/Linux, use `python3` in place of `python` if needed. On Windows, use the Python interpreter associated with the selected environment. Record versions after the final successful run with:
-
-```bash
-python --version
-python -m pip freeze > Output/environment_packages.txt
-python -c "import platform; print(platform.platform())" > Output/platform.txt
-```
-
-### 2. Map of the documentation and files
+### 2. Documentation map
 
 ```text
 Project_2/
-├── README.md                         Project orientation and reproduction instructions
-├── LICENSE.md                        MIT license for project software
-├── REFERENCES.MD                     Extended project reference list
-├── MI3_REVIEW.md                      Rubric findings and remaining corrections
 ├── Data/
-│   ├── README.MD                     Summary, provenance, terms, ethics, dictionary, plots
-│   ├── cville_crash_incidents.csv     5,432 incidents, including partial 2026
-│   ├── cville_weather_daily.csv       3,530 daily weather observations
-│   ├── cville_daily_crashes_weather.csv  3,287-row, 33-column intermediate table
-│   ├── cville_sarimax_analysis.csv    Final 3,287-row, nine-column model input
+│   ├── README.MD
 │   ├── annual_crash_counts.csv
-│   ├── source_codebook.csv
-│   ├── quality_report.json
-│   ├── provenance.json
-│   ├── mi2_daily_crash_distribution.png
+│   ├── cville_crash_incidents.csv
+│   ├── cville_daily_crashes_weather.csv
+│   ├── cville_sarimax_analysis.csv
+│   ├── cville_weather_daily.csv
 │   ├── mi2_annual_crash_counts.png
-│   └── raw/
-│       ├── crashes.json
-│       ├── crash_metadata.json
-│       ├── weather.json
-│       └── weather_request.json
-├── Scripts/
-│   ├── README.MD                     Script purposes, dependencies, execution order
-│   ├── build_dataset.py              Step 1: reconstruct tables from frozen JSON
-│   ├── prepare_sarimax_data.py        Step 2: prepare and validate final model input
-│   ├── fit_sarimax_models.py          Step 3: fit models and evaluate forecasts
-│   └── Charlottesville_Crash_EDA.ipynb  Step 4: descriptive exploration and plots
-└── Output/
-    ├── README.MD                     Output descriptions; some statements need updating
-    ├── cville_sarimax_analysis.csv    Mirror of final modeling input
-    ├── sarimax_validation_report.json
-    ├── sarimax_model_report.json      Order search, scores, intervals, diagnostics
-    ├── sarimax_test_forecasts.csv     Daily forecasts; export correction required
-    ├── Dataset_Tables/
-    │   ├── cville_crash_incidents.csv
-    │   ├── cville_weather_daily.csv
-    │   ├── cville_daily_crashes_weather.csv
-    │   ├── annual_crash_counts.csv
-    │   └── source_codebook.csv
-    ├── EDA_Tables/
-    │   ├── eda_summary.csv
-    │   ├── eda_missing_values.csv
-    │   ├── eda_annual_counts.csv
-    │   ├── eda_weekday_counts.csv
-    │   ├── eda_precipitation_summary.csv
-    │   └── eda_temperature_summary.csv
-    ├── EDA_Figures/
-    │   ├── eda_figure_01.png           Missing values
-    │   ├── eda_figure_02.png           Monthly counts and trailing average
-    │   ├── eda_figure_03.png           Annual counts
-    │   ├── eda_figure_04.png           Daily count distribution
-    │   ├── eda_figure_05.png           Weekday means
-    │   ├── eda_figure_06.png           Hourly totals and weekday-hour heatmap
-    │   ├── eda_figure_07.png           Severity and collision types
-    │   ├── eda_figure_08.png           Spatial concentration
-    │   └── eda_figure_09.png           Weather associations
-    └── Reports/
-        ├── quality_report.json
-        └── provenance.json
+│   ├── mi2_daily_crash_distribution.png
+│   ├── provenance.json
+│   ├── quality_report.json
+│   ├── raw/
+│   │   ├── crash_metadata.json
+│   │   ├── crashes.json
+│   │   ├── weather.json
+│   │   └── weather_request.json
+│   └── source_codebook.csv
+├── LICENSE
+├── Output/
+│   ├── Dataset_Tables/
+│   │   ├── annual_crash_counts.csv
+│   │   ├── cville_crash_incidents.csv
+│   │   ├── cville_daily_crashes_weather.csv
+│   │   ├── cville_weather_daily.csv
+│   │   └── source_codebook.csv
+│   ├── EDA_Figures/
+│   │   ├── eda_figure_01.png
+│   │   ├── eda_figure_02.png
+│   │   ├── eda_figure_03.png
+│   │   ├── eda_figure_04.png
+│   │   ├── eda_figure_05.png
+│   │   ├── eda_figure_06.png
+│   │   ├── eda_figure_07.png
+│   │   ├── eda_figure_08.png
+│   │   └── eda_figure_09.png
+│   ├── EDA_Tables/
+│   │   ├── eda_annual_counts.csv
+│   │   ├── eda_missing_values.csv
+│   │   ├── eda_precipitation_summary.csv
+│   │   ├── eda_summary.csv
+│   │   ├── eda_temperature_summary.csv
+│   │   └── eda_weekday_counts.csv
+│   ├── README.MD
+│   ├── Reports/
+│   │   ├── provenance.json
+│   │   └── quality_report.json
+│   ├── cville_sarimax_analysis.csv
+│   ├── sarimax_model_report.json
+│   ├── sarimax_test_forecasts.csv
+│   └── sarimax_validation_report.json
+├── README.MD
+├── REFERENCES.MD
+└── Scripts/
+    ├── Charlottesville_Crash_EDA.ipynb
+    ├── README.MD
+    ├── build_dataset.py
+    ├── fit_sarimax_models.py
+    └── prepare_sarimax_data.py
 ```
 
-The existing output subfolders contain organized copies. **The supplied scripts write new files directly into `Output/`, not those subfolders.** Rerunning does not update the organized copies automatically. Newly rebuilt files and future model figures therefore appear alongside the SARIMAX reports at the top of `Output/`.
+The builder and notebook write new files directly into `Output/`. Its existing subfolders hold organized copies; rerunning does not automatically replace those copies. Frozen inputs remain in `Data/` unless explicitly copied as described below.
 
-### 3. Instructions for reproducing the results
+### 3. Reproduce the results
 
-1. **Download or clone the repository.** Open a terminal in `Project_2/`, the directory containing this README and `Data/`, `Scripts/`, and `Output/`. Install the packages above in your chosen Python environment. Retain a copy of the supplied reports to compare with regenerated outputs; rerunning replaces same-named generated files.
+1. **Open a terminal in the repository root**, containing this README and the three project folders. Install the dependencies above. Reruns replace generated files with the same names.
 
-2. **Rebuild the cleaned data from the frozen source snapshot.** Run:
+2. **Rebuild the frozen data.** Run:
 
    ```bash
    python Scripts/build_dataset.py
    ```
 
-   This reads `Data/raw/` and writes five CSVs plus `quality_report.json` and `provenance.json` directly into `Output/`. Expected checks include 5,432 incident rows overall, 5,197 study incidents, 3,287 daily study rows, and zero unmatched weather days. Partial 2026 incidents are retained in the incident file but excluded from the study panel. The builder leaves frozen tables in `Data/` unchanged. Do not use `--refresh` to reproduce the October 9 snapshot: that option downloads current source responses.
+   This reads `Data/raw/` and writes five CSVs plus quality/provenance JSONs directly into `Output/`. Expect **5,432 incidents overall, 5,197 study incidents, 3,287 study days, and zero unmatched weather days**. Do not use `--refresh` to reproduce the frozen October 9 snapshot; it downloads current responses.
 
-3. **Connect the rebuilt data to the modeling pipeline.** After confirming the checks pass, copy the two rebuilt model source tables into `Data/`:
+3. **Prepare the final model input.** Pass the rebuilt daily and weather tables to preparation:
 
    ```bash
    python -c "from pathlib import Path; import shutil; [shutil.copy2(Path('Output')/n, Path('Data')/n) for n in ['cville_daily_crashes_weather.csv', 'cville_weather_daily.csv']]"
    python Scripts/prepare_sarimax_data.py
    ```
 
-   This replaces the corresponding derived Data tables with the frozen-raw rebuild; it does not change `Data/raw/`. The preparation script writes `Data/cville_sarimax_analysis.csv`, an identical `Output/` copy, and `Output/sarimax_validation_report.json`. Expect 3,287 rows, nine columns, no missing values, and splits of 2,191 training days, 365 validation days, and 731 test days. Alternatively, run the preparation script directly against the included frozen Data tables, which matched the raw-data rebuild in review.
+   Expect `Data/cville_sarimax_analysis.csv`, its `Output/` mirror, and `Output/sarimax_validation_report.json`: **3,287 rows, nine columns, no missing values**, and train/validation/test sizes of **2,191/365/731 days**. Raw JSON files are unchanged.
 
-4. **Correct the known forecast export error before relying on model CSV outputs.** In `Scripts/fit_sarimax_models.py`, the row-writing block currently uses the first element of a whole forecast array for every date. [MI3_REVIEW.md](MI3_REVIEW.md) gives the exact correction. The code is retained unchanged in this documentation update, so this repair remains required.
-
-5. **Fit and evaluate the models.** Run:
+4. **Fit and evaluate the models.** Run:
 
    ```bash
    python Scripts/fit_sarimax_models.py
    ```
 
-   The script searches 32 SARIMAX orders using only 2017–2022 fits and rolling 2023 validation MAE for the no-weather model. Both variants share the selected order. It refits through 2023 and forecasts each 2024–2025 day before using that day’s observed outcome to update the state, without refitting coefficients. Weather predictors are mean temperature, precipitation, snowfall, and maximum wind from seven days earlier; both models also use month sine/cosine terms. Scaling is learned from 2017–2022. The seasonal-naive comparator uses the observed count seven days earlier.
+   The search fits 32 candidates on 2017–2022 and selects the no-weather order using rolling next-day validation MAE on 2023. Both SARIMAX variants share the order and refit through 2023. Test forecasts cover 2024–2025, updating states after each observed day without refitting coefficients. Month sine/cosine terms appear in both models; the weather model adds mean temperature, precipitation, snowfall, and wind from seven days earlier. Scaling is learned from 2017–2022.
 
-   Results are `Output/sarimax_test_forecasts.csv` and `Output/sarimax_model_report.json`. The report includes overall and annual MAE/RMSE, paired circular seven-day block bootstrap intervals (2,000 resamples; seed 4002), clipping counts, residual Ljung–Box checks, and a pre-pandemic-trained evaluation on 2020–2021. There is no fixed runtime guarantee; the search makes many model fits. Exact numerical reproduction may depend on package versions and optimization.
+   Mean/median baselines use 2017–2022 for validation and 2017–2023 for testing, then remain fixed throughout each evaluation. Seasonal naive uses the observed count seven days earlier. Candidate intercepts use `trend='c'` when d=0 and `trend='n'` when d=1 [3].
 
-6. **Run the EDA notebook.** Launch:
+   Expected outputs are the existing `Output/sarimax_test_forecasts.csv` and `Output/sarimax_model_report.json`. The CSV contains **3,655 rows: five models × 731 days**, with observed counts, scored/raw forecasts, and clipping flags. The exporter checks its values before writing. The report includes overall/yearly MAE/RMSE, baseline values, fitted intercepts, order search, seven-day circular block-bootstrap intervals (2,000 resamples; seed 4002), residual diagnostics, sensitivity results, and environment. Compare with the expected results below; optimizer/package differences may affect final digits. No manual code changes are required.
 
-   ```bash
-   python -m jupyterlab
-   ```
+5. **Run EDA.** Launch `python -m jupyterlab`, open `Scripts/Charlottesville_Crash_EDA.ipynb`, select the installed environment, restart the kernel, and run all cells. Start from the project root or Scripts/. Expect **nine numbered PNG figures and six CSV summaries directly in Output/**, with plots displayed in the notebook. Same-day weather associations are descriptive, not forecasting inputs.
 
-   Open `Scripts/Charlottesville_Crash_EDA.ipynb`, select the same Python environment, restart the kernel, and run all cells in order. Start from the project root or `Scripts/`. It reads the frozen Data tables and writes nine PNG figures and six EDA CSV summaries directly into `Output/`; it also displays the plots. The two EDA images in `Data/` are metadata copies of figures 04 and 03. Same-day weather plots are descriptive, not forecasting inputs. The notebook examines the full study period, so it is not evidence that the test years were unseen during data exploration.
+## Expected modeling results
 
-7. **Validate the final exported results and record deviations.** Confirm 731 unique dates per model (2,193 forecast rows), actual counts matching Data, seasonal-naive values equal to count lag 7, and CSV MAE/RMSE agreeing with the JSON report. Record package versions and platform. Document the implemented sensitivity analysis as a change from MI2, or implement the preregistered exclusion check; these answer different questions. Save presentation tables and figures in `Output/` as they are finalized for MI4.
+| Model | Test MAE | Test RMSE |
+| --- | ---: | ---: |
+| SARIMAX without weather | 1.086120 | 1.395554 |
+| SARIMAX with earlier weather | 1.090465 | 1.400223 |
+| Constant median (predict 1) | 1.114911 | 1.592991 |
+| Constant mean | 1.118596 | 1.429067 |
+| Seven-day seasonal naive | 1.476060 | 1.969327 |
 
-## Results included in this snapshot
+The selected order is **(1,0,1)** with seasonal order **(1,0,1,7)** and an intercept. The final test constants are **mean = 1.538732394** and **median = 1**. Validation constants are mean = 1.523505249 and median = 1, calculated before 2023.
 
-These figures come from `Output/sarimax_model_report.json`. The SARIMAX scores were independently checked against the raw forecast column after clipping; the seasonal-naive scores were checked against count lag 7 from Data. The whole model search was not rerun for this documentation review.
+Both SARIMAX models beat both constant benchmarks and seasonal naive on test MAE. However, the weather model does not beat the no-weather model, so the original goal is **not met**. The weather-minus-no-weather MAE difference is approximately **+0.004344402** crashes/day, with a reported 95% block-bootstrap interval of **[−0.000654253, 0.009597203]**. This does not demonstrate improvement from the lagged weather features.
 
-| Model | Test MAE | Test RMSE | Days |
-| --- | ---: | ---: | ---: |
-| SARIMAX without weather | 1.089041 | 1.402993 | 731 |
-| SARIMAX with earlier weather | 1.089183 | 1.403236 | 731 |
-| Seven-day seasonal naive | 1.476060 | 1.969327 | 731 |
+## Decisions and limitations
 
-The selected order is `(1, 0, 1)` with seasonal order `(1, 0, 1, 7)`. Adding earlier weather changes MAE by approximately **+0.000142 crashes/day** relative to the no-weather model; the reported 95% block-bootstrap interval is approximately **[−0.01584, 0.01440]**. The weather model beats seasonal naive but does not beat the matched no-weather model. The goal is therefore **not met**; this is a null result for improvement from these weather features, not evidence that weather has no relationship with crashes.
+The source records count reported city crashes, not all emergencies or risk per trip. Reporting/publication timing is imperfectly known, so this is retrospective forecasting. SARIMAX is a Gaussian model applied to small counts; negative test point forecasts are clipped at zero for both models, and positive forecasts are not rounded. Validation MAE currently uses raw forecasts. Stationarity/invertibility are not enforced; convergence alone does not guarantee stability. Residual Ljung–Box results are descriptive and are not adjusted for fitted AR/MA degrees of freedom.
 
-## Data terms and interpretation
+The implemented sensitivity check trains on 2017–2019 and forecasts 2020–2021. This is a documented deviation from MI2's planned exclusion of 2020–2021 when fitting through 2023; the two analyses are not equivalent. Full-period EDA is not evidence that the test years were unseen during exploration. Predictive associations do not establish causation.
 
-The software is covered by [LICENSE.md](LICENSE.md). The MIT license does not override third-party data conditions. Preserve VDOT’s source terms [1] and Open-Meteo/ERA5 attribution [2], [4], [5]. The Data README records the unresolved VDOT redistribution terms; confirm the intended repository visibility and instructor access before submission.
+## License and attribution
 
-Counts describe reported city crashes, not all emergencies, individual risk, or risk per trip. Historical reporting dates and weather publication timing are not fully established, so this is a retrospective forecasting study. SARIMAX is a Gaussian model applied to small counts; negative point forecasts are clipped at zero consistently, and forecasts are not rounded. Predictive associations do not establish causation.
+The existing [LICENSE](LICENSE) provides MIT terms for project software. Third-party data retain their own source conditions: preserve VDOT terms [1] and Open-Meteo/ERA5 attribution and applicable CC BY 4.0 requirements [2], [4], [5]. Data/README.MD documents unresolved VDOT redistribution conditions. GitHub access and repository visibility are managed by the group.
 
 ## References
 
-Reference numbers below apply to this README. See [REFERENCES.MD](REFERENCES.MD) for the extended list; older Data `source_ref` tags use the Data README’s numbering.
+Numbers apply to this README; Data source_ref tags follow the Data README's numbering. The extended bibliography is in [REFERENCES.MD](REFERENCES.MD).
 
 [1] Virginia Department of Transportation, “Full_Crash,” Virginia Roads, ArcGIS REST Services Directory. Accessed: Oct. 21, 2026. [Online]. Available: https://services.arcgis.com/p5v98VHDX9Atv3l7/arcgis/rest/services/Full_Crash/FeatureServer
 
