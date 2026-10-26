@@ -15,6 +15,7 @@ import urllib.parse
 import urllib.request
 from zoneinfo import ZoneInfo
 
+# Resolve paths from the script location so terminal working directories do not matter.
 PROJECT_ROOT=Path(__file__).resolve().parent.parent
 DATA_DIR=PROJECT_ROOT/'Data'
 OUTPUT_DIR=PROJECT_ROOT/'Output'
@@ -33,6 +34,23 @@ FIELDS={'temperature_2m_max':'temp_max_c','temperature_2m_min':'temp_min_c',
     'temperature_2m_mean':'temp_mean_c','precipitation_sum':'precip_mm',
     'snowfall_sum':'snowfall_cm','wind_speed_10m_max':'wind_max_kmh'}
 
+def period_status(day, annual=False):
+    """Label supported study years and the frozen partial 2026 window explicitly.
+
+    A date outside the study is not automatically part of partial 2026. Annual
+    labels follow the same rule; other years remain outside_study_period.
+    """
+    year = day if isinstance(day, int) else day.year
+    if START.year <= year <= END.year:
+        return 'complete_calendar_year_range' if annual else 'complete_calendar_year'
+    if year == 2026:
+        if annual:
+            return 'partial_through_July_31'
+        if day <= dt.date(2026, 7, 31):
+            return 'partial_2026'
+    return 'outside_study_period'
+
+
 def fetch(url,params=None):
     if params: url+='?'+urllib.parse.urlencode(params)
     with urllib.request.urlopen(url,timeout=90) as response: data=json.load(response)
@@ -47,12 +65,14 @@ def save_csv(name,rows):
     with (OUTPUT_DIR/name).open('w',encoding='utf-8',newline='') as f:
         w=csv.DictWriter(f,fieldnames=list(rows[0]));w.writeheader();w.writerows(rows)
 
+# Refresh is opt-in: preserve Data/raw and write new responses under Output/raw.
 def refresh():
     global RAW
     RAW=OUTPUT_DIR/'raw'
     RAW.mkdir(parents=True, exist_ok=True)
     metadata=fetch(BASE,{'f':'json'})
     count=fetch(BASE+'/query',{'f':'json','where':WHERE,'returnCountOnly':'true'})['count']
+    # ArcGIS limits response size. Fetch all pages and verify the count is stable.
     records=[]
     while len(records)<count:
         page=fetch(BASE+'/query',{'f':'json','where':WHERE,'outFields':'*',
@@ -75,12 +95,15 @@ def refresh():
 def build():
     source=json.loads((RAW/'crashes.json').read_text())
     metadata=json.loads((RAW/'crash_metadata.json').read_text())
+    # Decode API categorical values using source metadata, preserving original codes.
     domains={f['name']:{str(v['code']):v['name'] for v in (f.get('domain') or {}).get('codedValues',[])}
         for f in metadata['fields']}
     domain_rows=[{'field':field,'code':code,'label':label} for field,mapping in domains.items()
         for code,label in mapping.items()]
     save_csv('source_codebook.csv',domain_rows)
     rows=[];seen={};excluded=[];duplicate_conflicts=[];time_issues=0
+    # Deterministic de-duplication retains the smallest OBJECTID for each crash ID.
+    # Log exclusions/conflicts; reject records outside the requested jurisdiction.
     for f in sorted(source['features'],key=lambda f:f['attributes']['OBJECTID']):
         a=f['attributes'];identifier=a.get('DOCUMENT_NBR')
         if str(a.get('PHYSICAL_JURIS'))!='104': raise RuntimeError('City filter violated')
@@ -115,24 +138,30 @@ def build():
             'reported_weather_code':a.get('WEATHER_CONDITION'),'reported_weather_label':label('WEATHER_CONDITION'),
             'road_surface_code':a.get('ROADWAY_SURFACE_COND'),'road_surface_label':label('ROADWAY_SURFACE_COND'),
             'light_condition_code':a.get('LIGHT_CONDITION'),'light_condition_label':label('LIGHT_CONDITION'),
-            'record_period_status':'complete_calendar_year' if START<=local_date<=END else 'partial_2026',
+            'record_period_status':period_status(local_date),
             'source_ref':'[1],[2]'})
+    # The incident table retains all source dates. Only the daily panel is study-filtered.
     rows.sort(key=lambda r:(r['date_local'],r['time_local_hhmm'] or '',r['crash_id']))
     save_csv('cville_crash_incidents.csv',rows)
     if excluded:save_csv('excluded_records.csv',excluded)
+    # Convert weather arrays to a date-keyed lookup; retain physical units from the API.
     wsource=json.loads((RAW/'weather.json').read_text()); wd=wsource['daily']
     weather={}
     for i,date in enumerate(wd['time']):
         weather[date]={'date_local':date,**{alias:wd[field][i] for field,alias in FIELDS.items()},'source_ref':'[3]'}
     save_csv('cville_weather_daily.csv',list(weather.values()))
+    # Index incidents before constructing every calendar day, including zero-record days.
     crash_by_day=collections.defaultdict(list)
     for r in rows:crash_by_day[r['date_local']].append(r)
     panel=[];history=[];weather_misses=0
     for index in range((END-START).days+1):
         day=START+dt.timedelta(days=index);key=day.isoformat();events=crash_by_day[key]
+        # Same-day weather is descriptive; lag-seven weather is the forecasting input.
         observed=weather.get(key,{});lag_weather=weather.get((day-dt.timedelta(days=7)).isoformat(),{})
         if not observed:weather_misses+=1
         def total(field):return sum(r[field] for r in events if r[field] is not None)
+        # Calendar and count-lag fields support EDA; final SARIMAX preparation selects
+        # only its allowed predictors. Injury/severity totals are never forecast inputs.
         p={'date_local':key,'year':day.year,'month':day.month,'day_of_month':day.day,
             'weekday_mon0':day.weekday(),'is_weekend':int(day.weekday()>=5),
             'day_of_year':day.timetuple().tm_yday,
@@ -150,16 +179,20 @@ def build():
             **{name+'_lag7':lag_weather.get(name) for name in FIELDS.values()},
             'coverage_status':'complete_calendar_year_range; source_completeness_unverified',
             'source_ref':'[1],[2],[3]'}
+        # Append after deriving history features to prevent target-day outcome leakage.
         panel.append(p);history.append(len(events))
     save_csv('cville_daily_crashes_weather.csv',panel)
+    # Summaries retain explicit partial/out-of-study labels instead of assuming coverage.
     annual=[{'year':int(y),'observed_crash_count':n,
-        'period_status':'partial_through_July_31' if y=='2026' else 'complete_calendar_year_range'}
+        'period_status':period_status(int(y), annual=True)}
         for y,n in sorted(collections.Counter(str(r['year']) for r in rows).items())]
     save_csv('annual_crash_counts.csv',annual)
+    # Reconcile unique study incidents with aggregated counts before publishing outputs.
     modeling=[r for r in rows if START.isoformat()<=r['date_local']<=END.isoformat()]
     if sum(p['crash_count'] for p in panel)!=len(modeling):raise RuntimeError('Daily counts do not reconcile')
     if len(rows)!=len({r['crash_id'] for r in rows}):raise RuntimeError('Duplicate clean IDs')
     if len(source['features'])!=source['source_count']:raise RuntimeError('Raw count mismatch')
+    # Quality checks and source hashes make the frozen snapshot independently auditable.
     quality={'city':'City of Charlottesville, Virginia','filter':WHERE,
         'source_rows':len(source['features']),'clean_incident_rows':len(rows),'excluded_rows':len(excluded),
         'duplicate_conflicts':duplicate_conflicts,'invalid_or_missing_hhmm':time_issues,
