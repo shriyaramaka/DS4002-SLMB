@@ -5,6 +5,9 @@ on 2023 with calendar-only exogenous terms; both model variants share the order.
 All scaling is learned from the applicable training period. See Scripts/README.MD.
 """
 import itertools
+import platform
+import sys
+from importlib.metadata import version
 import json
 import warnings
 from datetime import datetime, timezone
@@ -32,6 +35,17 @@ SEASONAL_ORDERS = list(itertools.product((0, 1), (0,), (0, 1), (7,)))
 BOOTSTRAPS, BLOCK_SIZE, SEED = 2000, 7, 4002
 
 
+def trend_for_order(order):
+    """Use an intercept for undifferenced candidates, no drift when d=1."""
+    return "c" if order[1] == 0 else "n"
+
+
+def constant_forecasts(history, horizon):
+    """Estimate constant benchmarks from fitting outcomes only, never evaluation data."""
+    return {"constant_mean": np.full(horizon, float(history.mean())),
+            "constant_median": np.full(horizon, float(history.median()))}
+
+
 def fit(y, x, order, seasonal_order, robust=False):
     # Slicing/reindexing can drop DatetimeIndex.freq even when dates remain daily.
     y = y.copy()
@@ -39,7 +53,7 @@ def fit(y, x, order, seasonal_order, robust=False):
     y.index = pd.DatetimeIndex(y.index, freq="D")
     x.index = pd.DatetimeIndex(x.index, freq="D")
     model = SARIMAX(y, exog=x, order=order, seasonal_order=seasonal_order,
-                    trend="c", enforce_stationarity=False,
+                    trend=trend_for_order(order), enforce_stationarity=False,
                     enforce_invertibility=False)
     # A longer final refit can need more optimizer iterations than the shorter
     # order-selection fit. Retry before classifying the fit as nonconverged.
@@ -70,7 +84,11 @@ def roll_forecast(result, y, x):
         preds.append(float(np.asarray(value).reshape(-1)[0]))
         # extend filters only the new observation; append refilters the full
         # history every day and makes long rolling evaluations unnecessarily slow.
-        state = state.extend(endog=[actual], exog=xrow)
+        # A single exogenous row is mechanically constant in every column.
+        # The full training design has already been specified; disable only
+        # clone-time specification checks for this one-row state update.
+        state = state.extend(endog=pd.Series([actual], index=xrow.index),
+                             exog=xrow, validate_specification=False)
     return np.asarray(preds)
 
 
@@ -118,12 +136,35 @@ def check_inputs():
         if part.empty or (part.index.min().strftime("%Y-%m-%d"),
                           part.index.max().strftime("%Y-%m-%d")) != dates:
             raise ValueError(f"Analysis CSV {split} split differs from the documented dates")
-    one_day_ns = 86_400_000_000_000  # nanoseconds in one day, without generic timedelta conversion
-    if not np.all(np.diff(df.index.asi8) == one_day_ns):
+    # Compare calendar dates, not raw integer ticks: pandas may use ns or us.
+    expected_dates = pd.date_range(df.index.min(), df.index.max(), freq="D")
+    if len(df.index) != len(expected_dates) or not (df.index == expected_dates).all():
         raise ValueError("Analysis CSV dates must be daily and continuous")
     # statsmodels uses the DatetimeIndex frequency when constructing forecast dates.
     df = df.asfreq("D")
     return df
+
+
+def forecast_table(test, predictions, raw_predictions):
+    """One scalar per date/model; validate before writing reusable forecasts."""
+    rows = []
+    for i, (date, actual) in enumerate(test.crash_count.items()):
+        for model, pred in predictions.items():
+            rows.append({"date_local": date.strftime("%Y-%m-%d"), "year": date.year,
+                         "model": model, "actual_crash_count": int(actual),
+                         "forecast_crash_count": float(np.asarray(pred).reshape(-1)[i]),
+                         "raw_forecast_crash_count": (float(np.asarray(raw_predictions[model][i]).reshape(-1)[0])
+                                                      if model in raw_predictions else
+                                                      float(np.asarray(pred).reshape(-1)[i])),
+                         "clipped": bool(model in raw_predictions and raw_predictions[model][i] < 0)})
+    frame = pd.DataFrame(rows)
+    if frame.duplicated(["date_local", "model"]).any():
+        raise ValueError("Duplicate date/model forecast rows")
+    for name, expected in predictions.items():
+        exported = frame.loc[frame.model == name, "forecast_crash_count"].to_numpy()
+        if not np.allclose(exported, np.asarray(expected).reshape(-1)):
+            raise ValueError(f"Exported forecasts differ from predictions: {name}")
+    return frame
 
 
 def main():
@@ -138,7 +179,8 @@ def main():
     candidates = [(o, s) for o in ORDERS for s in SEASONAL_ORDERS]
     selection, eligible = [], []
     for candidate_number, (order, seasonal) in enumerate(candidates, start=1):
-        item = {"order": list(order), "seasonal_order": list(seasonal)}
+        item = {"order": list(order), "seasonal_order": list(seasonal),
+                "trend": trend_for_order(order)}
         print(f"Order search {candidate_number}/{len(candidates)}: order={order}, seasonal={seasonal}",
               flush=True)
         try:
@@ -162,6 +204,12 @@ def main():
     eligible.sort(key=lambda x: (x[0], x[1][0] + x[1][2] + x[2][0] + x[2][2], x[3]))
     best_mae, best_order, best_seasonal, best_aic, _ = eligible[0]
 
+    # Validation constants are fixed from 2017-2022; neither is selected using test data.
+    validation_constants = constant_forecasts(train.crash_count, len(validation))
+    baseline_validation_metrics = {
+        name: {"forecast_value": float(pred[0]), **score(validation.crash_count, pred)}
+        for name, pred in validation_constants.items()
+    }
     # Final models are fit to all 2017-2023 data; test is a single untouched pass.
     refit, test = df.loc["2017":"2023"], df.loc["2024":"2025"]
     raw_predictions, clipped_predictions, fit_results = {}, {}, {}
@@ -184,13 +232,16 @@ def main():
 
     # Seasonal naive baseline is exactly the observed count seven days earlier.
     naive = df.crash_count.shift(7).loc[test.index].to_numpy(dtype=float)
-    predictions = {**clipped_predictions, "seasonal_naive_7day": naive}
-    model_metrics["seasonal_naive_7day"] = score(test.crash_count, naive)
-    annual_metrics["seasonal_naive_7day"] = {}
-    for year in (2024, 2025):
-        mask = test.index.year == year
-        annual_metrics["seasonal_naive_7day"][str(year)] = score(
-            test.crash_count.to_numpy()[mask], naive[mask])
+    # Re-estimate the prespecified constants on 2017-2023, then freeze throughout test.
+    test_constants = constant_forecasts(refit.crash_count, len(test))
+    predictions = {**clipped_predictions, "seasonal_naive_7day": naive, **test_constants}
+    for name in ("seasonal_naive_7day", "constant_mean", "constant_median"):
+        pred = predictions[name]
+        model_metrics[name] = score(test.crash_count, pred)
+        annual_metrics[name] = {}
+        for year in (2024, 2025):
+            mask = test.index.year == year
+            annual_metrics[name][str(year)] = score(test.crash_count.to_numpy()[mask], pred[mask])
 
     # Paired seven-day moving-block bootstrap; negative differences favor weather.
     rng = np.random.default_rng(SEED)
@@ -213,17 +264,18 @@ def main():
                 naive[mask], year_rng),
         }
 
-    rows = []
-    for i, (date, actual) in enumerate(test.crash_count.items()):
-        for model, pred in predictions.items():
-            rows.append({"date_local": date.strftime("%Y-%m-%d"), "year": date.year,
-                         "model": model, "actual_crash_count": int(actual),
-                         "forecast_crash_count": float(np.asarray(pred).reshape(-1)[0]),
-                         "raw_forecast_crash_count": (float(np.asarray(raw_predictions[model][i]).reshape(-1)[0])
-                                                      if model in raw_predictions else
-                                                      float(np.asarray(pred).reshape(-1)[0])),
-                         "clipped": bool(model in clip_counts and raw_predictions[model][i] < 0)})
-    pd.DataFrame(rows).to_csv(OUT / "sarimax_test_forecasts.csv", index=False)
+    for name in ("constant_mean", "constant_median"):
+        intervals[f"weather_minus_{name}"] = moving_block_ci(
+            test.crash_count, predictions["with_weather"], predictions[name], rng)
+        for year in (2024, 2025):
+            mask = test.index.year == year
+            baseline_rng = np.random.default_rng(SEED + year + (100 if name == "constant_mean" else 200))
+            intervals_by_year[str(year)][f"weather_minus_{name}"] = moving_block_ci(
+                test.crash_count.to_numpy()[mask], predictions["with_weather"][mask],
+                predictions[name][mask], baseline_rng)
+
+    forecast_table(test, predictions, raw_predictions).to_csv(
+        OUT / "sarimax_test_forecasts.csv", index=False)
 
     # Residual checks on final refits (in-sample one-step innovations).
     residual_checks = {}
@@ -258,6 +310,8 @@ def main():
                              "clipped_forecasts": int(np.sum(sp < 0))}
 
     report = {
+        "environment": {"python": sys.version, "platform": platform.platform(),
+                        "packages": {name: version(name) for name in ("numpy", "pandas", "scipy", "statsmodels")}},
         "created_at_utc": datetime.now(timezone.utc).isoformat(),
         "input": "Data/cville_sarimax_analysis.csv",
         "validation_report": "Output/sarimax_validation_report.json",
@@ -276,6 +330,21 @@ def main():
         "test_period": ["2024-01-01", "2025-12-31"],
         "forecast_method": "one day ahead; append observed count after each forecast, no coefficient refit",
         "metrics": model_metrics, "metrics_by_year": annual_metrics,
+        "intercept_policy": {"rule": "trend=c when d=0; trend=n when d=1",
+                             "selected_trend": trend_for_order(best_order),
+                             "fitted_intercepts": {name: float(result.params.get("intercept", 0.0))
+                                                   for name, result in fit_results.items()}},
+        "constant_baselines": {
+            "validation_fit_period": ["2017-01-01", "2022-12-31"],
+            "validation_period": ["2023-01-01", "2023-12-31"],
+            "validation_metrics": baseline_validation_metrics,
+            "test_fit_period": ["2017-01-01", "2023-12-31"],
+            "test_values": {name: float(pred[0]) for name, pred in test_constants.items()},
+            "policy": "Separate prespecified mean/median forecasts, fixed throughout evaluation; no test outcomes used to estimate constants",
+            "weather_beats_all_benchmarks_on_mae": bool(all(
+                model_metrics["with_weather"]["mae"] < model_metrics[name]["mae"]
+                for name in ("no_weather", "seasonal_naive_7day", "constant_mean", "constant_median"))),
+        },
         "goal_assessment": {
             "target": "with-weather test MAE lower than both no-weather and seasonal-naive models",
             "met": bool(model_metrics["with_weather"]["mae"] < model_metrics["no_weather"]["mae"]
