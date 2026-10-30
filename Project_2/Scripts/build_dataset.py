@@ -25,7 +25,8 @@ NY=ZoneInfo('America/New_York')
 BASE='https://services.arcgis.com/p5v98VHDX9Atv3l7/arcgis/rest/services/Full_Crash/FeatureServer/0'
 WHERE="PHYSICAL_JURIS = '104'"
 START=dt.date(2017,1,1)
-END=dt.date(2025,12,31)
+END=dt.date(2025,12,31) # exclude 2026 data due to it being an incomplete year
+# Location for weather: near the center of Charlottesville's Downtown Mall
 WEATHER_PARAMS={'latitude':38.03,'longitude':-78.48,'start_date':'2016-12-01',
     'end_date':'2026-07-31','models':'era5',
     'daily':'temperature_2m_max,temperature_2m_min,temperature_2m_mean,precipitation_sum,snowfall_sum,wind_speed_10m_max',
