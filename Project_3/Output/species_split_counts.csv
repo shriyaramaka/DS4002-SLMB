@@ -1,0 +1,13 @@
+common_name,train,validation,test
+American Crow,14,4,9
+American Goldfinch,21,8,9
+American Robin,20,16,12
+Barn Swallow,20,5,9
+Carolina Chickadee,21,6,8
+Eastern Bluebird,34,11,15
+Eastern Phoebe,27,5,10
+Great Blue Heron,23,7,9
+Mourning Dove,21,10,10
+Northern Cardinal,36,10,12
+Red-winged Blackbird,12,3,8
+Song Sparrow,23,5,9

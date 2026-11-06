@@ -1,0 +1,101 @@
+taxon_id,scientific_name,common_name,matching_observations,rank
+6930,Anas platyrhynchos,Mallard,812,species
+7089,Branta canadensis,Canada Goose,648,species
+9744,Agelaius phoeniceus,Red-winged Blackbird,257,species
+12727,Turdus migratorius,American Robin,256,species
+9100,Melospiza melodia,Song Sparrow,218,species
+4956,Ardea herodias,Great Blue Heron,209,species
+4793,Charadrius vociferus,Killdeer,191,species
+558439,Mareca strepera,Gadwall,189,species
+9083,Cardinalis cardinalis,Northern Cardinal,175,species
+11901,Hirundo rustica,Barn Swallow,172,species
+17008,Sayornis phoebe,Eastern Phoebe,169,species
+4756,Cathartes aura,Turkey Vulture,160,species
+4765,Coragyps atratus,Black Vulture,159,species
+12942,Sialia sialis,Eastern Bluebird,153,species
+145310,Spinus tristis,American Goldfinch,134,species
+14850,Sturnus vulgaris,European Starling,133,species
+7107,Aix sponsa,Wood Duck,123,species
+144814,Poecile carolinensis,Carolina Chickadee,121,species
+8021,Corvus brachyrhynchos,American Crow,119,species
+473,Fulica americana,American Coot,116,species
+3454,Zenaida macroura,Mourning Dove,112,species
+5212,Buteo jamaicensis,Red-tailed Hawk,109,species
+7109,Lophodytes cucullatus,Hooded Merganser,107,species
+5020,Butorides virescens,Green Heron,105,species
+199840,Haemorhous mexicanus,House Finch,100,species
+9602,Quiscalus quiscula,Common Grackle,98,species
+144455,Ardea alba,Great Egret,96,species
+3875,Tringa solitaria,Solitary Sandpiper,94,species
+11935,Tachycineta bicolor,Tree Swallow,92,species
+792988,Dryobates pubescens,Downy Woodpecker,91,species
+2548,Megaceryle alcyon,Belted Kingfisher,90,species
+13632,Baeolophus bicolor,Tufted Titmouse,87,species
+145245,Setophaga coronata,Yellow-rumped Warbler,86,species
+16782,Tyrannus tyrannus,Eastern Kingbird,85,species
+7428,Bombycilla cedrorum,Cedar Waxwing,84,species
+9135,Spizella passerina,Chipping Sparrow,84,species
+14995,Dumetella carolinensis,Gray Catbird,81,species
+14801,Sitta carolinensis,White-breasted Nuthatch,78,species
+7513,Thryothorus ludovicianus,Carolina Wren,76,species
+10094,Junco hyemalis,Dark-eyed Junco,74,species
+906,Meleagris gallopavo,Wild Turkey,72,species
+18205,Melanerpes carolinus,Red-bellied Woodpecker,72,species
+485176,Mareca americana,American Wigeon,71,species
+5206,Buteo lineatus,Red-shouldered Hawk,70,species
+8229,Cyanocitta cristata,Blue Jay,68,species
+9424,Pipilo erythrophthalmus,Eastern Towhee,67,species
+9921,Piranga olivacea,Scarlet Tanager,67,species
+10247,Setophaga ruticilla,American Redstart,64,species
+14886,Mimus polyglottos,Northern Mockingbird,64,species
+1579017,Astur cooperii,Cooper's Hawk,64,species
+9152,Spizella pusilla,Field Sparrow,62,species
+116999,Pandion haliaetus,Osprey,62,species
+4364,Larus delawarensis,Ring-billed Gull,61,species
+891704,Vireo olivaceus,Red-eyed Vireo,61,species
+9184,Zonotrichia albicollis,White-throated Sparrow,58,species
+7493,Polioptila caerulea,Blue-gray Gnatcatcher,57,species
+3864,Calidris minutilla,Least Sandpiper,54,species
+5305,Haliaeetus leucocephalus,Bald Eagle,51,species
+14898,Toxostoma rufum,Brown Thrasher,51,species
+16100,Contopus virens,Eastern Wood-Pewee,51,species
+145231,Setophaga tigrina,Cape May Warbler,51,species
+7044,Aythya collaris,Ring-necked Duck,50,species
+18236,Colaptes auratus,Northern Flicker,50,species
+72458,Actitis macularius,Spotted Sandpiper,50,species
+5227,Buteo platypterus,Broad-winged Hawk,49,species
+17402,Vireo solitarius,Blue-headed Vireo,49,species
+558433,Spatula discors,Blue-winged Teal,47,species
+145235,Setophaga magnolia,Magnolia Warbler,46,species
+9721,Geothlypis trichas,Common Yellowthroat,44,species
+10227,Passerina cyanea,Indigo Bunting,43,species
+11970,Stelgidopteryx serripennis,Northern Rough-winged Swallow,43,species
+1454382,Nannopterum auritum,Double-crested Cormorant,43,species
+7562,Troglodytes aedon,Northern House Wren,42,species
+3017,Columba livia,Rock Pigeon,41,species
+4665,Falco sparverius,American Kestrel,40,species
+6432,Archilochus colubris,Ruby-throated Hummingbird,40,species
+979756,Leiothlypis peregrina,Tennessee Warbler,40,species
+12878,Catharus ustulatus,Swainson's Thrush,39,species
+7004,Mergus merganser,Common Merganser,38,species
+10373,Molothrus ater,Brown-headed Cowbird,38,species
+4999,Nyctanassa violacea,Yellow-crowned Night Heron,37,species
+8010,Corvus corax,Common Raven,37,species
+10286,Mniotilta varia,Black-and-white Warbler,37,species
+145258,Setophaga virens,Black-throated Green Warbler,36,species
+145242,Setophaga palmarum,Palm Warbler,35,species
+4246,Podilymbus podiceps,Pied-billed Grebe,33,species
+9346,Icterus galbula,Baltimore Oriole,33,species
+145236,Setophaga castanea,Bay-breasted Warbler,33,species
+199916,Setophaga caerulescens,Black-throated Blue Warbler,33,species
+3893,Tringa flavipes,Lesser Yellowlegs,32,species
+12890,Catharus guttatus,Hermit Thrush,32,species
+145239,Setophaga pensylvanica,Chestnut-sided Warbler,32,species
+6571,Chaetura pelagica,Chimney Swift,30,species
+7054,Aythya affinis,Lesser Scaup,30,species
+13858,Passer domesticus,House Sparrow,30,species
+17855,Dryocopus pileatus,Pileated Woodpecker,29,species
+62550,Seiurus aurocapilla,Ovenbird,29,species
+145244,Setophaga pinus,Pine Warbler,29,species
+12883,Catharus minimus,Gray-cheeked Thrush,28,species
+5097,Accipiter striatus,Sharp-shinned Hawk,27,species

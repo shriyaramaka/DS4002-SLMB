@@ -1,0 +1,41 @@
+{
+  "retrieved_utc": "2026-11-05T14:37:29.760372+00:00",
+  "filters": {
+    "taxon_id": 3,
+    "place_id": 7,
+    "swlat": 36.54,
+    "swlng": -83.68,
+    "nelat": 37.95,
+    "nelng": -79.65,
+    "quality_grade": "research",
+    "captive": "false",
+    "photos": "true",
+    "photo_license": "cc0,cc-by,cc-by-sa",
+    "d2": "2026-11-05"
+  },
+  "selected_taxon_ids": [
+    12727,
+    9744,
+    4956,
+    9100,
+    9083,
+    17008,
+    11901,
+    12942,
+    145310,
+    8021,
+    3454,
+    144814
+  ],
+  "rows_selected": 484,
+  "usable_unique_images": 482,
+  "download_failures": 2,
+  "exact_duplicates_removed": 0,
+  "observers": 60,
+  "species": 12,
+  "split_counts": {
+    "train": 272,
+    "validation": 90,
+    "test": 120
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "images": 482,
+  "species": 12,
+  "observers": 60,
+  "split_counts": {
+    "train": 272,
+    "test": 120,
+    "validation": 90
+  },
+  "smallest_species_count": 23,
+  "largest_observer_share": 0.1970954356846473,
+  "pixel_duplicate_rows": 0,
+  "all_files_valid": true,
+  "all_species_in_every_partition": true,
+  "human_quality_review_complete": false,
+  "model_fitted": false
+}
