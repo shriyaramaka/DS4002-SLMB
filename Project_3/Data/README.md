@@ -25,7 +25,6 @@ Research-grade is community identification [5], not an expert guarantee. Conveni
 | selected_species.csv | Original per-species availability and selection counts. |
 | quality_review.csv | Original review log, preserved unchanged. |
 | quality_review_analysis.csv | 482 Visual review decisions with reasons, reviewer, and review date. |
-| near_duplicate_review.csv | Six perceptual-hash candidate pairs and explicit review decisions. |
 | review_policy.md | Selection rules, review scope, limitations, and provenance. |
 | class_mapping.json | Twelve records with class_index (0–11), taxon_id, scientific_name, common_name; indices follow ascending numeric taxon ID. |
 | dataset_freeze.json | SHA-256 of original manifest, review inputs, final manifest, and class mapping; individual image hashes remain in manifests. |
@@ -60,7 +59,7 @@ The original and analysis manifests have identical column definitions. IDs are s
 | `download_status` | ok for usable source/analysis manifest rows. |
 | `split` | Unchanged train, validation, or test assignment; never a predictor. |
 
-The analysis review log has photo_id, observation_id, common_name, image_path, review_status, decision, reason, reviewer, and reviewed_on. decision is retain or exclude. The duplicate log has photo_id_a, photo_id_b, hamming_distance, split_a, split_b, decision, reason, and reviewer; decision is distinct_images or duplicate. Pair decisions are inputs to preparation, not automated exclusions. class_mapping.json uses a classes array under schema_version and ordering metadata; use class_index, not row positions from alphabetical common names.
+The analysis review log has photo_id, observation_id, common_name, image_path, review_status, decision, reason, reviewer, and reviewed_on. decision is retain or exclude. class_mapping.json uses a classes array under schema_version and ordering metadata; use class_index, not row positions from alphabetical common names.
 
 | Index | Taxon ID | Species |
 |---|---|---|
@@ -88,7 +87,7 @@ python Scripts/test_data_setup.py
 python Scripts/04_majority_baseline.py
 ```
 
-Preparation applies the saved decisions and recreates the final manifest, mapping, freeze, exclusion report, split counts, duplicate audit, and two updated plots. It does not re-review photographs or change source files. The original build_dataset.py is for source collection and can recover failed downloads or change the sample; do not rerun it over this frozen collection for routine modeling. Keep a separate version for any recollection.
+Preparation applies the saved decisions and recreates the final manifest, mapping, freeze, exclusion report, split counts, and two updated plots. It does not re-review photographs or change source files. The original build_dataset.py is for source collection and can recover failed downloads or change the sample; do not rerun it over this frozen collection for routine modeling. Keep a separate version for any recollection.
 
 The original Scripts/01_bird_eda.ipynb describes the original 482-image establishment sample. Its existing numbered figures and eda_summary.json remain historical. New analysis_* outputs and preparation_report.json describe the reviewed sample. Do not mix their counts when reporting final results.
 
