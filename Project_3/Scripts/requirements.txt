@@ -4,3 +4,8 @@ Pillow>=10
 matplotlib>=3.8
 jupyterlab>=4
 ipykernel>=6
+
+# Analysis preparation and PyTorch loader dependencies
+scipy>=1.11
+torch>=2.2
+torchvision>=0.17
