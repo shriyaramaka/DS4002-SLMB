@@ -1,0 +1,10 @@
+{
+  "sha256": {
+    "Data/bird_images.csv": "82ae53bf3c1fcb4972dfe3b3fa3e3dd4845b18901b747857784efcacdb03305e",
+    "Data/quality_review_analysis.csv": "863c32ce7c93bff176bac713dd7f58435253825617f2759a9d43e0518bfab741",
+    "Data/near_duplicate_review.csv": "31cc4f945dc14e3f37e2820c7e1d30f28b4639f37685fef2ba14230557870576",
+    "Data/bird_images_analysis.csv": "9bb821bf548c5cc737f4ef3df1e74bd8dff358fb0d66233776fe6ffbc21229c6",
+    "Data/class_mapping.json": "ece43094219625dcd0c8645865477c116a376173409223e905d4f61478c3c266"
+  },
+  "source_images": "per-image hashes in both manifests"
+}
