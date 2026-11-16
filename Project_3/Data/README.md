@@ -30,6 +30,17 @@ Research-grade is community identification [5], not an expert guarantee. Conveni
 | dataset_freeze.json | SHA-256 of original manifest, review inputs, final manifest, and class mapping; individual image hashes remain in manifests. |
 | raw/ | Cached observation JSON responses, species-count response, earlier pilot records, and original quality_review_before_setup.csv. |
 
+## Initial Exploratory Plots from MI2
+
+These plots describe the original 482-image dataset before image-quality exclusions.
+
+![Observer contributions and observation months](03_observers_and_months.png)
+
+**Figure 1. Observer contributions and observation months.** The largest contributor accounts for 19.7% of the photographs. Keeping each observer’s photographs within one split helps us evaluate performance on photographs from new contributors. Monthly counts describe when the sampled photographs were taken, not seasonal bird abundance.
+
+![Observer-separated data splits](02_split_coverage.png)
+
+**Figure 2. Observer-separated partitions.** The initial dataset contains 272 training, 90 validation, and 120 test images, with all 12 species represented in each split. The proportions are approximate because each observer’s photographs stay together.
 ## Manifest dictionary
 
 The original and analysis manifests have identical column definitions. IDs are strings, not quantitative features. Blank metadata mean unavailable, not zero. Date/location information can be missing without preventing image loading. Species-label uncertainty remains unquantified.
