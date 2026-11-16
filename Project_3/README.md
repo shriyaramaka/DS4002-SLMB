@@ -21,6 +21,96 @@ Use Python 3.10+ with numpy, pandas, Pillow, matplotlib, scipy, torch, torchvisi
 | Scripts/ | README.md, requirements.txt, build_dataset.py, 01_bird_eda.ipynb, 02_prepare_data.py, bird_dataset.py, 03_check_loader.py, test_data_setup.py, 04_majority_baseline.py, test_majority_baseline.py. |
 | Output/ | README.md, original EDA figures/tables, reviewed-sample preparation reports/plots, loader verification, software versions, baseline rule/predictions/metrics/per-species scores/confusion matrix. The Output README enumerates them. |
 
+### Repository structure
+
+```text
+Project_3/
+├── README.md
+├── LICENSE.md
+├── REFERENCES.md
+│
+├── Data/
+│   ├── README.md
+│   ├── bird_images.csv
+│   ├── bird_images_analysis.csv
+│   ├── selected_species.csv
+│   ├── download_manifest.csv
+│   ├── quality_review.csv
+│   ├── quality_review_analysis.csv
+│   ├── near_duplicate_review.csv
+│   ├── review_policy.md
+│   ├── class_mapping.json
+│   ├── dataset_freeze.json
+│   ├── 02_split_coverage.png
+│   ├── 03_observers_and_months.png
+│   ├── images/
+│   │   └── <taxon_id>/
+│   │       └── <photo_id>.jpg
+│   └── raw/
+│       ├── observations_<taxon_id>_200.json
+│       ├── species_counts.json
+│       ├── quality_review_before_setup.csv
+│       └── pilot/
+│           ├── observations_<taxon_id>.json
+│           ├── species_counts.json
+│           └── tables/
+│               ├── bird_images.csv
+│               ├── download_manifest.csv
+│               ├── selected_species.csv
+│               └── species_availability.csv
+│
+├── Scripts/
+│   ├── README.md
+│   ├── requirements.txt
+│   ├── build_dataset.py
+│   ├── 01_bird_eda.ipynb
+│   ├── 02_prepare_data.py
+│   ├── bird_dataset.py
+│   ├── 03_check_loader.py
+│   ├── test_data_setup.py
+│   ├── 04_majority_baseline.py
+│   └── test_majority_baseline.py
+│
+└── Output/
+    ├── README.md
+    ├── EDA/
+    │   ├── 01_species_counts.png
+    │   ├── 02_split_coverage.png
+    │   ├── 03_observers_and_months.png
+    │   ├── 04_image_dimensions.png
+    │   ├── 05_example_images.png
+    │   ├── species_summary.csv
+    │   ├── species_split_counts.csv
+    │   ├── observer_counts.csv
+    │   ├── month_counts.csv
+    │   ├── missing_values.csv
+    │   ├── image_integrity.csv
+    │   ├── pixel_duplicate_candidates.csv
+    │   ├── build_summary.json
+    │   └── eda_summary.json
+    ├── Preparation/
+    │   ├── analysis_species_counts.png
+    │   ├── analysis_split_coverage.png
+    │   ├── analysis_exclusions.csv
+    │   ├── analysis_species_split_counts.csv
+    │   ├── near_duplicate_candidates.csv
+    │   └── preparation_report.json
+    ├── Baseline/
+    │   ├── majority_baseline.json
+    │   ├── baseline_test_predictions.csv
+    │   ├── baseline_metrics.json
+    │   ├── baseline_per_species.csv
+    │   ├── baseline_confusion_matrix.csv
+    │   └── baseline_confusion_matrix.png
+    └── Validation/
+        ├── loader_check.json
+        └── setup_environment.json
+```
+
+`<taxon_id>` and `<photo_id>` represent species folders and individual photograph filenames. The image manifests list each photograph’s exact path. Observation JSON filenames follow the displayed patterns for each selected species.
+
+The two MI2 plots in Data/ are documentation copies of the original figures in Output/EDA/. $$##ResNet-18 scripts and results will be added to this map when completed.$$##
+
 ## Reproduce the completed results
 
 1. Extract Project_3.zip and open a terminal **inside Project_3**, where Data, Scripts, and Output are located.
