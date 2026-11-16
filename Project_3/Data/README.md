@@ -24,7 +24,7 @@ Research-grade is community identification [5], not an expert guarantee. Conveni
 | download_manifest.csv | All 484 original selected attempts and their status. |
 | selected_species.csv | Original per-species availability and selection counts. |
 | quality_review.csv | Original review log, preserved unchanged. |
-| quality_review_analysis.csv | 482 Visual review decisions with reasons, reviewer, and review date. |
+| quality_review_analysis.csv | 482 Visual review decisions with reasons and review date. |
 | review_policy.md | Selection rules, review scope, limitations, and provenance. |
 | class_mapping.json | Twelve records with class_index (0–11), taxon_id, scientific_name, common_name; indices follow ascending numeric taxon ID. |
 | dataset_freeze.json | SHA-256 of original manifest, review inputs, final manifest, and class mapping; individual image hashes remain in manifests. |
@@ -70,7 +70,7 @@ The original and analysis manifests have identical column definitions. IDs are s
 | `download_status` | ok for usable source/analysis manifest rows. |
 | `split` | Unchanged train, validation, or test assignment; never a predictor. |
 
-The analysis review log has photo_id, observation_id, common_name, image_path, review_status, decision, reason, reviewer, and reviewed_on. decision is retain or exclude. class_mapping.json uses a classes array under schema_version and ordering metadata; use class_index, not row positions from alphabetical common names.
+The analysis review log has photo_id, observation_id, common_name, image_path, review_status, decision, reason, and reviewed_on. decision is retain or exclude. class_mapping.json uses a classes array under schema_version and ordering metadata; use class_index, not row positions from alphabetical common names.
 
 | Index | Taxon ID | Species |
 |---|---|---|
@@ -104,16 +104,20 @@ The original Scripts/01_bird_eda.ipynb describes the original 482-image establis
 
 ## Explanatory plots and findings
 
-![Reviewed species sample](../Output/analysis_species_counts.png)
+![Reviewed species sample](../Output/Preparation/analysis_species_counts.png)
 
 Retained counts remain unequal; overall accuracy should be accompanied by per-species recall and test support.
 
-![Reviewed split coverage](../Output/analysis_split_coverage.png)
+![Reviewed split coverage](../Output/Preparation/analysis_split_coverage.png)
 
 All 12 classes remain represented, with observers still isolated. This does not rule out site-level dependence or every near duplicate.
 
-Preparation excluded 15 noneligible images; none of the six fingerprint candidates was confirmed as a duplicate. The review cannot establish expert species correctness. The source labels remain unchanged. See Output/analysis_exclusions.csv and review_policy.md for exact decisions.
+Preparation excluded 15 noneligible images; none of the six fingerprint candidates was confirmed as a duplicate. The review cannot establish expert species correctness. The source labels remain unchanged. See Output/Preparation/analysis_exclusions.csv and review_policy.md for exact decisions.
 
 ## References
 
 Numbers refer to [the project's IEEE reference list](../REFERENCES.md). Photo-level credits and original links remain in both image manifests.
+
+## Duplicate-review input
+
+`near_duplicate_review.csv` records decisions for the six perceptual-hash candidate pairs. It restores the decisions retained in `Output/Preparation/near_duplicate_candidates.csv`; all six were recorded as distinct images. Preparation reads the Data file and regenerates the Output table. The review log has no reviewer column. AI assistance is documented in [review_policy.md](review_policy.md).
