@@ -2,7 +2,7 @@
 
 Run from any directory: python /path/to/Project_3/Scripts/04_majority_baseline.py
 Inputs: Data/bird_images_analysis.csv, class_mapping.json, dataset_freeze.json.
-Outputs: Output/majority_baseline.json, baseline_test_predictions.csv,
+Outputs: Output/Baseline/majority_baseline.json, baseline_test_predictions.csv,
          baseline_metrics.json, baseline_per_species.csv,
          baseline_confusion_matrix.csv, baseline_confusion_matrix.png.
 The class is selected ONLY from training labels; test labels only score the
@@ -34,8 +34,8 @@ def write_csv(path, fields, rows):
         writer.writerows(rows)
 
 def main():
-    data, output = ROOT/'Data', ROOT/'Output'
-    output.mkdir(exist_ok=True)
+    data, output = ROOT/'Data', ROOT/'Output/Baseline'
+    output.mkdir(parents=True, exist_ok=True)
     freeze = json.loads((data/'dataset_freeze.json').read_text())
     for name, expected in freeze['sha256'].items():
         if digest(ROOT/name) != expected:

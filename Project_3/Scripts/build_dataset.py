@@ -44,6 +44,7 @@ def download(row):
  return row
 def main():
  parser=argparse.ArgumentParser();parser.add_argument('--per-species',type=int,default=60);args=parser.parse_args()
+ (ROOT/'Output/EDA').mkdir(parents=True,exist_ok=True)
  raw=ROOT/'Data/raw';raw.mkdir(parents=True,exist_ok=True)
  url=BASE+'observations/species_counts?'+urllib.parse.urlencode(dict(FILTER,per_page=100))
  counts=fetch(url,raw/'species_counts.json')
@@ -104,5 +105,5 @@ def main():
   r.pop('provisional_split',None);r.setdefault('split','')
  table(ROOT/'Data/download_manifest.csv',rows);table(ROOT/'Data/bird_images.csv',final);table(ROOT/'Data/selected_species.csv',species)
  summary={'retrieved_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'filters':FILTER,'selected_taxon_ids':IDS,'rows_selected':len(rows),'usable_unique_images':len(final),'download_failures':sum(r['download_status']!='ok' for r in rows),'exact_duplicates_removed':sum(r['download_status']=='ok' for r in rows)-len(final),'observers':len({r['observer_id'] for r in final}),'species':len(set(r['taxon_id'] for r in final)),'split_counts':{s:sum(r['split']==s for r in final) for s in ['train','validation','test']}}
- (ROOT/'Output/build_summary.json').write_text(json.dumps(summary,indent=2));print(json.dumps(summary),flush=True)
+ (ROOT/'Output/EDA/build_summary.json').write_text(json.dumps(summary,indent=2));print(json.dumps(summary),flush=True)
 if __name__=='__main__':main()

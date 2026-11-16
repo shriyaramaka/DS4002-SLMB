@@ -1,7 +1,7 @@
 """Verify the prepared loader without fitting a model or scoring test images.
 
 Run: python Scripts/03_check_loader.py
-Output: Output/loader_check.json. Exercises complete train/validation loading,
+Output: Output/Validation/loader_check.json. Exercises complete train/validation loading,
 mapping, deterministic validation, train-only augmentation, and repeat seeds.
 Test media integrity is checked by 02_prepare_data.py, not used for tuning here.
 """
@@ -52,7 +52,8 @@ def main():
                   validation_deterministic=True, seeded_training_reproducible=True,
                   test_images_scored=False, model_fitted=False,
                   python=platform.python_version(), torch=torch.__version__, torchvision=torchvision.__version__)
-    (ROOT/'Output/loader_check.json').write_text(json.dumps(result,indent=2)+'\n')
+    (ROOT/'Output/Validation').mkdir(parents=True, exist_ok=True)
+    (ROOT/'Output/Validation/loader_check.json').write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps(result,indent=2))
 
 if __name__ == '__main__':

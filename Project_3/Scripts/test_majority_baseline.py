@@ -26,9 +26,9 @@ class BaselineChecks(unittest.TestCase):
         with self.assertRaises(ValueError): module.majority_class([])
 
     def test_saved_predictions_match_scores(self):
-        with (ROOT/'Output/baseline_test_predictions.csv').open(newline='') as f:
+        with (ROOT/'Output/Baseline/baseline_test_predictions.csv').open(newline='') as f:
             predictions=list(csv.DictReader(f))
-        metrics=json.loads((ROOT/'Output/baseline_metrics.json').read_text())
+        metrics=json.loads((ROOT/'Output/Baseline/baseline_metrics.json').read_text())
         with (ROOT/'Data/bird_images_analysis.csv').open(newline='') as f:
             all_rows=list(csv.DictReader(f))
         tests={r['photo_id']:r for r in all_rows if r['split']=='test'}
@@ -42,7 +42,7 @@ class BaselineChecks(unittest.TestCase):
         correct=sum(int(r['correct']) for r in predictions)
         self.assertEqual(metrics['correct'],correct)
         self.assertAlmostEqual(metrics['accuracy'],correct/len(predictions))
-        with (ROOT/'Output/baseline_per_species.csv').open(newline='') as f:
+        with (ROOT/'Output/Baseline/baseline_per_species.csv').open(newline='') as f:
             species=list(csv.DictReader(f))
         self.assertEqual(sum(int(r['test_images']) for r in species),len(predictions))
         self.assertAlmostEqual(metrics['macro_recall'],sum(float(r['recall']) for r in species)/len(species))

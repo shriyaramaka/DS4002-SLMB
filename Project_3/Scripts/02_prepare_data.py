@@ -3,7 +3,7 @@
 Run: python Scripts/02_prepare_data.py
 Inputs: Data/bird_images.csv, quality_review_analysis.csv, near_duplicate_review.csv, images/.
 Outputs: Data/bird_images_analysis.csv, class_mapping.json, dataset_freeze.json;
-         Output/preparation_report.json, analysis_species_split_counts.csv,
+         Output/Preparation/preparation_report.json, analysis_species_split_counts.csv,
          analysis_exclusions.csv, near_duplicate_candidates.csv.
 Review decisions are inputs, not automatic botanical/zoological verification.
 Preparation fails on missing decisions, corrupted images, changed source hashes,
@@ -20,7 +20,7 @@ from scipy.fft import dctn
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA, OUTPUT = ROOT / 'Data', ROOT / 'Output'
+DATA, OUTPUT = ROOT / 'Data', ROOT / 'Output/Preparation'
 
 def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -47,7 +47,7 @@ def phash(path):
     return bits
 
 def main():
-    OUTPUT.mkdir(exist_ok=True)
+    OUTPUT.mkdir(parents=True, exist_ok=True)
     fields, source = read_csv(DATA / 'bird_images.csv')
     _, decisions = read_csv(DATA / 'quality_review_analysis.csv')
     ids = [r['photo_id'] for r in source]
