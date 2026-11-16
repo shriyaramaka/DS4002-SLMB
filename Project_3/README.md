@@ -4,7 +4,7 @@ DS 4002, Section 002 · SM: Statistics and Modelling · Maggie Parkhurst and Shr
 
 We will identify 12 selected bird species using image pixels, targeting at least 80% accuracy on photographs from held-out observers. **Data preparation, image loading, and the training-majority baseline are complete. ResNet-18 training and evaluation are still pending.** This is not a completed MI3 model analysis yet.
 
-The original collection has 482 photographs. Documented AI-assisted quality screening retains 467: **265 train / 83 validation / 119 test**. All species occur in each split; no observer crosses splits. Source labels were not independently expert-verified. The fixed training-majority baseline predicts Northern Cardinal and scores **12/119 = 10.084% accuracy**, with macro recall **8.333%**. $$##INSERT NEURAL MODEL ACCURACY HERE.##$$
+The original collection has 482 photographs. Documented quality screening retains 467: **265 train / 83 validation / 119 test**. All species occur in each split; no observer crosses splits. Source labels were not independently expert-verified. The fixed training-majority baseline predicts Northern Cardinal and scores **12/119 = 10.084% accuracy**, with macro recall **8.333%**. $$##INSERT NEURAL MODEL ACCURACY HERE.##$$
 
 ## Software and platform
 
@@ -20,7 +20,6 @@ Use Python 3.10+ with numpy, pandas, Pillow, matplotlib, scipy, torch, torchvisi
 | Data/raw/ | Cached collection/pilot JSON, plus quality_review_before_setup.csv. Use the manifests to locate the modeling inputs; raw metadata are not features. |
 | Scripts/ | README.md, requirements.txt, build_dataset.py, 01_bird_eda.ipynb, 02_prepare_data.py, bird_dataset.py, 03_check_loader.py, test_data_setup.py, 04_majority_baseline.py, test_majority_baseline.py. |
 | Output/ | README.md, original EDA figures/tables, reviewed-sample preparation reports/plots, loader verification, software versions, baseline rule/predictions/metrics/per-species scores/confusion matrix. The Output README enumerates them. |
-
 
 ## Reproduce the completed results
 
