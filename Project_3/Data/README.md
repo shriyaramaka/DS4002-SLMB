@@ -1,104 +1,109 @@
 # Bird Identification Data
 
-## Data summary
+## Summary and final analysis inputs
 
-This folder contains the initial source records and final image dataset for the DS 4002 bird identification project. The dataset contains **482 validated photographs of 12 bird species**, contributed by **60 observers**, within the project's defined Southwest Virginia study area. Images were compiled from iNaturalist; no Kaggle data are used.
+The original November 5 collection contains **482 images, 12 species, and 60 observers**. Its medium-resolution photographs and manifest remain unchanged. Visual quality screening on November 16 retained **467 images from 56 observers**, with **265 train / 83 validation / 119 test** images. Every species remains in every split, with no observer crossing partitions. The target remains identification of the 12 selected species, with an 80% held-out accuracy goal. The training-majority baseline is now complete; no ResNet-18 classifier has been trained or scored.
 
-The final analysis inputs are **`bird_images.csv` together with the photographs in `images/`**. Each row represents one photograph from one observation. The planned model predicts species from image pixels and is evaluated using held-out accuracy. This package contains EDA, not a fitted classifier or achieved accuracy results.
+Use **bird_images_analysis.csv**, **class_mapping.json**, **dataset_freeze.json**, and the photographs referenced under **images/** for the next analysis. Keep bird_images.csv as the original manifest. All image paths are relative to Project_3. Review is amateur screening, not expert taxonomic verification; see [review_policy.md](review_policy.md).
 
-## Files and folders
+## Provenance and permissions
 
-| Name | Description |
+Source: public iNaturalist API [2]. Area: Virginia (place ID 7) intersected with latitude 36.54–37.95 and longitude −83.68–−79.65, an operational Southwest Virginia area rather than an official county list. The collector considered up to the latest 200 matching research-grade, non-captive observations per species, required eligible licensed photos, and excluded obscured/private candidates. One eligible photo per observation was chosen, capped at 60 per species and eight per observer/species, using seeded observer round-robin selection. Observation-date cutoff: November 5, 2026. Reported source dates span May 6, 2010 through October 21, 2026. Of 484 download attempts, 482 succeeded; none was removed by the original byte-hash check. Raw cached records preserve the source response used for collection. API pacing follows [4].
+
+Each photo retains its recorded CC0, CC BY, or CC BY-SA permission, credit, and source links [3]. Follow its actual source terms; the code's MIT license does not replace photo or raw-metadata permissions. The manifest has no precise coordinate columns, but locality text need not be county-only and cached API responses may contain more detailed public metadata. This setup did not sanitize or remove source metadata. Do not infer private locations or redistribute sensitive details unnecessarily.
+
+Research-grade is community identification [5], not an expert guarantee. Convenience sampling reflects observers and detection effort, not abundance or seasonal bird population changes. Performance will apply only to these selected classes and sampled conditions. IDs, names, locality, credit strings, and split labels are not image-model predictors. Difficult bird photographs were not excluded based on model performance.
+
+## Files
+
+| File/folder | Purpose |
 |---|---|
-| `README.md` | Documentation for this data folder. |
-| `bird_images.csv` | Final image manifest containing species labels, observation and photo IDs, image paths, dates, observer IDs, image dimensions, hashes, source credits, licenses, and proposed data splits. |
-| `download_manifest.csv` | Audit of all 484 selected download attempts, including the two failures. Only successful retained images appear in `bird_images.csv`. |
-| `selected_species.csv` | Source availability and sample-selection counts for the 12 requested species. |
-| `quality_review.csv` | Human image-review log with review status, decisions, and reasons. Review is incomplete; existing entries are preserved when the notebook is rerun. |
-| `images/` | Downloaded photographs, organized as `<taxon_id>/<photo_id>.jpg`. The manifest's `image_path` locates each file relative to the project root. |
-| `raw/` | Initial cached iNaturalist API responses used to assemble the dataset. |
-| `raw/species_counts.json` | Original API response describing regional species availability. Observation counts reflect source coverage, not standardized bird abundance. |
-| `raw/observations_<taxon_id>_200.json` | Twelve source-response files, with up to 200 matching candidate observations per requested species. |
-| `raw/pilot/` | Earlier pilot API snapshots, retained as provenance. These are not additional rows in the final dataset. |
+| bird_images.csv | Original 482-image source manifest; retained unchanged. |
+| bird_images_analysis.csv | Reviewed 467-image modeling manifest, same columns and original assignments. |
+| images/ | Original source JPEGs; excluded images remain for provenance. |
+| download_manifest.csv | All 484 original selected attempts and their status. |
+| selected_species.csv | Original per-species availability and selection counts. |
+| quality_review.csv | Original review log, preserved unchanged. |
+| quality_review_analysis.csv | 482 Visual review decisions with reasons, reviewer, and review date. |
+| near_duplicate_review.csv | Six perceptual-hash candidate pairs and explicit review decisions. |
+| review_policy.md | Selection rules, review scope, limitations, and provenance. |
+| class_mapping.json | Twelve records with class_index (0–11), taxon_id, scientific_name, common_name; indices follow ascending numeric taxon ID. |
+| dataset_freeze.json | SHA-256 of original manifest, review inputs, final manifest, and class mapping; individual image hashes remain in manifests. |
+| raw/ | Cached observation JSON responses, species-count response, earlier pilot records, and original quality_review_before_setup.csv. |
 
-The 12 observation-response taxon IDs are **3454, 4956, 8021, 9083, 9100, 9744, 11901, 12727, 12942, 17008, 144814, and 145310**. The pilot folder contains `species_counts.json` and corresponding `observations_<taxon_id>.json` files.
+## Manifest dictionary
 
-`taxon_id` is the species class key. Read IDs as categorical strings. Dates use `YYYY-MM-DD`; image dimensions are in pixels. Missing metadata are not zero. Source community identifications remain subject to error and human review.
+The original and analysis manifests have identical column definitions. IDs are strings, not quantitative features. Blank metadata mean unavailable, not zero. Date/location information can be missing without preventing image loading. Species-label uncertainty remains unquantified.
 
-## Where to find the scripts
-
-Code is stored in the sibling **Scripts** folder:
-
-- [build_dataset.py](../Scripts/build_dataset.py): assembles the dataset from cached source responses, downloads missing photographs, validates images, removes exact byte duplicates, and assigns observer-separated splits. Writes the final data manifests and `Output/build_summary.json`.
-- [01_bird_eda.ipynb](../Scripts/01_bird_eda.ipynb): commented exploratory notebook with section headers and executed outputs. Audits the manifest, image files, class balance, split coverage, observers, dates, and image sizes; saves tables and plots to `Output/`. Creates the review log if missing and preserves existing review entries.
-- [requirements.txt](../Scripts/requirements.txt): packages needed for collection and EDA.
-
-## Recreate the data and EDA
-
-Keep **Data**, **Scripts**, and **Output** together. Run commands from the **project root**, the folder containing those three folders:
-
-```bash
-python -m pip install -r Scripts/requirements.txt
-```
-
-To reproduce the EDA for the included frozen sample:
-
-```bash
-jupyter lab Scripts/01_bird_eda.ipynb
-```
-
-Open the notebook, select your Python environment, and run all cells in order. Included photographs and cached data allow EDA without internet access. Expected results: **482 images**, **12 species**, **272 training**, **90 validation**, and **120 test images**. All records from an observer belong to the same split.
-
-To rebuild the source-derived dataset separately:
-
-```bash
-python Scripts/build_dataset.py
-```
-
-Existing raw responses and images are reused. Missing records or photographs require internet access. A rebuild can recover previously failed downloads and change the sample, so keep the supplied manifest for reproducing the frozen EDA and version any newly rebuilt dataset separately. The observation-date cutoff is November 5, 2026; retain cached source responses because the live source can change.
-
-## Generated outputs
-
-Generated EDA results belong in the sibling **Output** folder. Keep the actual input photographs, final manifest, and review decisions here in **Data**.
-
-| File in `Output/` | Contents |
+| Field | Definition |
 |---|---|
-| `01_species_counts.png` | Image counts by species. |
-| `02_split_coverage.png` | Species counts across training, validation, and test sets. |
-| `03_observers_and_months.png` | Observer concentration and monthly coverage. |
-| `04_image_dimensions.png` | Image dimensions and aspect ratios. |
-| `05_example_images.png` | One source-labeled example per species; credits are in `bird_images.csv`. |
-| `species_summary.csv` | Species-level image and observer counts. |
-| `species_split_counts.csv` | Image counts by species and split. |
-| `observer_counts.csv` | Retained image counts per observer. |
-| `month_counts.csv` | Image counts by observation month. |
-| `missing_values.csv` | Missing manifest values by feature. |
-| `image_integrity.csv` | Image validation and decoded-image audit results. |
-| `pixel_duplicate_candidates.csv` | Identical decoded-image candidates; not a complete near-duplicate test. |
-| `build_summary.json` | Collection settings, counts, download results, and split sizes. |
-| `eda_summary.json` | EDA counts and verification results. |
-| `README.md` | Output-folder documentation. |
+| `observation_id` | Public observation key; one retained photo per observation. |
+| `photo_id` | Public photo key, unique; string returned with each tensor. |
+| `taxon_id` | Species target key; mapped to a class index using class_mapping.json. |
+| `scientific_name` | Source species name; not independently expert-verified. |
+| `common_name` | Source display name; descriptive label. |
+| `observed_on` | Reported observation date (YYYY-MM-DD); not retrieval date. |
+| `month` | Derived observation month, 1–12; blank if unavailable. |
+| `observer_id` | Public contributor key used for split isolation, not a feature. |
+| `place_guess` | Source locality text; not guaranteed county-only; no coordinate columns in the manifest. |
+| `quality_grade` | Source research-grade status, not a guarantee of correct labels. |
+| `photo_license` | Source permission code: cc0, cc-by, or cc-by-sa. |
+| `license_url` | Recorded reference link for the photo permission; verify source terms before reuse. |
+| `attribution` | Original photographer credit. |
+| `observation_url` | Source observation page. |
+| `photo_url` | Source photo page. |
+| `image_url` | Medium-size image download URL. |
+| `image_path` | Path relative to Project_3, used only to read pixels. |
+| `width` | Decoded image width in pixels. |
+| `height` | Decoded image height in pixels. |
+| `sha256` | SHA-256 of source image bytes; preserved after review. |
+| `download_status` | ok for usable source/analysis manifest rows. |
+| `split` | Unchanged train, validation, or test assignment; never a predictor. |
 
-### Exploratory plots
+The analysis review log has photo_id, observation_id, common_name, image_path, review_status, decision, reason, reviewer, and reviewed_on. decision is retain or exclude. The duplicate log has photo_id_a, photo_id_b, hamming_distance, split_a, split_b, decision, reason, and reviewer; decision is distinct_images or duplicate. Pair decisions are inputs to preparation, not automated exclusions. class_mapping.json uses a classes array under schema_version and ordering metadata; use class_index, not row positions from alphabetical common names.
 
-![Bird species counts](../Output/01_species_counts.png)
+| Index | Taxon ID | Species |
+|---|---|---|
+| 0 | 3454 | Mourning Dove |
+| 1 | 4956 | Great Blue Heron |
+| 2 | 8021 | American Crow |
+| 3 | 9083 | Northern Cardinal |
+| 4 | 9100 | Song Sparrow |
+| 5 | 9744 | Red-winged Blackbird |
+| 6 | 11901 | Barn Swallow |
+| 7 | 12727 | American Robin |
+| 8 | 12942 | Eastern Bluebird |
+| 9 | 17008 | Eastern Phoebe |
+| 10 | 144814 | Carolina Chickadee |
+| 11 | 145310 | American Goldfinch |
 
-Species counts range from 23 to 60 photographs, so the sample is not balanced. Counts describe this selected sample, not regional bird abundance.
+## Recreate preparation and verify loading
 
-![Species coverage by split](../Output/02_split_coverage.png)
+From Project_3 after installing Scripts/requirements.txt:
 
-Every species appears in each partition. Keeping observers separate reduces one source of leakage but does not guarantee independent sites or individual birds.
+```bash
+python Scripts/02_prepare_data.py
+python Scripts/03_check_loader.py
+python Scripts/test_data_setup.py
+python Scripts/04_majority_baseline.py
+```
 
-## Source permissions and limitations
+Preparation applies the saved decisions and recreates the final manifest, mapping, freeze, exclusion report, split counts, duplicate audit, and two updated plots. It does not re-review photographs or change source files. The original build_dataset.py is for source collection and can recover failed downloads or change the sample; do not rerun it over this frozen collection for routine modeling. Keep a separate version for any recollection.
 
-Photo credits, original URLs, and individual CC0, CC BY, or CC BY-SA license links are recorded in `bird_images.csv`. Preserve credits and follow each photograph's linked terms. A project code license does not override image permissions. Raw metadata has its own source license fields.
+The original Scripts/01_bird_eda.ipynb describes the original 482-image establishment sample. Its existing numbered figures and eda_summary.json remain historical. New analysis_* outputs and preparation_report.json describe the reviewed sample. Do not mix their counts when reporting final results.
 
-Human quality and identification review remains incomplete. Complete the review log and check near duplicates before freezing a modeling benchmark. This selected 12-species sample does not represent all Southwest Virginia birds, and observer effort affects its coverage. Avoid using IDs, paths, names, or credit text as image-model predictors.
+## Explanatory plots and findings
+
+![Reviewed species sample](../Output/analysis_species_counts.png)
+
+Retained counts remain unequal; overall accuracy should be accompanied by per-species recall and test support.
+
+![Reviewed split coverage](../Output/analysis_split_coverage.png)
+
+All 12 classes remain represented, with observers still isolated. This does not rule out site-level dependence or every near duplicate.
+
+Preparation excluded 15 noneligible images; none of the six fingerprint candidates was confirmed as a duplicate. The review cannot establish expert species correctness. The source labels remain unchanged. See Output/analysis_exclusions.csv and review_policy.md for exact decisions.
 
 ## References
 
-[1] iNaturalist, “iNaturalist API.” [Online]. Available: https://api.inaturalist.org/v1/docs/. [Accessed: Nov. 5, 2026].
-
-[2] iNaturalist, “API Recommended Practices.” [Online]. Available: https://www.inaturalist.org/pages/api+recommended+practices. [Accessed: Nov. 5, 2026].
-
-[3] iNaturalist, “Can I use the photos and sounds that are posted on iNaturalist?” [Online]. Available: https://help.inaturalist.org/en/support/solutions/articles/151000169918. [Accessed: Nov. 5, 2026].
+Numbers refer to [the project's IEEE reference list](../REFERENCES.md). Photo-level credits and original links remain in both image manifests.
