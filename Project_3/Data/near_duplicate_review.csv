@@ -1,7 +1,7 @@
 photo_id_a,photo_id_b,hamming_distance,split_a,split_b,decision,reason,reviewer
-155949645,22093813,8,test,train,distinct_images,"Visually different subjects, wing/body positions or framing; pHash match reflects simple sky backgrounds, not the same photograph.",AI-assisted visual screening (ChatGPT)
-155949645,152759699,6,test,test,distinct_images,"Visually different subjects, wing/body positions or framing; pHash match reflects simple sky backgrounds, not the same photograph.",AI-assisted visual screening (ChatGPT)
-154254827,114882470,8,test,test,distinct_images,"Visually different subjects, wing/body positions or framing; pHash match reflects simple sky backgrounds, not the same photograph.",AI-assisted visual screening (ChatGPT)
-155949645,153333610,4,test,test,distinct_images,"Visually different subjects, wing/body positions or framing; pHash match reflects simple sky backgrounds, not the same photograph.",AI-assisted visual screening (ChatGPT)
-22093813,153333610,6,train,test,distinct_images,"Visually different subjects, wing/body positions or framing; pHash match reflects simple sky backgrounds, not the same photograph.",AI-assisted visual screening (ChatGPT)
-152759699,153333610,6,test,test,distinct_images,"Visually different subjects, wing/body positions or framing; pHash match reflects simple sky backgrounds, not the same photograph.",AI-assisted visual screening (ChatGPT)
+155949645,22093813,8,test,train,distinct_images,"Visually different subjects, wing/body positions or framing; pHash match reflects simple sky backgrounds, not the same photograph."
+155949645,152759699,6,test,test,distinct_images,"Visually different subjects, wing/body positions or framing; pHash match reflects simple sky backgrounds, not the same photograph.",
+154254827,114882470,8,test,test,distinct_images,"Visually different subjects, wing/body positions or framing; pHash match reflects simple sky backgrounds, not the same photograph."
+155949645,153333610,4,test,test,distinct_images,"Visually different subjects, wing/body positions or framing; pHash match reflects simple sky backgrounds, not the same photograph."
+22093813,153333610,6,train,test,distinct_images,"Visually different subjects, wing/body positions or framing; pHash match reflects simple sky backgrounds, not the same photograph."
+152759699,153333610,6,test,test,distinct_images,"Visually different subjects, wing/body positions or framing; pHash match reflects simple sky backgrounds, not the same photograph."
