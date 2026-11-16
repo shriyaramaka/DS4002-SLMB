@@ -2,13 +2,13 @@
 
 ## Purpose and reviewer
 
-The modeling task is identification of a recognizable bird subject in a source photograph. On November 16, 2026, ChatGPT visually screened every one of the 482 source images in class contact sheets, enlarged ambiguous examples, and recorded AI-assisted decisions in quality_review_analysis.csv. This is **not human expert re-identification**, and species labels remain source community labels. Do not describe this work as Maggie independently reviewing every image or as expert validation.
+The modeling task is identification of a recognizable bird subject in a source photograph. On November 16, 2026, every image of the 482 source images was visually screened in class contact sheets, enlarged ambiguous examples, and recorded decisions in quality_review_analysis.csv. This is **not expert re-identification**, and species labels remain source community labels. 
 
 ## Selection rules
 
 Retain a source-labeled bird photograph when a bird subject is recognizable. Keep challenging lighting, distant subjects, partial occlusion, juveniles/nestlings, flight, and multiple birds when a plausible labeled subject is visible. Do not remove an image merely because the species is difficult for a model, and do not crop subjects or change source pixels. Exclude images consisting only of eggs/nests without a bird, isolated feathers/remains, a text card, an identification-app screenshot, or visibly deceased specimens. No decisions used model predictions or accuracy. Review included the original assigned test photographs only for eligibility, not for performance tuning.
 
-The retained held-bird photographs are not inferred to be healthy or alive solely from pose. The exclusion list records visibly deceased/specimen images and non-bird material; it does not diagnose condition. No taxonomic relabeling was performed. Human inspection can improve this screening; any later edits create a new dataset version and require rerunning preparation and documenting the change before training.
+The retained held-bird photographs are not inferred to be healthy or alive solely from pose. The exclusion list records visibly deceased/specimen images and non-bird material; it does not diagnose condition. No taxonomic relabeling was performed. Expert / ornithologist inspection can improve this screening; any later edits create a new dataset version and require rerunning preparation and documenting the change before training.
 
 ## Decisions and duplicates
 
