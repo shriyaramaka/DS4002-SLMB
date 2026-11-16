@@ -1,4 +1,4 @@
-photo_id,observation_id,common_name,image_path,review_status,decision,reason,reviewer,reviewed_on
+photo_id,observation_id,common_name,image_path,review_status,decision,reason,reviewed_on
 653282144,358135043,American Robin,Data/images/12727/653282144.jpg,assistant_visual_review,retain,"Recognizable bird subject in source photograph; source species label retained, not expert-reidentified.",2026-11-16
 707487358,386406717,American Robin,Data/images/12727/707487358.jpg,assistant_visual_review,retain,"Recognizable bird subject in source photograph; source species label retained, not expert-reidentified.",2026-11-16
 645316851,353701831,American Robin,Data/images/12727/645316851.jpg,assistant_visual_review,retain,"Recognizable bird subject in source photograph; source species label retained, not expert-reidentified.",2026-11-16
