@@ -14,7 +14,7 @@
   "all_source_images_decode_and_match_hash": true,
   "near_duplicate_threshold": 8,
   "near_duplicate_candidates": 6,
-  "review_method": "AI-assisted visual screening of all source contact sheets with enlarged ambiguous examples; no expert species re-identification",
+  "review_method": "visual screening of all source contact sheets with enlarged ambiguous examples; no expert species re-identification",
   "human_expert_review_complete": false,
   "model_trained": false,
   "test_predictions_generated": false,
