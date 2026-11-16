@@ -1,0 +1,16 @@
+photo_id,taxon_id,common_name,split,reason
+547100915,12727,American Robin,train,"Egg-only image, no bird body."
+729347423,12727,American Robin,validation,Deceased bird on ground.
+665664070,12727,American Robin,test,"Text-only warning card, no bird photograph."
+145748387,12727,American Robin,validation,"Isolated feather, no bird body."
+333375364,9100,Song Sparrow,validation,Deceased bird remains on pavement.
+623045055,9083,Northern Cardinal,train,"Feathers and remains only, no intact bird body."
+308075761,9083,Northern Cardinal,validation,Deceased bird remains.
+104773807,9083,Northern Cardinal,train,Deceased bird on pavement.
+304034255,11901,Barn Swallow,validation,Deceased bird on pavement.
+17566199,12942,Eastern Bluebird,train,"Nest and eggs only, no bird body."
+588222484,8021,American Crow,train,Deceased bird on pavement.
+372129706,3454,Mourning Dove,train,"Isolated feather, no bird body."
+734907415,3454,Mourning Dove,validation,Deceased specimen on work surface.
+744776486,3454,Mourning Dove,train,"Isolated feather held in hand, no bird body."
+323593397,144814,Carolina Chickadee,validation,Photograph of an identification app screen; label leakage and no direct bird photograph.

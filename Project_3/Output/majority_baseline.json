@@ -1,0 +1,25 @@
+{
+  "model": "training_majority",
+  "predicted_taxon_id": "9083",
+  "predicted_class_index": 3,
+  "predicted_common_name": "Northern Cardinal",
+  "training_images": 265,
+  "training_counts": {
+    "17008": 27,
+    "9083": 34,
+    "145310": 21,
+    "8021": 13,
+    "11901": 20,
+    "12942": 33,
+    "144814": 21,
+    "4956": 23,
+    "9100": 23,
+    "3454": 19,
+    "9744": 12,
+    "12727": 19
+  },
+  "tie_rule": "lowest numeric taxon_id",
+  "selected_from": "training labels only",
+  "manifest_sha256": "9bb821bf548c5cc737f4ef3df1e74bd8dff358fb0d66233776fe6ffbc21229c6",
+  "class_mapping_sha256": "ece43094219625dcd0c8645865477c116a376173409223e905d4f61478c3c266"
+}

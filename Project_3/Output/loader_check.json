@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "batch_shape": [
+    32,
+    3,
+    224,
+    224
+  ],
+  "label_dtype": "torch.int64",
+  "classes": 12,
+  "complete_splits_loaded": {
+    "train": 265,
+    "validation": 83
+  },
+  "split_sizes": {
+    "train": 265,
+    "validation": 83,
+    "test": 119
+  },
+  "validation_deterministic": true,
+  "seeded_training_reproducible": true,
+  "test_images_scored": false,
+  "model_fitted": false,
+  "python": "3.12.14",
+  "torch": "2.15.0+cpu",
+  "torchvision": "0.29.2+cpu"
+}

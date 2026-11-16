@@ -1,0 +1,16 @@
+{
+  "model": "training_majority",
+  "test_images": 119,
+  "correct": 12,
+  "accuracy": 0.10084033613445378,
+  "macro_recall": 0.08333333333333333,
+  "metric_scale": "accuracy and recall are fractions from 0 to 1",
+  "predicted_taxon_id": "9083",
+  "predicted_common_name": "Northern Cardinal",
+  "target_accuracy": 0.8,
+  "correct_needed_for_80_percent": 96,
+  "meets_80_percent": false,
+  "manifest_sha256": "9bb821bf548c5cc737f4ef3df1e74bd8dff358fb0d66233776fe6ffbc21229c6",
+  "class_mapping_sha256": "ece43094219625dcd0c8645865477c116a376173409223e905d4f61478c3c266",
+  "neural_model_trained": false
+}

@@ -1,0 +1,7 @@
+photo_id_a,photo_id_b,hamming_distance,cross_split,decision,reason
+155949645,22093813,8,True,distinct_images,"Visually different subjects, wing/body positions or framing; pHash match reflects simple sky backgrounds, not the same photograph."
+152759699,155949645,6,False,distinct_images,"Visually different subjects, wing/body positions or framing; pHash match reflects simple sky backgrounds, not the same photograph."
+114882470,154254827,8,False,distinct_images,"Visually different subjects, wing/body positions or framing; pHash match reflects simple sky backgrounds, not the same photograph."
+153333610,155949645,4,False,distinct_images,"Visually different subjects, wing/body positions or framing; pHash match reflects simple sky backgrounds, not the same photograph."
+153333610,22093813,6,True,distinct_images,"Visually different subjects, wing/body positions or framing; pHash match reflects simple sky backgrounds, not the same photograph."
+152759699,153333610,6,False,distinct_images,"Visually different subjects, wing/body positions or framing; pHash match reflects simple sky backgrounds, not the same photograph."
