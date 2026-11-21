@@ -1,0 +1,54 @@
+{
+  "architecture": "torchvision resnet18",
+  "pretrained_weights": "ResNet18_Weights.IMAGENET1K_V1",
+  "frozen_layers": [
+    "conv1",
+    "bn1",
+    "layer1",
+    "layer2",
+    "layer3",
+    "layer4"
+  ],
+  "trainable_layers": [
+    "fc: Linear(512, 12)"
+  ],
+  "trainable_parameters": 6156,
+  "batchnorm_mode": "eval during training (running statistics frozen at ImageNet values)",
+  "predictors": "image pixels only (224x224 resize, ImageNet normalization, train-only horizontal flip)",
+  "loss": "CrossEntropyLoss",
+  "optimizer": "Adam on fc parameters only (default betas, no weight decay)",
+  "learning_rates_compared": [
+    0.001,
+    0.0003
+  ],
+  "batch_size": 32,
+  "epochs_per_learning_rate": 15,
+  "seed": 4002,
+  "selection_rule": "highest validation accuracy; ties go to the earlier epoch, then to the lower learning rate",
+  "selected_lr": 0.001,
+  "selected_epoch": 12,
+  "selected_val_accuracy": 0.5060240963855421,
+  "train_metrics": "averaged over each epoch on augmented batches while training",
+  "val_metrics": "full validation pass after each epoch, eval mode, no augmentation",
+  "python": "3.13.3",
+  "torch": "2.15.0",
+  "torchvision": "0.29.2",
+  "device": "cpu",
+  "deterministic_algorithms": "torch.use_deterministic_algorithms(True, warn_only=True)",
+  "manifest_sha256": "9bb821bf548c5cc737f4ef3df1e74bd8dff358fb0d66233776fe6ffbc21229c6",
+  "class_mapping_sha256": "ece43094219625dcd0c8645865477c116a376173409223e905d4f61478c3c266",
+  "split_sizes": {
+    "train": 265,
+    "validation": 83,
+    "test": 119
+  },
+  "test_set_used_for_selection": false,
+  "test_set_scored": false,
+  "checkpoint": "Output/ResNet/resnet18_selected.pt",
+  "checkpoint_bytes": 44807307,
+  "deviations_from_MI2": [
+    "Learning rates 0.001 and 0.0003 compared. MI2 Figure 3 lists 0.003 but the MI2 Methodology text lists 0.0003; the Methodology value is used.",
+    "Final split sizes are 265 train / 83 validation / 119 test after quality review (MI2 listed 272/90/120 before review). The 80% goal requires 96 of 119 correct.",
+    "Backbone BatchNorm layers are kept in eval mode during training so their running statistics stay at the ImageNet values; this clarifies \"frozen backbone\"."
+  ]
+}
