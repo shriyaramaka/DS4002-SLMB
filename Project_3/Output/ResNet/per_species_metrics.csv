@@ -1,0 +1,13 @@
+taxon_id,common_name,test_count,correct,recall
+3454,Mourning Dove,10,1,0.1
+4956,Great Blue Heron,9,9,1.0
+8021,American Crow,9,7,0.7777777777777778
+9083,Northern Cardinal,12,10,0.8333333333333334
+9100,Song Sparrow,9,9,1.0
+9744,Red-winged Blackbird,8,1,0.125
+11901,Barn Swallow,9,4,0.4444444444444444
+12727,American Robin,11,4,0.36363636363636365
+12942,Eastern Bluebird,15,11,0.7333333333333333
+17008,Eastern Phoebe,10,5,0.5
+144814,Carolina Chickadee,8,4,0.5
+145310,American Goldfinch,9,8,0.8888888888888888
