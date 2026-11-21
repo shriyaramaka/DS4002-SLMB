@@ -20,5 +20,9 @@
 
 [10] D. Van Horn et al., “The iNaturalist species classification and detection dataset,” in Proc. IEEE/CVF Conf. Computer Vision and Pattern Recognition (CVPR), 2018, pp. 8769–8778. [Online]. Available: https://research.google/pubs/the-inaturalist-species-classification-and-detection-dataset/
 
+[11] D. P. Kingma and J. Ba, “Adam: A method for stochastic optimization,” in Proc. 3rd Int. Conf. Learning Representations (ICLR), 2015. [Online]. Available: https://arxiv.org/abs/1412.6980
+
+[12] PyTorch, “Reproducibility.” Accessed: Nov. 20, 2026. [Online]. Available: https://docs.pytorch.org/docs/stable/notes/randomness.html
+
 Photo-specific sources, credits, and permissions are recorded in Data/bird_images.csv and Data/bird_images_analysis.csv. Reference numbers 1–3 retain the numbering in the latest supplied MI2 text. The local DCT fingerprint is a screening heuristic, not a comprehensive near-duplicate detector or a paper-validated classification model.
 
