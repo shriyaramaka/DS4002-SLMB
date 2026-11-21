@@ -2,7 +2,7 @@
 
 ## Summary and final analysis inputs
 
-The original November 5 collection contains **482 images, 12 species, and 60 observers**. Its medium-resolution photographs and manifest remain unchanged. Visual quality screening on November 16 retained **467 images from 56 observers**, with **265 train / 83 validation / 119 test** images. Every species remains in every split, with no observer crossing partitions. The target remains identification of the 12 selected species, with an 80% held-out accuracy goal. The training-majority baseline is now complete; no ResNet-18 classifier has been trained or scored.
+The original November 5 collection contains **482 images, 12 species, and 60 observers**. Its medium-resolution photographs and manifest remain unchanged. Visual quality screening on November 16 retained **467 images from 56 observers**, with **265 train / 83 validation / 119 test** images. Every species remains in every split, with no observer crossing partitions. The target remains identification of the 12 selected species, with an 80% held-out accuracy goal. The training-majority baseline (12/119 = 10.084%) and the ResNet-18 classifier (73/119 = 61.345%, below the 80% goal) are complete; see the project README and Output/ResNet/.
 
 Use **bird_images_analysis.csv**, **class_mapping.json**, **dataset_freeze.json**, and the photographs referenced under **images/** for the next analysis. Keep bird_images.csv as the original manifest. All image paths are relative to Project_3. Review is amateur screening, not expert taxonomic verification; see [review_policy.md](review_policy.md).
 
